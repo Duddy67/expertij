@@ -140,7 +140,9 @@ class UserController extends Controller
             return response()->json(['redirect' => route('admin.users.index', $request->query())]);
         }
 
-        $user->name = $request->input('name');
+        $user->first_name = $request->input('first_name');
+        $user->last_name = $request->input('last_name');
+        $user->name = $request->input('first_name').' '.$request->input('last_name');
         $user->email = $request->input('email');
         $user->updated_by = auth()->user()->id;
 
@@ -197,7 +199,9 @@ class UserController extends Controller
     public function store(StoreRequest $request)
     {
         $user = User::create([
-            'name' => $request->input('name'),
+            'first_name' => $request->input('first_name'),
+            'last_name' => $request->input('last_name'),
+            'name' => $request->input('first_name').' '.$request->input('last_name'),
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
         ]);

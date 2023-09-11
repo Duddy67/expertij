@@ -103,6 +103,8 @@ return [
     'generic' => [
 	'title' => 'Title',
 	'name' => 'Name',
+	'last_name' => 'Last name',
+	'first_name' => 'First name',
 	'slug' => 'Slug',
 	'code' => 'Code',
 	'alias' => 'Alias',

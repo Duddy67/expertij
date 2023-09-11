@@ -25,7 +25,8 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         return [
-	    'name' => 'bail|required|between:5,25|regex:/^[\pL\s\-]+$/u',
+	    'first_name' => 'bail|required|between:5,25|regex:/^[\pL\s\-]+$/u',
+	    'last_name' => 'bail|required|between:5,25|regex:/^[\pL\s\-]+$/u',
 	    'email' => 'bail|required|email|unique:users',
 	    'password' => 'required|confirmed|min:8',
 	    'role' => 'required',

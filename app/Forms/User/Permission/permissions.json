@@ -102,6 +102,24 @@
 	"optional": "manager"
       }
   ],
+  "memberships": [
+      {
+	"name": "create-memberships",
+	"type": "level3",
+	"roles": "admin|manager|assistant|registered"
+      },
+      {
+	"name": "update-memberships",
+	"type": "level3",
+	"roles": "admin|manager|assistant|registered"
+      },
+      {
+	"name": "delete-memberships",
+	"type": "level3",
+	"roles": "admin|manager|assistant",
+	"optional": "assistant"
+      }
+  ],
   "settings": [
       {
 	"name": "global-settings",
