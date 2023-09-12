@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('votes', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('membership_id')->nullable();
+            $table->char('choice', 3);
+            $table->text('note')->nullable();
             $table->timestamps();
         });
     }

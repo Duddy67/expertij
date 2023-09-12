@@ -15,6 +15,9 @@ return new class extends Migration
     {
         Schema::create('citizenships', function (Blueprint $table) {
             $table->id();
+            $table->char('alpha_3', 3);
+            $table->boolean('published');
+            $table->tinyText('fr');
             $table->timestamps();
         });
     }

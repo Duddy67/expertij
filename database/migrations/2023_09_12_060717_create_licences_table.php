@@ -15,6 +15,11 @@ return new class extends Migration
     {
         Schema::create('licences', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('membership_id')->nullable();
+            $table->unsignedBigInteger('jurisdiction_id')->nullable();
+            $table->string('type', 20);
+            $table->timestamp('attestation_expiry_date')->nullable();
+            $table->unsignedSmallInteger('since');
             $table->timestamps();
         });
     }

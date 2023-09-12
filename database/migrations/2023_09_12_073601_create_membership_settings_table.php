@@ -15,7 +15,9 @@ return new class extends Migration
     {
         Schema::create('membership_settings', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->string('group', 50);
+            $table->string('key', 50);
+            $table->text('value')->nullable();
         });
     }
 

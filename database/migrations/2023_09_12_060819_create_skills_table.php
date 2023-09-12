@@ -15,7 +15,12 @@ return new class extends Migration
     {
         Schema::create('skills', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->unsignedBigInteger('licence_id')->nullable();
+            $table->unsignedBigInteger('language_id')->nullable();
+            $table->boolean('interpreter')->nullable();
+            $table->boolean('interpreter_cassation')->nullable();
+            $table->boolean('translator')->nullable();
+            $table->boolean('translator_cassation')->nullable();
         });
     }
 

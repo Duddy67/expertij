@@ -15,7 +15,8 @@ return new class extends Migration
     {
         Schema::table('users', function(Blueprint $table)
 	{
-            $table->string('first_name', 30)->after('email');
+            $table->char('civility', 3)->nullable()->after('email');
+            $table->string('first_name', 30)->after('civility');
             $table->string('last_name', 30)->after('first_name');
             $table->string('birth_name', 30)->nullable()->after('last_name');
             $table->timestamp('birth_date')->nullable()->after('birth_name');
@@ -33,6 +34,7 @@ return new class extends Migration
     {
         Schema::table('users', function(Blueprint $table)
 	{
+	    $table->dropColumn('civility');
 	    $table->dropColumn('first_name');
 	    $table->dropColumn('last_name');
 	    $table->dropColumn('birth_name');
