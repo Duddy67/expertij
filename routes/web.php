@@ -12,6 +12,7 @@ use App\Http\Controllers\Cms\FileController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\Post\CategoryController as PostCategoryController;
 use App\Http\Controllers\SiteController;
+use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\TokenController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ContactController;
@@ -35,6 +36,8 @@ Route::post('/'.$segments['posts'].'/{id}/{slug}/comments', [PostController::cla
 Route::put('/'.$segments['posts'].'/comments/{comment}', [PostController::class, 'updateComment'])->name('posts.comments.update')->middleware('auth');
 Route::delete('/'.$segments['posts'].'/comments/{comment}', [PostController::class, 'deleteComment'])->name('posts.comments.delete')->middleware('auth');
 Route::get('/'.$segments['posts'].'/'.$segments['categories'].'/{id}/{slug}', [PostCategoryController::class, 'index'])->name('posts.categories');
+
+Route::resource('memberships', MembershipController::class)->except(['index']);
 
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
