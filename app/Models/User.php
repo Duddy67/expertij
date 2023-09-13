@@ -5,12 +5,16 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use App\Models\User\Role;
 use App\Models\User\Group;
+use App\Models\User\Citizenship;
 use App\Models\Cms\Document;
 use App\Models\Cms\Setting;
+use App\Models\Cms\Address;
 use App\Traits\CheckInCheckOut;
 use App\Traits\OptionList;
 use Illuminate\Http\Request;
@@ -109,9 +113,25 @@ class User extends Authenticatable
     /**
      * The users's photo.
      */
-    public function photo()
+    public function photo(): MorphOne
     {
         return $this->morphOne(Document::class, 'documentable')->where('field', 'photo');
+    }
+
+    /**
+     * The user's address.
+     */
+    public function address(): MorphOne
+    {
+        return $this->morphOne(Address::class, 'addressable');
+    }
+
+    /**
+     * Get the citizenship that owns the user.
+     */
+    public function citizenship(): BelongsTo
+    {
+        return $this->belongsTo(Citizenship::class);
     }
 
     /**

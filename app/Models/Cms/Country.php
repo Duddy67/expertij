@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Models\Membership;
+namespace App\Models\Cms;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Licence;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
-class Jurisdiction extends Model
+class Country extends Model
 {
     use HasFactory;
 
@@ -15,7 +15,7 @@ class Jurisdiction extends Model
      *
      * @var string
      */
-    protected $table = 'membership_jurisdictions';
+    protected $table = 'countries';
 
     /**
      * The attributes that are mass assignable.
@@ -23,8 +23,12 @@ class Jurisdiction extends Model
      * @var array
      */
     protected $fillable = [
-        'type',
-        'name',
+        'alpha_2',
+        'alpha_3',
+        'numerical',
+        'continent_code',
+        'published',
+        'fr',
     ];
 
     /**
@@ -38,10 +42,10 @@ class Jurisdiction extends Model
     ];
 
     /**
-     * The licences that belong to the jurisdiction.
+     * Get the parent countryable model.
      */
-    public function licences(): HasMany
+    public function countryable(): MorphTo
     {
-        return $this->hasMany(Licence::class);
+        return $this->morphTo();
     }
 }
