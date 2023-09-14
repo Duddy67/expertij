@@ -26,7 +26,7 @@ class MembershipController extends Controller
      */
     public function create()
     {
-        $page = Setting::getPage('membership.form');
+        $page = Setting::getPage('membership.registration');
 
         return view('themes.'.$page['theme'].'.index', compact('page'));
     }

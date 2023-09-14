@@ -22,9 +22,10 @@ return new class extends Migration
             $table->unsignedTinyInteger('email_sendings')->default(0);
             $table->timestamp('member_since')->nullable();
             $table->string('member_number', 30)->nullable();
+            $table->boolean('associated_member')->default(0);
             $table->boolean('free_period')->default(0);
-            $table->string('pro_status', 20);
-            $table->string('pro_status_info', 30)->nullable();
+            $table->string('professional_status', 20);
+            $table->string('professional_status_info', 30)->nullable();
             $table->unsignedSmallInteger('since');
             $table->string('siret_number', 14);
             $table->string('naf_code', 5);
