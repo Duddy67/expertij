@@ -1,12 +1,16 @@
+@push('styles')
+    <link rel="stylesheet" href="{{ asset('/vendor/adminlte/plugins/daterangepicker/daterangepicker.css') }}">
+@endpush
+
 <div class="position-relative">
     @include('themes.expertij.partials.flash-message')
     <form action="{{ route('memberships.store') }}" method="post" enctype="multipart/form-data" id="registration" role="form" class="php-email-form">
         @csrf
 
         <nav class="nav nav-tabs">
-            <a class="nav-item nav-link active" href="#personal_information" data-toggle="tab">{{ __('labels.generic.personal_information') }}</a>
-            <a class="nav-item nav-link" href="#licences" data-toggle="tab">{{ __('labels.membership.licences') }}</a>
-            <a class="nav-item nav-link" href="#professional_status" data-toggle="tab">{{ __('labels.membership.professional_status') }}</a>
+            <a class="nav-item nav-link active" href="#personal_information" data-bs-toggle="tab">{{ __('labels.generic.personal_information') }}</a>
+            <a class="nav-item nav-link" href="#licences" data-bs-toggle="tab">{{ __('labels.membership.licences') }}</a>
+            <a class="nav-item nav-link" href="#professional_status" data-bs-toggle="tab">{{ __('labels.membership.professional_status') }}</a>
         </nav>
 
         <div class="tab-content">
@@ -16,6 +20,10 @@
                     <div class="col-md-6 form-group">
                         <label for="civility">{{ __('labels.user.civility') }}</label>
                         <select name="civility" class="form-select" id="civility" required>
+                            <option value="">{{ __('labels.generic.select_option') }}</option>
+                            @foreach ($options['civility'] as $option)
+                                <option value="{{ $option['value'] }}">{{ $option['text'] }}</option>
+                            @endforeach
                         </select>
                         <div class="text-danger" id="civilityError"></div>
                     </div>
@@ -40,7 +48,8 @@
                     </div>
                     <div class="col-md-6 form-group">
                         <label for="birthDate">{{ __('labels.user.birth_date') }}</label>
-                        <input type="text" name="birth_date" class="form-control" id="birthDate" required>
+                        <input type="text" name="birth_date" class="form-control date" id="birthDate" data-date="0" data-format="D MMM YYYY">
+                        <input type="hidden" id="_birthDate" name="_birth_date" value="">
                         <div class="text-danger" id="birthDateError"></div>
                     </div>
                 </div>
@@ -53,6 +62,10 @@
                     <div class="col-md-6 form-group">
                         <label for="citizenship">{{ __('labels.user.citizenship') }}</label>
                         <select name="citizenship" class="form-select" id="citizenship" required>
+                            <option value="">{{ __('labels.generic.select_option') }}</option>
+                            @foreach ($options['citizenship'] as $option)
+                                <option value="{{ $option['value'] }}">{{ $option['text'] }}</option>
+                            @endforeach
                         </select>
                         <div class="text-danger" id="citizenshipError"></div>
                     </div>
@@ -126,12 +139,20 @@
                     <div class="col-md-6 form-group">
                         <label for="professionalStatus">{{ __('labels.membership.professional_status') }}</label>
                         <select name="professional_status" class="form-select" id="professionalStatus" required>
+                            <option value="">{{ __('labels.generic.select_option') }}</option>
+                            @foreach ($options['professional_status'] as $option)
+                                <option value="{{ $option['value'] }}">{{ $option['text'] }}</option>
+                            @endforeach
                         </select>
                         <div class="text-danger" id="professionalStatusError"></div>
                     </div>
                     <div class="col-md-6 form-group">
                         <label for="since">{{ __('labels.generic.since') }}</label>
                         <select name="since" class="form-select" id="since" required>
+                            <option value="">{{ __('labels.generic.select_option') }}</option>
+                            @foreach ($options['since'] as $option)
+                                <option value="{{ $option['value'] }}">{{ $option['text'] }}</option>
+                            @endforeach
                         </select>
                         <div class="text-danger" id="sinceError"></div>
                     </div>
@@ -203,6 +224,10 @@
     </form>
 
 @push ('scripts')
+    <script type="text/javascript" src="{{ asset('/vendor/adminlte/plugins/moment/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/vendor/adminlte/plugins/daterangepicker/daterangepicker.js') }}"></script>
     <script src="{{ asset('/vendor/codalia/c.ajax.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/js/admin/daterangepicker.js') }}"></script>
     <script src="{{ asset('/js/membership/registration.js') }}"></script>
 @endpush
+

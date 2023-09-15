@@ -39,14 +39,20 @@
 
               // Change the locale date format of that picker. 
               $('#'+fields[i].id).data('daterangepicker').locale.format = format;
+              // Check whether a time picker is needed (ie: whether a "time" dataset is defined).
+              let timePicker = ($('#'+fields[i].id).data('time') === undefined) ? false : true;
+              // Set the datepicker accordingly.
+              $('#'+fields[i].id).data('daterangepicker').timePicker = timePicker;
 
               // By defaut set the start date to the current date.
               let startDate = moment().format(format);
 
               // A datetime has been previously set.
               if ($('#'+fields[i].id).data('date') != 0) {
+                  // Set time to 00:00 when no time picker is available.
+                  let time = (timePicker) ? $('#'+fields[i].id).data('time') : '00:00';
                   // Concatenate date and time dataset parameters. 
-                  let datetime = $('#'+fields[i].id).data('date')+' '+$('#'+fields[i].id).data('time');
+                  let datetime = $('#'+fields[i].id).data('date')+' '+time;
                   startDate = moment(datetime).format(format);
                   // Set the hidden field to the datetime previously set.
                   $('#_'+fields[i].id).val(datetime);

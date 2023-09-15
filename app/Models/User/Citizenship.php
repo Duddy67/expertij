@@ -18,6 +18,13 @@ class Citizenship extends Model
     protected $table = 'citizenships';
 
     /**
+     * No timestamps.
+     *
+     * @var boolean
+     */
+    public $timestamps = false;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -29,20 +36,15 @@ class Citizenship extends Model
     ];
 
     /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'created_at',
-        'updated_at',
-    ];
-
-    /**
      * The users that belong to the citizenship.
      */
     public function users(): HasMany
     {
         return $this->hasMany(User::class);
+    }
+
+    public function getCitizenships(): \Illuminate\Database\Eloquent\Collection 
+    {
+        return self::all();
     }
 }

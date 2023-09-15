@@ -18,7 +18,6 @@ return new class extends Migration
             $table->char('alpha_3', 3);
             $table->boolean('published');
             $table->tinyText('fr');
-            $table->timestamps();
         });
     }
 

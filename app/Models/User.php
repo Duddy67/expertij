@@ -244,6 +244,28 @@ class User extends Authenticatable
         return $options;
     }
 
+    public function getCivilityOptions(): array
+    {
+        return [
+            ['value' => 'mr', 'text' => __('labels.user.mr')],
+            ['value' => 'mrs', 'text' => __('labels.user.mrs')],
+        ];
+    }
+
+    public function getCitizenshipOptions(): array
+    {
+        $options = [];
+        $citizenships = $this->citizenship()->getRelated()->getCitizenships();
+
+        foreach ($citizenships as $citizenship) {
+            if ($citizenship->published) {
+                $options[] = ['value' => $citizenship->alpha_3, 'text' => $citizenship->fr];
+            }
+        }
+
+        return $options;
+    }
+
     /*
      * Generic function that returns model values which are handled by select inputs. 
      */

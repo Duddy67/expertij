@@ -26,6 +26,8 @@ return [
 	'last_name' => 'Last name',
 	'first_name' => 'First name',
 	'civility' => 'Civility',
+	'mr' => 'Mr',
+	'mrs' => 'Mrs',
 	'birth_name' => 'Birth name',
 	'birth_date' => 'Birth date',
 	'birth_location' => 'Birth location',
@@ -73,6 +75,9 @@ return [
     'membership' => [
 	'expert' => 'Expert',
 	'ceseda' => 'CESEDA',
+	'liberal_profession' => 'Liberal profession',
+	'micro_entrepreneur' => 'Micro entrepreneur',
+	'company' => 'Company',
 	'licences' => 'Licences',
 	'associated_member' => 'Associated member',
 	'professional_status' => 'Professional status',
@@ -238,6 +243,7 @@ return [
         'since' => 'Since',
         'attestation' => 'Attestation',
 	'personal_information' => 'Personal information',
+	'other' => 'Other',
     ],
     'filter' => [
 	'search' => 'Search',

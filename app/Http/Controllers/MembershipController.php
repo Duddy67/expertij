@@ -9,6 +9,22 @@ use App\Models\Cms\Setting;
 
 class MembershipController extends Controller
 {
+    /*
+     * Instance of the membership model.
+     */
+    protected $item = null;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //$this->middleware('auth');
+        $this->item = new Membership;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -27,8 +43,9 @@ class MembershipController extends Controller
     public function create()
     {
         $page = Setting::getPage('membership.registration');
+        $options = $this->getOptions();
 
-        return view('themes.'.$page['theme'].'.index', compact('page'));
+        return view('themes.'.$page['theme'].'.index', compact('page', 'options'));
     }
 
     /**
@@ -85,5 +102,18 @@ class MembershipController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    private function getOptions(Membership $membership = null): array
+    {
+        $options = [];
+        $membership = ($membership) ? $membership : new Membership;
+
+        $options['since'] = $membership->getSinceOptions();
+        $options['professional_status'] = $membership->getProfessionalStatusOptions();
+        $options['citizenship'] = $membership->getCitizenshipOptions();
+        $options['civility'] = $membership->getCivilityOptions();
+
+        return $options;
     }
 }

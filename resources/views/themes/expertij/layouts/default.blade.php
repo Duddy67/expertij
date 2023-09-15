@@ -43,6 +43,8 @@
 	    </footer>
 	</div>
 
+    <!-- Adds possible extra style sheets pushed by pages and partials. -->
+    @stack ('styles')
     <!-- JS files: jQuery first, then Bootstrap JS -->
     <script type="text/javascript" src="{{ asset('/vendor/adminlte/plugins/jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap JS Bundle with Popper -->

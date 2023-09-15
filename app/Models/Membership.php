@@ -58,6 +58,9 @@ class Membership extends Model
         'member_since'
     ];
 
+    const EARLIEST_YEAR = 1980;
+
+
     /**
      * Get the user that owns the membership.
      */
@@ -96,5 +99,39 @@ class Membership extends Model
     public function payments(): MorphMany
     {
         return $this->morphMany(Payment::class, 'payable');
+    }
+
+    public function getProfessionalStatusOptions(): array
+    {
+        return [
+            ['value' => 'liberal_profession', 'text' => __('labels.membership.liberal_profession')],
+            ['value' => 'micro_entrepreneur', 'text' => __('labels.membership.micro_entrepreneur')],
+            ['value' => 'company', 'text' => __('labels.membership.company')],
+            ['value' => 'other', 'text' => __('labels.generic.other')],
+        ];
+    }
+
+    public function getSinceOptions(): array
+    {
+        $options = [];
+        // Get the current year.
+        $year = date('Y');
+
+	while ($year >= self::EARLIEST_YEAR) {
+            $options[] = ['value' => $year, 'text' => $year];
+	    $year--;
+	}
+
+        return $options;
+    }
+
+    public function getCivilityOptions(): array
+    {
+        return $this->user()->getRelated()->getCivilityOptions();
+    }
+
+    public function getCitizenshipOptions(): array
+    {
+        return $this->user()->getRelated()->getCitizenshipOptions();
     }
 }
