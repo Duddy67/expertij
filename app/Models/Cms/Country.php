@@ -4,7 +4,8 @@ namespace App\Models\Cms;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Models\Cms\Address;
 
 class Country extends Model
 {
@@ -16,6 +17,13 @@ class Country extends Model
      * @var string
      */
     protected $table = 'countries';
+
+    /**
+     * No timestamps.
+     *
+     * @var boolean
+     */
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -32,20 +40,10 @@ class Country extends Model
     ];
 
     /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
+     * Get the addresses for the country.
      */
-    protected $dates = [
-        'created_at',
-        'updated_at',
-    ];
-
-    /**
-     * Get the parent countryable model.
-     */
-    public function countryable(): MorphTo
+    public function addresses(): HasMany
     {
-        return $this->morphTo();
+        return $this->hasMany(Address::class);
     }
 }

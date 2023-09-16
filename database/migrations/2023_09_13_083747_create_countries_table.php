@@ -15,15 +15,12 @@ return new class extends Migration
     {
         Schema::create('countries', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('countryable_id')->nullable();
-            $table->string('countryable_type')->nullable();
             $table->char('alpha_2', 2);
             $table->char('alpha_3', 3);
             $table->unsignedSmallInteger('numerical');
             $table->char('continent_code', 2);
             $table->boolean('published');
             $table->tinyText('fr');
-            $table->timestamps();
         });
     }
 

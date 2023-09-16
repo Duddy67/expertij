@@ -19,6 +19,13 @@ class Language extends Model
     protected $table = 'membership_languages';
 
     /**
+     * No timestamps.
+     *
+     * @var boolean
+     */
+    public $timestamps = false;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -28,16 +35,6 @@ class Language extends Model
         'alpha_3',
         'published',
         'fr',
-    ];
-
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'created_at',
-        'updated_at',
     ];
 
     /**

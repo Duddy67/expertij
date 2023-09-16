@@ -42,9 +42,4 @@ class Citizenship extends Model
     {
         return $this->hasMany(User::class);
     }
-
-    public function getCitizenships(): \Illuminate\Database\Eloquent\Collection 
-    {
-        return self::all();
-    }
 }

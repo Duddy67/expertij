@@ -255,12 +255,10 @@ class User extends Authenticatable
     public function getCitizenshipOptions(): array
     {
         $options = [];
-        $citizenships = $this->citizenship()->getRelated()->getCitizenships();
+        $citizenships = Citizenship::where('published', 1)->orderBy('fr')->get();
 
         foreach ($citizenships as $citizenship) {
-            if ($citizenship->published) {
-                $options[] = ['value' => $citizenship->alpha_3, 'text' => $citizenship->fr];
-            }
+            $options[] = ['value' => $citizenship->alpha_3, 'text' => $citizenship->fr];
         }
 
         return $options;

@@ -19,6 +19,13 @@ class Insurance extends Model
     protected $table = 'membership_insurances';
 
     /**
+     * No timestamps.
+     *
+     * @var boolean
+     */
+    public $timestamps = false;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -26,16 +33,6 @@ class Insurance extends Model
     protected $fillable = [
         'status',
         'code',
-    ];
-
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'created_at',
-        'updated_at',
     ];
 
     /**

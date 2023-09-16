@@ -89,6 +89,7 @@ return [
 	'professional_experience' => 'Professional experience',
 	'observations' => 'Observations',
 	'why_expertij' => 'Why subscribed to Expertij ?',
+	'submit_application' => 'Submit application',
     ],
     'category' => [
 	'create_category' => 'Create a category',

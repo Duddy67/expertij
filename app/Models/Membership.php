@@ -11,9 +11,10 @@ use App\Traits\AccessLevel;
 use App\Traits\CheckInCheckOut;
 use App\Traits\OptionList;
 use App\Models\User;
-use App\Models\Insurance;
-use App\Models\Licence;
-use App\Models\Vote;
+use App\Models\Membership\Insurance;
+use App\Models\Membership\Licence;
+use App\Models\Membership\Language;
+use App\Models\Membership\Vote;
 use App\Models\Payment;
 
 class Membership extends Model
@@ -101,6 +102,14 @@ class Membership extends Model
         return $this->morphMany(Payment::class, 'payable');
     }
 
+    public function getLicenceTypeOptions(): array
+    {
+        return [
+            ['value' => 'expert',  'text' => __('labels.membership.expert')],
+            ['value' => 'ceseda',  'text' => __('labels.membership.ceseda')],
+        ];
+    }
+
     public function getProfessionalStatusOptions(): array
     {
         return [
@@ -127,11 +136,25 @@ class Membership extends Model
 
     public function getCivilityOptions(): array
     {
+        // Get the User relationship model then use its method.
         return $this->user()->getRelated()->getCivilityOptions();
     }
 
     public function getCitizenshipOptions(): array
     {
+        // Get the User relationship model then use its method.
         return $this->user()->getRelated()->getCitizenshipOptions();
+    }
+
+    public function getLanguageOptions(): array
+    {
+        $options = [];
+        $languages = Language::where('published', 1)->orderBy('fr')->get();
+
+        foreach ($languages as $language) {
+            $options[] = ['value' => $language->alpha_3, 'text' => $language->fr];
+        }
+
+        return $options;
     }
 }

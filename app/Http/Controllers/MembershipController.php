@@ -56,7 +56,8 @@ class MembershipController extends Controller
      */
     public function store(Request $request)
     {
-        //
+//file_put_contents('debog_file.txt', print_r($request->all(), true));
+        return response()->json();
     }
 
     /**
@@ -104,15 +105,47 @@ class MembershipController extends Controller
         //
     }
 
+    public function addLicence()
+    {
+        //
+    }
+
+    public function deleteLicence()
+    {
+        //
+    }
+
+    public function addSkill()
+    {
+        //
+    }
+
+    public function deleteSkill()
+    {
+        //
+    }
+
+    public function addLanguage()
+    {
+        //
+    }
+
+    public function deleteLanguage()
+    {
+        //
+    }
+
     private function getOptions(Membership $membership = null): array
     {
         $options = [];
         $membership = ($membership) ? $membership : new Membership;
 
+        $options['licence_type'] = $membership->getLicenceTypeOptions();
         $options['since'] = $membership->getSinceOptions();
         $options['professional_status'] = $membership->getProfessionalStatusOptions();
         $options['citizenship'] = $membership->getCitizenshipOptions();
         $options['civility'] = $membership->getCivilityOptions();
+        $options['language'] = $membership->getLanguageOptions();
 
         return $options;
     }

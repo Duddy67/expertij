@@ -5,7 +5,7 @@ namespace App\Models\Cms;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use App\Models\Cms\Country;
 
 class Address extends Model
@@ -29,7 +29,7 @@ class Address extends Model
         'additional_address',
         'city',
         'postcode',
-        'country',
+        'country_id',
         'phone',
         'mobile',
     ];
@@ -53,10 +53,10 @@ class Address extends Model
     }
 
     /**
-     * Get the address' country.
+     * Get the country that owns the address.
      */
-    public function country(): MorphOne
+    public function country(): BelongsTo
     {
-        return $this->morphOne(Country::class, 'countryable');
+        return $this->belongsTo(Country::class, 'country_id', 'alpha_3');
     }
 }

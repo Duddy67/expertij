@@ -18,6 +18,13 @@ class Jurisdiction extends Model
     protected $table = 'membership_jurisdictions';
 
     /**
+     * No timestamps.
+     *
+     * @var boolean
+     */
+    public $timestamps = false;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -25,16 +32,6 @@ class Jurisdiction extends Model
     protected $fillable = [
         'type',
         'name',
-    ];
-
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'created_at',
-        'updated_at',
     ];
 
     /**

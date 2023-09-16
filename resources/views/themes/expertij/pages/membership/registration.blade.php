@@ -30,34 +30,34 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <label for="lastName">{{ __('labels.user.last_name') }}</label>
-                        <input type="text" name="last_name" class="form-control" id="lastName" required>
-                        <div class="text-danger" id="lastNameError"></div>
+                        <label for="last_name">{{ __('labels.user.last_name') }}</label>
+                        <input type="text" name="last_name" class="form-control" id="last_name" required>
+                        <div class="text-danger" id="last_nameError"></div>
                     </div>
                     <div class="col-md-6 form-group">
-                        <label for="firstName">{{ __('labels.user.first_name') }}</label>
-                        <input type="text" name="first_name" class="form-control" id="firstName" required>
-                        <div class="text-danger" id="firstNameError"></div>
+                        <label for="first_name">{{ __('labels.user.first_name') }}</label>
+                        <input type="text" name="first_name" class="form-control" id="first_name" required>
+                        <div class="text-danger" id="first_nameError"></div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <label for="birthName">{{ __('labels.user.birth_name') }}</label>
-                        <input type="text" name="birth_name" class="form-control" id="birthName" required>
-                        <div class="text-danger" id="birthNameError"></div>
+                        <label for="birth_name">{{ __('labels.user.birth_name') }}</label>
+                        <input type="text" name="birth_name" class="form-control" id="birth_name" required>
+                        <div class="text-danger" id="birth_nameError"></div>
                     </div>
                     <div class="col-md-6 form-group">
-                        <label for="birthDate">{{ __('labels.user.birth_date') }}</label>
-                        <input type="text" name="birth_date" class="form-control date" id="birthDate" data-date="0" data-format="D MMM YYYY">
-                        <input type="hidden" id="_birthDate" name="_birth_date" value="">
+                        <label for="birth_date">{{ __('labels.user.birth_date') }}</label>
+                        <input type="text" name="birth_date" class="form-control date" id="birth_date" data-date="0" data-format="D MMM YYYY">
+                        <input type="hidden" id="_birth_date" name="_birth_date" value="">
                         <div class="text-danger" id="birthDateError"></div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <label for="birthLocation">{{ __('labels.user.birth_location') }}</label>
-                        <input type="text" name="birth_location" class="form-control" id="birthLocation" required>
-                        <div class="text-danger" id="birthLocationError"></div>
+                        <label for="birth_location">{{ __('labels.user.birth_location') }}</label>
+                        <input type="text" name="birth_location" class="form-control" id="birth_location" required>
+                        <div class="text-danger" id="birth_locationError"></div>
                     </div>
                     <div class="col-md-6 form-group">
                         <label for="citizenship">{{ __('labels.user.citizenship') }}</label>
@@ -77,9 +77,9 @@
                         <div class="text-danger" id="streetError"></div>
                     </div>
                     <div class="col-md-6 form-group">
-                        <label for="additionalAddress">{{ __('labels.address.additional_address') }}</label>
-                        <input type="text" name="additional_address" class="form-control" id="additionalAddress">
-                        <div class="text-danger" id="additionalAddressError"></div>
+                        <label for="additional_address">{{ __('labels.address.additional_address') }}</label>
+                        <input type="text" name="additional_address" class="form-control" id="additional_address">
+                        <div class="text-danger" id="additional_addressError"></div>
                     </div>
                 </div>
                 <div class="row">
@@ -115,36 +115,41 @@
                         <div class="text-danger" id="passwordError"></div>
                     </div>
                     <div class="col-md-6 form-group">
-                        <label for="passwordConfirmation">{{ __('labels.user.confirm_password') }}</label>
-                        <input type="password" autocomplete="false" name="password_confirmation" class="form-control" id="passwordConfirmation" required>
-                        <div class="text-danger" id="passwordConfirmationError"></div>
+                        <label for="password_confirmation">{{ __('labels.user.confirm_password') }}</label>
+                        <input type="password" autocomplete="false" name="password_confirmation" class="form-control" id="password_confirmation" required>
+                        <div class="text-danger" id="password_confirmationError"></div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 form-group mt-3 mt-md-0">
-                        <label for="associatedMember">{{ __('labels.membership.associated_member') }}</label><br />
-                        <input type="checkbox" class="form-check-input" name="associated_member" id="associatedMember" />
-                        <div class="text-danger" id="emailError"></div>
+                        <label for="associated_member">{{ __('labels.membership.associated_member') }}</label><br />
+                        <input type="checkbox" class="form-check-input" name="associated_member" id="associated_member" />
+                        <div class="text-danger" id="associated_memberError"></div>
                     </div>
                 </div>
             </div>
 
             <div class="tab-pane" id="licences">
-            <!-- Licences etc... -->
+                <!-- Licences etc... -->
+                <div class="form-group" id="licence-container" data-last-index="0">
+                    <div class="row licence-row" id="licence-0">
+                        @include('themes.expertij.partials.membership.registration.licence')
+                    </div>
+                </div> <!-- licence container -->
             </div>
 
             <div class="tab-pane" id="professional_status">
                 <!-- Professional status -->
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <label for="professionalStatus">{{ __('labels.membership.professional_status') }}</label>
-                        <select name="professional_status" class="form-select" id="professionalStatus" required>
+                        <label for="professional_status">{{ __('labels.membership.professional_status') }}</label>
+                        <select name="professional_status" class="form-select" id="professional_status" required>
                             <option value="">{{ __('labels.generic.select_option') }}</option>
                             @foreach ($options['professional_status'] as $option)
                                 <option value="{{ $option['value'] }}">{{ $option['text'] }}</option>
                             @endforeach
                         </select>
-                        <div class="text-danger" id="professionalStatusError"></div>
+                        <div class="text-danger" id="professional_statusError"></div>
                     </div>
                     <div class="col-md-6 form-group">
                         <label for="since">{{ __('labels.generic.since') }}</label>
@@ -159,50 +164,50 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <label for="professionalStatusInfo">{{ __('labels.membership.professional_status_info') }}</label>
-                        <input type="text" name="professional_status_info" class="form-control" id="professionalStatusInfo">
-                        <div class="text-danger" id="professionalStatusInfoError"></div>
+                        <label for="professional_status_info">{{ __('labels.membership.professional_status_info') }}</label>
+                        <input type="text" name="professional_status_info" class="form-control" id="professional_status_info">
+                        <div class="text-danger" id="professional_status_infoError"></div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <label for="siretNumber">{{ __('labels.membership.siret_number') }}</label>
-                        <input type="text" name="siret_number" class="form-control" id="siretNumber" required>
-                        <div class="text-danger" id="siretNumberError"></div>
+                        <label for="siret_number">{{ __('labels.membership.siret_number') }}</label>
+                        <input type="text" name="siret_number" class="form-control" id="siret_number" required>
+                        <div class="text-danger" id="siret_numberError"></div>
                     </div>
                     <div class="col-md-6 form-group">
-                        <label for="nafCode">{{ __('labels.membership.naf_code') }}</label>
-                        <input type="text" name="naf_code" class="form-control" id="nafCode" required>
+                        <label for="naf_code">{{ __('labels.membership.naf_code') }}</label>
+                        <input type="text" name="naf_code" class="form-control" id="naf_code" required>
                         <div class="text-danger" id="nafCodeError"></div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <label for="professionalAttestation">{{ __('labels.generic.attestation') }}</label>
-                        <input type="file" name="professional_attestation" class="form-control" id="professionalAttestation" required>
-                        <div class="text-danger" id="professionalAttestationError"></div>
+                        <label for="professional_attestation">{{ __('labels.generic.attestation') }}</label>
+                        <input type="file" name="professional_attestation" class="form-control" id="professional_attestation" required>
+                        <div class="text-danger" id="professional_attestationError"></div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <label for="linguisticTraining">{{ __('labels.membership.linguistic_training') }}</label>
-                        <textarea name="linguistic_training" rows="5" cols="35" class="form-control" id="linguisticTraining" required>
+                        <label for="linguistic_training">{{ __('labels.membership.linguistic_training') }}</label>
+                        <textarea name="linguistic_training" rows="5" cols="35" class="form-control" id="linguistic_training" required>
                         </textarea>
-                        <div class="text-danger" id="linguisticTrainingError"></div>
+                        <div class="text-danger" id="linguistic_trainingError"></div>
                     </div>
                     <div class="col-md-6 form-group">
-                        <label for="extraLinguisticTraining">{{ __('labels.membership.extra_linguistic_training') }}</label>
-                        <textarea name="extra_linguistic_training" rows="5" cols="35" class="form-control" id="extraLinguisticTraining" required>
+                        <label for="extra_linguistic_training">{{ __('labels.membership.extra_linguistic_training') }}</label>
+                        <textarea name="extra_linguistic_training" rows="5" cols="35" class="form-control" id="extra_linguistic_training" required>
                         </textarea>
-                        <div class="text-danger" id="extraLinguisticTrainingError"></div>
+                        <div class="text-danger" id="extra_linguistic_trainingError"></div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <label for="professionalExperience">{{ __('labels.membership.professional_experience') }}</label>
-                        <textarea name="professional_experience" rows="5" cols="35" class="form-control" id="professionalExperience" required>
+                        <label for="professional_experience">{{ __('labels.membership.professional_experience') }}</label>
+                        <textarea name="professional_experience" rows="5" cols="35" class="form-control" id="professional_experience" required>
                         </textarea>
-                        <div class="text-danger" id="professionalExperienceError"></div>
+                        <div class="text-danger" id="professional_experienceError"></div>
                     </div>
                     <div class="col-md-6 form-group">
                         <label for="observations">{{ __('labels.membership.observations') }}</label>
@@ -213,15 +218,21 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6 form-group">
-                        <label for="whyExpertij">{{ __('labels.membership.why_expertij') }}</label>
-                        <textarea name="why_expertij" rows="5" cols="35" class="form-control" id="whyExpertij" required>
+                        <label for="why_expertij">{{ __('labels.membership.why_expertij') }}</label>
+                        <textarea name="why_expertij" rows="5" cols="35" class="form-control" id="why_expertij" required>
                         </textarea>
-                        <div class="text-danger" id="whyExpertijError"></div>
+                        <div class="text-danger" id="why_expertijError"></div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="text-center"><button class="btn btn-success" id="submit" type="button">{{ __('labels.membership.submit_application') }}</button></div>
     </form>
+</div>
+
+<div class="ajax-progress d-none" id="ajax-progress">
+    <img src="{{ asset('/images/progress-icon.gif') }}" class="progress-icon" style="top:20%;" />
+</div>
 
 @push ('scripts')
     <script type="text/javascript" src="{{ asset('/vendor/adminlte/plugins/moment/moment.min.js') }}"></script>

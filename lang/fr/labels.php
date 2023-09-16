@@ -89,6 +89,7 @@ return [
 	'professional_experience' => 'Expérience professionnelle',
 	'observations' => 'Observations',
 	'why_expertij' => 'Pourquoi voulez vous adhérer à Expertij ?',
+	'submit_application' => 'Soumettre votre candidature',
     ],
     'category' => [
 	'create_category' => 'Créer une catégorie',

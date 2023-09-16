@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('additional_address')->nullable();
             $table->string('postcode', 20)->nullable();
             $table->string('city')->nullable();
-            $table->char('country', 3)->nullable();
+            $table->char('country_id', 3)->nullable();
             $table->string('phone', 20)->nullable();
             $table->string('mobile', 20)->nullable();
             $table->timestamps();
