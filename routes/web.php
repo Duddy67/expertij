@@ -38,6 +38,7 @@ Route::delete('/'.$segments['posts'].'/comments/{comment}', [PostController::cla
 Route::get('/'.$segments['posts'].'/'.$segments['categories'].'/{id}/{slug}', [PostCategoryController::class, 'index'])->name('posts.categories');
 
 Route::resource('memberships', MembershipController::class)->except(['index']);
+Route::post('/memberships/add-licence', [MembershipController::class, 'addLicence'])->name('memberships.addLicence');
 
 Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');

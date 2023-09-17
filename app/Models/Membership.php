@@ -14,6 +14,7 @@ use App\Models\User;
 use App\Models\Membership\Insurance;
 use App\Models\Membership\Licence;
 use App\Models\Membership\Language;
+use App\Models\Membership\Jurisdiction;
 use App\Models\Membership\Vote;
 use App\Models\Payment;
 
@@ -153,6 +154,23 @@ class Membership extends Model
 
         foreach ($languages as $language) {
             $options[] = ['value' => $language->alpha_3, 'text' => $language->fr];
+        }
+
+        return $options;
+    }
+
+    public function getJurisdictionOptions(): array
+    {
+        $options = [];
+        $jurisdictions = Jurisdiction::all();
+
+        foreach ($jurisdictions as $jurisdiction) {
+            // Create an array for each jurisdiction type.
+            if (!isset($options[$jurisdiction->type])) {
+                $options[$jurisdiction->type] = [];
+            }
+
+            $options[$jurisdiction->type][] = ['value' => $jurisdiction->id, 'text' => $jurisdiction->name];
         }
 
         return $options;

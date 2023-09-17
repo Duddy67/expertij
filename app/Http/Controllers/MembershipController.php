@@ -44,8 +44,9 @@ class MembershipController extends Controller
     {
         $page = Setting::getPage('membership.registration');
         $options = $this->getOptions();
+        $i = $j = $k = 0;
 
-        return view('themes.'.$page['theme'].'.index', compact('page', 'options'));
+        return view('themes.'.$page['theme'].'.index', compact('page', 'options', 'i', 'j', 'k'));
     }
 
     /**
@@ -56,7 +57,6 @@ class MembershipController extends Controller
      */
     public function store(Request $request)
     {
-//file_put_contents('debog_file.txt', print_r($request->all(), true));
         return response()->json();
     }
 
@@ -105,9 +105,16 @@ class MembershipController extends Controller
         //
     }
 
-    public function addLicence()
+    public function addLicence(Request $request)
     {
-        //
+        // Get the number of licences to use it as new licence index (ie: current index + 1).
+        $i = count($request->input('licences'));
+        $j = $k = 0;
+        $page = Setting::getPage('membership.registration');
+        $options = $this->getOptions();
+        $html = view('themes.'.$page['theme'].'.partials.membership.registration.licence', compact('page', 'options', 'i', 'j', 'k'))->render();
+//file_put_contents('debog_file.txt', print_r($html, true));
+        return response()->json(['html' => $html, 'destination' => 'licence-container']);
     }
 
     public function deleteLicence()
@@ -146,6 +153,7 @@ class MembershipController extends Controller
         $options['citizenship'] = $membership->getCitizenshipOptions();
         $options['civility'] = $membership->getCivilityOptions();
         $options['language'] = $membership->getLanguageOptions();
+        $options['jurisdictions'] = $membership->getJurisdictionOptions();
 
         return $options;
     }

@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
         spinner.classList.remove('d-none');
 
         let formData = new FormData(document.getElementById('registration'));
-
+//console.log(formData);
         let ajax = new C_Ajax.init({
             method: 'post',
             url: document.getElementById('registration').action,
@@ -17,13 +17,44 @@ document.addEventListener('DOMContentLoaded', () => {
         ajax.run(getAjaxResult);
     }
 
+    let buttons = document.getElementsByClassName('btn-action');
+    Array.prototype.forEach.call(buttons, function(button) {
+        // Do stuff here
+        button.onclick = setAjaxRequest;
+    });
+
+    document.getElementById('add-licence').onclick = function(e) { 
+        const spinner = document.getElementById('ajax-progress');
+        spinner.classList.remove('d-none');
+
+//const parent = document.querySelector('#licence-container');
+//const count = parent.children.length;
+        let formData = new FormData(document.getElementById('registration'));
+
+        let ajax = new C_Ajax.init({
+            method: 'post',
+            url: document.getElementById('addLicence').value,
+            dataType: 'json',
+            data: formData,
+            headers: {'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'), 'Accept': 'application/json'}
+        });
+
+        ajax.run(getAjaxResult);
+    }
+
+    function setAjaxRequest() {
+        console.log(this.dataset.params);
+    }
+
     function getAjaxResult(status, result) {
         const spinner = document.getElementById('ajax-progress');
         spinner.classList.add('d-none');
+console.log(result);
 
-            console.log(result);
         if (status === 200) {
-            alert('Success');
+            if (result.html !== undefined) {
+                document.getElementById(result.destination).innerHTML += result.html;
+            }
         }
         else if (status === 422) {
             displayMessage('danger', 'Please check the form below for errors.');

@@ -131,11 +131,16 @@
 
             <div class="tab-pane" id="licences">
                 <!-- Licences etc... -->
-                <div class="form-group" id="licence-container" data-last-index="0">
-                    <div class="row licence-row" id="licence-0">
-                        @include('themes.expertij.partials.membership.registration.licence')
-                    </div>
+                <div class="form-group" id="licence-container" data-last-index="{{ $i }}">
+                    @include('themes.expertij.partials.membership.registration.licence')
                 </div> <!-- licence container -->
+                <input type="hidden" name="licence_last_id" id="licenceLastId" value="{{ $i }}">
+                <input type="hidden" id="addLicence" value="{{ route('memberships.addLicence') }}">
+                <div class="text-center">
+                    <button class="btn btn-success" id="add-licence" type="button">{{ __('labels.membership.new_licence') }}</button>
+                </div>
+                    <button class="btn btn-success btn-action" data-params="action: 'addLicence', context: 'register'" id="foo-1" type="button">btn1</button>
+                    <button class="btn btn-success btn-action" data-params="action: 'addSkill', context: 'update'" id="foo-2" type="button">btn2</button>
             </div>
 
             <div class="tab-pane" id="professional_status">
