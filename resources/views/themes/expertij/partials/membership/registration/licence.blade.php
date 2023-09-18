@@ -1,4 +1,4 @@
-<div class="row licence-row" id="licence-{{ $i }}">
+<div class="row" id="licence-{{ $i }}">
     <div class="row">
         <div class="col-md-6 form-group">
             <label for="licence_type_{{ $i }}">{{ __('labels.generic.type') }}</label>
@@ -40,4 +40,17 @@
             <div class="text-danger" id="appeal_court_{{ $i }}Error"></div>
         </div>
     </div>
+
+    <div class="form-group" id="attestation-container-{{ $i }}-{{ $j }}">
+        @include('themes.expertij.partials.membership.registration.attestation')
+    </div> <!-- attestation container -->
+    <div class="text-center">
+        <button class="btn btn-success form-action-btn" data-form="registration" data-route="addAttestation" type="button">{{ __('labels.membership.add_attestation') }}</button>
+    </div>
 </div>
+
+@if ($i > 0)
+    <div class="text-center">
+        <button class="btn btn-danger form-action-btn" data-form="registration" data-route="deleteLicence" type="button">{{ __('labels.membership.delete_licence') }}</button>
+    </div>
+@endif

@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('membership_skills', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('licence_id')->nullable();
+            $table->unsignedBigInteger('attestation_id')->nullable();
             $table->unsignedBigInteger('language_id')->nullable();
             $table->boolean('interpreter')->nullable();
             $table->boolean('interpreter_cassation')->nullable();

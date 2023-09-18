@@ -6,6 +6,7 @@
     @include('themes.expertij.partials.flash-message')
     <form action="{{ route('memberships.store') }}" method="post" enctype="multipart/form-data" id="registration" role="form" class="php-email-form">
         @csrf
+        <input type="hidden" id="store" value="{{ route('memberships.store') }}">
 
         <nav class="nav nav-tabs">
             <a class="nav-item nav-link active" href="#personal_information" data-bs-toggle="tab">{{ __('labels.generic.personal_information') }}</a>
@@ -50,7 +51,7 @@
                         <label for="birth_date">{{ __('labels.user.birth_date') }}</label>
                         <input type="text" name="birth_date" class="form-control date" id="birth_date" data-date="0" data-format="D MMM YYYY">
                         <input type="hidden" id="_birth_date" name="_birth_date" value="">
-                        <div class="text-danger" id="birthDateError"></div>
+                        <div class="text-danger" id="birth_dateError"></div>
                     </div>
                 </div>
                 <div class="row">
@@ -131,16 +132,15 @@
 
             <div class="tab-pane" id="licences">
                 <!-- Licences etc... -->
-                <div class="form-group" id="licence-container" data-last-index="{{ $i }}">
+                <div class="form-group" id="licence-container">
                     @include('themes.expertij.partials.membership.registration.licence')
                 </div> <!-- licence container -->
+                <div class="text-center">
+                    <button class="btn btn-success form-action-btn" data-form="registration" data-route="addLicence" type="button">{{ __('labels.membership.add_licence') }}</button>
+                </div>
+
                 <input type="hidden" name="licence_last_id" id="licenceLastId" value="{{ $i }}">
                 <input type="hidden" id="addLicence" value="{{ route('memberships.addLicence') }}">
-                <div class="text-center">
-                    <button class="btn btn-success" id="add-licence" type="button">{{ __('labels.membership.new_licence') }}</button>
-                </div>
-                    <button class="btn btn-success btn-action" data-params="action: 'addLicence', context: 'register'" id="foo-1" type="button">btn1</button>
-                    <button class="btn btn-success btn-action" data-params="action: 'addSkill', context: 'update'" id="foo-2" type="button">btn2</button>
             </div>
 
             <div class="tab-pane" id="professional_status">

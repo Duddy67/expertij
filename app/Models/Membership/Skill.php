@@ -5,7 +5,7 @@ namespace App\Models\Membership;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\Licence;
+use App\Models\Attestation;
 use App\Models\Language;
 
 class Skill extends Model
@@ -32,11 +32,11 @@ class Skill extends Model
     ];
 
     /**
-     * Get the licence that owns the skill.
+     * Get the attestation that owns the skill.
      */
-    public function licence(): BelongsTo
+    public function attestation(): BelongsTo
     {
-        return $this->belongsTo(Licence::class);
+        return $this->belongsTo(Attestation::class);
     }
 
     /**

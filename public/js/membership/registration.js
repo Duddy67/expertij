@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    document.getElementById('submit').onclick = function(e) { 
+    /*document.getElementById('submit').onclick = function(e) { 
         const spinner = document.getElementById('ajax-progress');
         spinner.classList.remove('d-none');
 
@@ -16,12 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         ajax.run(getAjaxResult);
     }
-
-    let buttons = document.getElementsByClassName('btn-action');
-    Array.prototype.forEach.call(buttons, function(button) {
-        // Do stuff here
-        button.onclick = setAjaxRequest;
-    });
 
     document.getElementById('add-licence').onclick = function(e) { 
         const spinner = document.getElementById('ajax-progress');
@@ -40,10 +34,29 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         ajax.run(getAjaxResult);
-    }
+    }*/
+
+    let buttons = document.getElementsByClassName('form-action-btn');
+
+    Array.prototype.forEach.call(buttons, function(button) {
+        button.onclick = setAjaxRequest;
+    });
 
     function setAjaxRequest() {
-        console.log(this.dataset.params);
+        const spinner = document.getElementById('ajax-progress');
+        spinner.classList.remove('d-none');
+
+        let formData = new FormData(document.getElementById(this.dataset.form));
+
+        let ajax = new C_Ajax.init({
+            method: 'post',
+            url: document.getElementById(this.dataset.route).value,
+            dataType: 'json',
+            data: formData,
+            headers: {'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'), 'Accept': 'application/json'}
+        });
+
+        ajax.run(getAjaxResult);
     }
 
     function getAjaxResult(status, result) {

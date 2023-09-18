@@ -6,11 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Models\Membership;
-use App\Models\Jurisdiction;
-use App\Models\Attestation;
+use App\Models\Licence;
+use App\Models\Skill;
 
-class Licence extends Model
+class Attestation extends Model
 {
     use HasFactory;
 
@@ -19,7 +18,7 @@ class Licence extends Model
      *
      * @var string
      */
-    protected $table = 'membership_licences';
+    protected $table = 'membership_attestations';
 
     /**
      * The attributes that are mass assignable.
@@ -27,8 +26,7 @@ class Licence extends Model
      * @var array
      */
     protected $fillable = [
-        'type',
-        'since',
+        'expiry_date',
     ];
 
     /**
@@ -39,29 +37,22 @@ class Licence extends Model
     protected $dates = [
         'created_at',
         'updated_at',
+        'expiry_date'
     ];
 
     /**
-     * Get the membership that owns the licence.
+     * Get the licence that owns the attestation.
      */
-    public function membership(): BelongsTo
+    public function licence(): BelongsTo
     {
-        return $this->belongsTo(Membership::class);
+        return $this->belongsTo(Licence::class);
     }
 
     /**
-     * Get the jurisdiction that owns the licence.
+     * The skills that belong to the attestation.
      */
-    public function jurisdiction(): BelongsTo
+    public function skills(): HasMany
     {
-        return $this->belongsTo(Jurisdiction::class);
-    }
-
-    /**
-     * The attestations that belong to the licence.
-     */
-    public function attestations(): HasMany
-    {
-        return $this->hasMany(Attestation::class);
+        return $this->hasMany(Skill::class);
     }
 }

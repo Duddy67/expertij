@@ -13,12 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('membership_licences', function (Blueprint $table) {
+        Schema::create('membership_attestations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('membership_id')->nullable();
-            $table->unsignedBigInteger('jurisdiction_id')->nullable();
-            $table->string('type', 20);
-            $table->unsignedSmallInteger('since');
+            $table->unsignedBigInteger('licence_id')->nullable();
+            $table->timestamp('expiry_date')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('membership_licences');
+        Schema::dropIfExists('membership_attestations');
     }
 };
