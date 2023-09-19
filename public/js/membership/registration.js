@@ -1,60 +1,55 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    /*document.getElementById('submit').onclick = function(e) { 
+    // Use event delegation to ckeck whenever a button in the form is clicked.
+    document.body.addEventListener('click', function (evt) {
+        // Handle only the elements with the form-action-btn class.
+        if (evt.target.classList.contains('form-action-btn')) {
+            setAjaxRequest(evt.target);
+        }
+    }, false);
+
+    function setAjaxRequest(element) {
         const spinner = document.getElementById('ajax-progress');
         spinner.classList.remove('d-none');
 
-        let formData = new FormData(document.getElementById('registration'));
-//console.log(formData);
+        let route = element.dataset.route;
+        let url = document.getElementById(route).value;
+
+        // Check for items to delete.
+        if (route.startsWith('delete')) {
+            // Set the Laravel method field to "delete".
+            document.getElementsByName('_method')[0].value = 'delete';
+            // Set the item id to zero if no parameter is given (ie: the item is not in database).
+            let id = (element.dataset.itemId !== undefined) ? element.dataset.itemId : 0;
+            // Add the item id and the element index to the route url.
+            url = url+id+'/?_index='+element.dataset.index;
+        }
+
+        if (route.startsWith('add')) {
+            if (element.dataset.licenceIndex !== undefined) {
+                url = url+'?_licence_index='+element.dataset.licenceIndex;
+            }
+
+            if (element.dataset.attestationIndex !== undefined) {
+                url = url+'&_attestation_index='+element.dataset.attestationIndex;
+            }
+        }
+console.log(url);
+
+        let formData = new FormData(document.getElementById(element.dataset.form));
+
         let ajax = new C_Ajax.init({
             method: 'post',
-            url: document.getElementById('registration').action,
+            url: url,
             dataType: 'json',
             data: formData,
             headers: {'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'), 'Accept': 'application/json'}
         });
 
-        ajax.run(getAjaxResult);
-    }
-
-    document.getElementById('add-licence').onclick = function(e) { 
-        const spinner = document.getElementById('ajax-progress');
-        spinner.classList.remove('d-none');
-
-//const parent = document.querySelector('#licence-container');
-//const count = parent.children.length;
-        let formData = new FormData(document.getElementById('registration'));
-
-        let ajax = new C_Ajax.init({
-            method: 'post',
-            url: document.getElementById('addLicence').value,
-            dataType: 'json',
-            data: formData,
-            headers: {'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'), 'Accept': 'application/json'}
-        });
-
-        ajax.run(getAjaxResult);
-    }*/
-
-    let buttons = document.getElementsByClassName('form-action-btn');
-
-    Array.prototype.forEach.call(buttons, function(button) {
-        button.onclick = setAjaxRequest;
-    });
-
-    function setAjaxRequest() {
-        const spinner = document.getElementById('ajax-progress');
-        spinner.classList.remove('d-none');
-
-        let formData = new FormData(document.getElementById(this.dataset.form));
-
-        let ajax = new C_Ajax.init({
-            method: 'post',
-            url: document.getElementById(this.dataset.route).value,
-            dataType: 'json',
-            data: formData,
-            headers: {'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'), 'Accept': 'application/json'}
-        });
+        if (route.startsWith('delete')) {
+            // Set back the Laravel method field to "post".
+            document.getElementsByName('_method')[0].value = 'post';
+        }
 
         ajax.run(getAjaxResult);
     }
@@ -65,8 +60,14 @@ document.addEventListener('DOMContentLoaded', () => {
 console.log(result);
 
         if (status === 200) {
+            // An item has to be added.
             if (result.html !== undefined) {
                 document.getElementById(result.destination).innerHTML += result.html;
+            }
+
+            // An item has to be removed.
+            if (result.target !== undefined) {
+                document.getElementById(result.target).remove();
             }
         }
         else if (status === 422) {

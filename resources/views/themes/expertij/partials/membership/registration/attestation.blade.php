@@ -6,9 +6,9 @@
             <div class="text-danger" id="attestation_{{ $i }}_{{ $j }}Error"></div>
         </div>
         <div class="col-md-6 form-group">
-            <label for="expiry_date">{{ __('labels.user.birth_date') }}</label>
-            <input type="text" name="expiry_date" class="form-control date" id="expiry_date" data-date="0" data-format="D MMM YYYY">
-            <input type="hidden" id="_expiry_date" name="licences[{{ $i }}][attestations[{{ $j }}][expiry_date]" value="">
+            <label for="expiry_date">{{ __('labels.membership.expiry_date') }}</label>
+            <input type="text" name="licences[{{ $i }}][attestations][{{ $j }}][expiry_date]" class="form-control date" id="expiry_date_{{ $i }}_{{ $j }}" data-date="0" data-format="D MMM YYYY">
+            <input type="hidden" id="_expiry_date_{{ $i }}_{{ $j }}" name="licences[{{ $i }}][attestations[{{ $j }}][expiry_date]" value="">
             <div class="text-danger" id="expiry_dateError"></div>
         </div>
     </div>

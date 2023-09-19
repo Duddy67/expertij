@@ -41,16 +41,17 @@
         </div>
     </div>
 
-    <div class="form-group" id="attestation-container-{{ $i }}-{{ $j }}">
+    <div class="form-group" id="attestation-container-{{ $i }}">
         @include('themes.expertij.partials.membership.registration.attestation')
     </div> <!-- attestation container -->
     <div class="text-center">
-        <button class="btn btn-success form-action-btn" data-form="registration" data-route="addAttestation" type="button">{{ __('labels.membership.add_attestation') }}</button>
+        <button class="btn btn-success form-action-btn" data-form="registration" data-licence-index="{{ $i }}" data-route="addAttestation" type="button">
+        {{ __('labels.membership.add_attestation') }}</button>
     </div>
-</div>
 
-@if ($i > 0)
-    <div class="text-center">
-        <button class="btn btn-danger form-action-btn" data-form="registration" data-route="deleteLicence" type="button">{{ __('labels.membership.delete_licence') }}</button>
-    </div>
-@endif
+    @if ($i > 0)
+        <div class="text-center">
+            <button class="btn btn-danger form-action-btn" data-form="registration" data-index="{{ $i }}" data-route="deleteLicence" type="button">{{ __('labels.membership.delete_licence') }}</button>
+        </div>
+    @endif
+</div>

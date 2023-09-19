@@ -7,6 +7,7 @@
     <form action="{{ route('memberships.store') }}" method="post" enctype="multipart/form-data" id="registration" role="form" class="php-email-form">
         @csrf
         <input type="hidden" id="store" value="{{ route('memberships.store') }}">
+        @method('post')
 
         <nav class="nav nav-tabs">
             <a class="nav-item nav-link active" href="#personal_information" data-bs-toggle="tab">{{ __('labels.generic.personal_information') }}</a>
@@ -139,8 +140,9 @@
                     <button class="btn btn-success form-action-btn" data-form="registration" data-route="addLicence" type="button">{{ __('labels.membership.add_licence') }}</button>
                 </div>
 
-                <input type="hidden" name="licence_last_id" id="licenceLastId" value="{{ $i }}">
                 <input type="hidden" id="addLicence" value="{{ route('memberships.addLicence') }}">
+                <input type="hidden" id="deleteLicence" value="{{ url('/').'/memberships/delete-licence' }}">
+                <input type="hidden" id="addAttestation" value="{{ route('memberships.addAttestation') }}">
             </div>
 
             <div class="tab-pane" id="professional_status">
