@@ -11,4 +11,11 @@
             <div class="text-danger" id="language_{{ $i }}-{{ $j }}-{{ $k }}Error"></div>
         </div>
     </div>
+
+    @if ($k > 0)
+        <div class="text-center">
+            <button class="btn btn-danger form-action-btn" data-form="registration" data-type="skill" data-index="{{ $i }}-{{ $j }}-{{ $k }}" data-route="deleteItem" type="button">
+            {{ __('labels.membership.delete_skill') }}</button>
+        </div>
+    @endif
 </div>

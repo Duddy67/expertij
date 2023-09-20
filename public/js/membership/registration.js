@@ -13,7 +13,22 @@ document.addEventListener('DOMContentLoaded', () => {
         spinner.classList.remove('d-none');
 
         let route = element.dataset.route;
+        let type = element.dataset.type;
         let url = document.getElementById(route).value;
+
+        // Check for items to add.
+        if (route.startsWith('add')) {
+            url = url+'?_type='+type;
+
+            if (element.dataset.licenceIndex !== undefined) {
+                url = url+'&_licence_index='+element.dataset.licenceIndex;
+            }
+
+            if (element.dataset.attestationIndex !== undefined) {
+                url = url+'&_attestation_index='+element.dataset.attestationIndex;
+            }
+
+        }
 
         // Check for items to delete.
         if (route.startsWith('delete')) {
@@ -21,18 +36,8 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementsByName('_method')[0].value = 'delete';
             // Set the item id to zero if no parameter is given (ie: the item is not in database).
             let id = (element.dataset.itemId !== undefined) ? element.dataset.itemId : 0;
-            // Add the item id and the element index to the route url.
-            url = url+id+'/?_index='+element.dataset.index;
-        }
-
-        if (route.startsWith('add')) {
-            if (element.dataset.licenceIndex !== undefined) {
-                url = url+'?_licence_index='+element.dataset.licenceIndex;
-            }
-
-            if (element.dataset.attestationIndex !== undefined) {
-                url = url+'&_attestation_index='+element.dataset.attestationIndex;
-            }
+            // Add the item id and the item type and the element index to the route url.
+            url = url+'/'+id+'?_type='+type+'&_index='+element.dataset.index;
         }
 console.log(url);
 

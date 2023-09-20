@@ -105,53 +105,43 @@ class MembershipController extends Controller
         //
     }
 
-    public function addLicence(Request $request)
+    public function addItem(Request $request)
     {
-        // Get the number of licences to use it as new licence index (ie: current index + 1).
-        $i = count($request->input('licences'));
-        $j = $k = 0;
+        $type = $request->input('_type');
+
+//file_put_contents('debog_file.txt', print_r($request->all(), true));
+        $i = ($type == 'licence') ? count($request->input('licences')) : $request->input('_licence_index');
+        $j = ($type == 'attestation') ? count($request->input('licences.'.$i.'.attestations')) : 0;
+        $j = ($request->input('_attestation_index', null)) ? $request->input('_attestation_index') : $j;
+        $k = ($type == 'skill') ? count($request->input('licences.'.$i.'.attestations.'.$j.'.skills')) : 0;
+
         $page = Setting::getPage('membership.registration');
         $options = $this->getOptions();
-        $html = view('themes.'.$page['theme'].'.partials.membership.registration.licence', compact('page', 'options', 'i', 'j', 'k'))->render();
 
-        return response()->json(['html' => $html, 'destination' => 'licence-container']);
+        $html = view('themes.'.$page['theme'].'.partials.membership.registration.'.$request->input('_type'), compact('page', 'options', 'i', 'j', 'k'))->render();
+
+        $index = '';
+
+        if ($type == 'attestation') {
+            $index = '-'.$i;
+        }
+
+        if ($type == 'skill') {
+            $index = '-'.$i.'-'.$j;
+        }
+
+        return response()->json(['html' => $html, 'destination' => $type.'-container'.$index]);
     }
 
-    public function deleteLicence(Request $request, int $id)
+    public function deleteItem(Request $request, int $id)
     {
-        // The licence exists in database.
+        $type = $request->input('_type');
+
+        // The item exists in database.
         if ($id > 0) {
         }
 
-        return response()->json(['target' => 'licence-'.$request->input('_index')]);
-    }
-
-    public function addAttestation(Request $request)
-    {
-        $i = $request->input('_licence_index');
-//file_put_contents('debog_file.txt', print_r(count($request->input('licences.'.$i.'.attestations')), true));
-        $j = count($request->input('licences.'.$i.'.attestations'));
-        $k = 0;
-        $page = Setting::getPage('membership.registration');
-        $options = $this->getOptions();
-        $html = view('themes.'.$page['theme'].'.partials.membership.registration.attestation', compact('page', 'options', 'i', 'j', 'k'))->render();
-
-        return response()->json(['html' => $html, 'destination' => 'attestation-container-'.$i]);
-    }
-
-    public function deleteAttestation(Request $request, int $id)
-    {
-        //
-    }
-
-    public function addSkill()
-    {
-        //
-    }
-
-    public function deleteSkill()
-    {
-        //
+        return response()->json(['target' => $type.'-'.$request->input('_index')]);
     }
 
     private function getOptions(Membership $membership = null): array

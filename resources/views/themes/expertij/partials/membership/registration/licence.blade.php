@@ -45,13 +45,14 @@
         @include('themes.expertij.partials.membership.registration.attestation')
     </div> <!-- attestation container -->
     <div class="text-center">
-        <button class="btn btn-success form-action-btn" data-form="registration" data-licence-index="{{ $i }}" data-route="addAttestation" type="button">
-        {{ __('labels.membership.add_attestation') }}</button>
+        <button class="btn btn-success form-action-btn" data-form="registration" data-type="attestation" data-licence-index="{{ $i }}" data-route="addItem" type="button">
+            {{ __('labels.membership.add_attestation') }}
+        </button>
     </div>
 
     @if ($i > 0)
         <div class="text-center">
-            <button class="btn btn-danger form-action-btn" data-form="registration" data-index="{{ $i }}" data-route="deleteLicence" type="button">{{ __('labels.membership.delete_licence') }}</button>
+            <button class="btn btn-danger form-action-btn" data-form="registration" data-type="licence" data-index="{{ $i }}" data-route="deleteItem" type="button">{{ __('labels.membership.delete_licence') }}</button>
         </div>
     @endif
 </div>
