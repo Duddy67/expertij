@@ -2,6 +2,10 @@
 
   // Run a function when the page is fully loaded including graphics.
   $(window).on('load', function() {
+      $.fn.initDatePickers();
+  });
+
+  $.fn.initDatePickers = function() {
       $('.date').daterangepicker({
           'singleDatePicker': true,
           'timePicker': true,
@@ -14,10 +18,18 @@
 
       $('.date').on('apply.daterangepicker', function(ev, picker) {
           // Convert the selected datetime in MySQL format. 
-          let datetime = picker.startDate.format('YYYY-MM-DD HH:mm');
+          let date = picker.startDate.format('YYYY-MM-DD');
+          let time = picker.startDate.format('HH:mm');
 
           // Set the hidden field to the selected datetime
-          $('#_'+$(this).attr('id')).val(datetime);
+          $('#_'+$(this).attr('id')).val(date+' '+time);
+
+          // Set the data attributes.
+          $('#'+$(this).attr('id')).attr('data-date', date);
+          // Check first whether a time picker is used.
+          if ($('#'+$(this).attr('id')).data('time') !== undefined) {
+              $('#'+$(this).attr('id')).attr('data-time', time);
+          }
       });
 
       $('.date').on('show.daterangepicker', function(ev, picker) {
@@ -25,7 +37,7 @@
       });
 
       $.fn.initStartDates();   
-  });
+  }
 
   $.fn.initStartDates = function() {
       // The fields to initialized.

@@ -13,21 +13,28 @@ document.addEventListener('DOMContentLoaded', () => {
         spinner.classList.remove('d-none');
 
         let route = element.dataset.route;
-        let type = element.dataset.type;
         let url = document.getElementById(route).value;
 
         // Check for items to add.
         if (route.startsWith('add')) {
-            url = url+'?_type='+type;
+            let containerIndex = '';
+            url = url+'?_type='+element.dataset.type;
 
+            // A new attestation is being added.
             if (element.dataset.licenceIndex !== undefined) {
                 url = url+'&_licence_index='+element.dataset.licenceIndex;
+                containerIndex = '-'+element.dataset.licenceIndex;
             }
 
+            // A new skill is being added.
             if (element.dataset.attestationIndex !== undefined) {
                 url = url+'&_attestation_index='+element.dataset.attestationIndex;
+                containerIndex = containerIndex+'-'+element.dataset.attestationIndex;
             }
 
+            // Count the number of (first) children into a item container to set the new item index.
+            let newIndex = document.getElementById(element.dataset.type+'-container'+containerIndex).children.length;
+            url = url+'&_new_index='+newIndex;
         }
 
         // Check for items to delete.
@@ -37,9 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // Set the item id to zero if no parameter is given (ie: the item is not in database).
             let id = (element.dataset.itemId !== undefined) ? element.dataset.itemId : 0;
             // Add the item id and the item type and the element index to the route url.
-            url = url+'/'+id+'?_type='+type+'&_index='+element.dataset.index;
+            url = url+'/'+id+'?_type='+element.dataset.type+'&_index='+element.dataset.index;
         }
-console.log(url);
 
         let formData = new FormData(document.getElementById(element.dataset.form));
 
@@ -62,12 +68,13 @@ console.log(url);
     function getAjaxResult(status, result) {
         const spinner = document.getElementById('ajax-progress');
         spinner.classList.add('d-none');
-console.log(result);
 
         if (status === 200) {
             // An item has to be added.
             if (result.html !== undefined) {
-                document.getElementById(result.destination).innerHTML += result.html;
+                document.getElementById(result.destination).insertAdjacentHTML('beforeend', result.html);
+                // Refresh the date inputs.
+                $.fn.initDatePickers();
             }
 
             // An item has to be removed.

@@ -108,18 +108,24 @@ class MembershipController extends Controller
     public function addItem(Request $request)
     {
         $type = $request->input('_type');
+        $newIndex = $request->input('_new_index');
 
-//file_put_contents('debog_file.txt', print_r($request->all(), true));
-        $i = ($type == 'licence') ? count($request->input('licences')) : $request->input('_licence_index');
-        $j = ($type == 'attestation') ? count($request->input('licences.'.$i.'.attestations')) : 0;
+        // Compute the item indexes:
+        // $i = licence, $j = attestation, $k = skill.
+
+        $i = ($type == 'licence') ? $newIndex : $request->input('_licence_index');
+        // Set $j to zero if the new item is of type "licence"
+        $j = ($type == 'attestation') ? $newIndex : 0;
+        // Set $j to the given attestation index if the new item is of type "skill".
         $j = ($request->input('_attestation_index', null)) ? $request->input('_attestation_index') : $j;
-        $k = ($type == 'skill') ? count($request->input('licences.'.$i.'.attestations.'.$j.'.skills')) : 0;
+        $k = ($type == 'skill') ? $newIndex : 0;
 
         $page = Setting::getPage('membership.registration');
         $options = $this->getOptions();
 
         $html = view('themes.'.$page['theme'].'.partials.membership.registration.'.$request->input('_type'), compact('page', 'options', 'i', 'j', 'k'))->render();
 
+        // licence, (no index is needed).
         $index = '';
 
         if ($type == 'attestation') {

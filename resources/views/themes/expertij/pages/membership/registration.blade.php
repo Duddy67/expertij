@@ -4,10 +4,9 @@
 
 <div class="position-relative">
     @include('themes.expertij.partials.flash-message')
-    <form action="{{ route('memberships.store') }}" method="post" enctype="multipart/form-data" id="registration" role="form" class="php-email-form">
+    <form action="#" method="post" enctype="multipart/form-data" id="registration" role="form" class="php-email-form">
         @csrf
         <input type="hidden" id="store" value="{{ route('memberships.store') }}">
-        @method('post')
 
         <nav class="nav nav-tabs">
             <a class="nav-item nav-link active" href="#personal_information" data-bs-toggle="tab">{{ __('labels.generic.personal_information') }}</a>
@@ -137,7 +136,7 @@
                     @include('themes.expertij.partials.membership.registration.licence')
                 </div> <!-- licence container -->
                 <div class="text-center">
-                    <button class="btn btn-success form-action-btn" data-form="registration" data-type="licence" data-route="addItem" type="button">
+                    <button class="btn btn-success form-action-btn" data-form="items" data-type="licence" data-route="addItem" type="button">
                         {{ __('labels.membership.add_licence') }}
                     </button>
                 </div>
@@ -234,9 +233,18 @@
                 </div>
             </div>
         </div>
-        <div class="text-center"><button class="btn btn-success" id="submit" type="button">{{ __('labels.membership.submit_application') }}</button></div>
+        <div class="text-center">
+            <button class="btn btn-success form-action-btn" data-form="registration" data-route="store" type="button">
+                {{ __('labels.membership.submit_application') }}
+            </button>
+        </div>
     </form>
 </div>
+
+<form action="#" method="post" id="items" role="form">
+    @csrf
+    @method('post')
+</form>
 
 <div class="ajax-progress d-none" id="ajax-progress">
     <img src="{{ asset('/images/progress-icon.gif') }}" class="progress-icon" style="top:20%;" />

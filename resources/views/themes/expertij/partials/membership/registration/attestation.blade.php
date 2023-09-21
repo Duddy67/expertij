@@ -17,13 +17,13 @@
         @include('themes.expertij.partials.membership.registration.skill')
     </div> <!-- skill container -->
     <div class="text-center">
-        <button class="btn btn-success form-action-btn" data-form="registration" data-type="skill" data-licence-index="{{ $i }}" data-attestation-index="{{ $j }}" data-route="addItem" type="button">
+        <button class="btn btn-success form-action-btn" data-form="items" data-type="skill" data-licence-index="{{ $i }}" data-attestation-index="{{ $j }}" data-route="addItem" type="button">
         {{ __('labels.membership.add_skill') }}</button>
     </div>
 
     @if ($j > 0)
         <div class="text-center">
-            <button class="btn btn-danger form-action-btn" data-form="registration" data-type="attestation" data-index="{{ $i }}-{{ $j }}" data-route="deleteItem" type="button">
+            <button class="btn btn-danger form-action-btn" data-form="items" data-type="attestation" data-index="{{ $i }}-{{ $j }}" data-route="deleteItem" type="button">
             {{ __('labels.membership.delete_attestation') }}</button>
         </div>
     @endif
