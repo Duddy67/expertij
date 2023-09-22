@@ -73,6 +73,13 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6 form-group">
+                        <label for="photo">{{ __('labels.generic.photo') }}</label>
+                        <input id="photo" type="file" class="form-control " name="photo">
+                        <div class="text-danger" id="photoError"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 form-group">
                         <label for="street">{{ __('labels.address.street') }}</label>
                         <input type="text" name="street" class="form-control" id="street" required>
                         <div class="text-danger" id="streetError"></div>
@@ -135,7 +142,7 @@
                 <div class="form-group" id="licence-container">
                     @include('themes.expertij.partials.membership.registration.licence')
                 </div> <!-- licence container -->
-                <div class="text-center">
+                <div class="text-end mt-3">
                     <button class="btn btn-success form-action-btn" data-form="items" data-type="licence" data-route="addItem" type="button">
                         {{ __('labels.membership.add_licence') }}
                     </button>
@@ -233,7 +240,7 @@
                 </div>
             </div>
         </div>
-        <div class="text-center">
+        <div class="text-center mt-3">
             <button class="btn btn-success form-action-btn" data-form="registration" data-route="store" type="button">
                 {{ __('labels.membership.submit_application') }}
             </button>

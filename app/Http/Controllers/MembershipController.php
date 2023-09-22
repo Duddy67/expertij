@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Membership;
 use App\Models\User;
 use App\Models\Cms\Setting;
+use App\Http\Requests\Membership\StoreRequest;
+use App\Http\Requests\Membership\UpdateRequest;
 
 class MembershipController extends Controller
 {
@@ -55,8 +57,9 @@ class MembershipController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
+//file_put_contents('debog_file.txt', print_r($request->all(), true));
         return response()->json();
     }
 
@@ -105,6 +108,12 @@ class MembershipController extends Controller
         //
     }
 
+    /**
+     * Add a new item to the membership. (AJAX)
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return JSON
+     */
     public function addItem(Request $request)
     {
         $type = $request->input('_type');
@@ -139,6 +148,13 @@ class MembershipController extends Controller
         return response()->json(['html' => $html, 'destination' => $type.'-container'.$index]);
     }
 
+    /**
+     * Delete a given item from the membership. (AJAX)
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return JSON
+     */
     public function deleteItem(Request $request, int $id)
     {
         $type = $request->input('_type');

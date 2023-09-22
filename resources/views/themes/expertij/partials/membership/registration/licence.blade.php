@@ -1,4 +1,4 @@
-<div class="row" id="licence-{{ $i }}">
+<div class="row border border-primary rounded p-3 mt-3" id="licence-{{ $i }}">
     <div class="row">
         <div class="col-md-6 form-group">
             <label for="licence_type_{{ $i }}">{{ __('labels.generic.type') }}</label>
@@ -11,6 +11,7 @@
         <div class="col-md-6 form-group">
             <label for="since_{{ $i }}">{{ __('labels.generic.since') }}</label>
             <select name="licences[{{ $i }}][since]" class="form-select" id="since_{{ $i }}" required>
+                <option value="">{{ __('labels.generic.select_option') }}</option>
                 @foreach ($options['since'] as $option)
                     <option value="{{ $option['value'] }}">{{ $option['text'] }}</option>
                 @endforeach
@@ -44,14 +45,14 @@
     <div class="form-group" id="attestation-container-{{ $i }}">
         @include('themes.expertij.partials.membership.registration.attestation')
     </div> <!-- attestation container -->
-    <div class="text-center">
+    <div class="text-end pe-4">
         <button class="btn btn-success form-action-btn" data-form="items" data-type="attestation" data-licence-index="{{ $i }}" data-route="addItem" type="button">
             {{ __('labels.membership.add_attestation') }}
         </button>
     </div>
 
     @if ($i > 0)
-        <div class="text-center">
+        <div class="text-end pe-4 mt-3">
             <button class="btn btn-danger form-action-btn" data-form="items" data-type="licence" data-index="{{ $i }}" data-route="deleteItem" type="button">{{ __('labels.membership.delete_licence') }}</button>
         </div>
     @endif

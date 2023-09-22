@@ -1,4 +1,4 @@
-<div class="row" id="attestation-{{ $i }}-{{ $j }}">
+<div class="row border border-success rounded p-3 m-3" id="attestation-{{ $i }}-{{ $j }}">
     <div class="row">
         <div class="col-md-6 form-group">
             <label for="attestation_{{ $i }}_{{ $j }}">{{ __('labels.generic.attestation') }}</label>
@@ -16,13 +16,13 @@
     <div class="form-group" id="skill-container-{{ $i }}-{{ $j }}">
         @include('themes.expertij.partials.membership.registration.skill')
     </div> <!-- skill container -->
-    <div class="text-center">
+    <div class="text-end pe-4">
         <button class="btn btn-success form-action-btn" data-form="items" data-type="skill" data-licence-index="{{ $i }}" data-attestation-index="{{ $j }}" data-route="addItem" type="button">
         {{ __('labels.membership.add_skill') }}</button>
     </div>
 
     @if ($j > 0)
-        <div class="text-center">
+        <div class="text-end pe-4 mt-3">
             <button class="btn btn-danger form-action-btn" data-form="items" data-type="attestation" data-index="{{ $i }}-{{ $j }}" data-route="deleteItem" type="button">
             {{ __('labels.membership.delete_attestation') }}</button>
         </div>

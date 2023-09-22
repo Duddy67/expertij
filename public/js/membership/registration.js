@@ -35,6 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Count the number of (first) children into a item container to set the new item index.
             let newIndex = document.getElementById(element.dataset.type+'-container'+containerIndex).children.length;
             url = url+'&_new_index='+newIndex;
+//console.log(element.dataset.type+containerIndex+'-'+newIndex);
         }
 
         // Check for items to delete.
