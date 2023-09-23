@@ -49,7 +49,7 @@
                     </div>
                     <div class="col-md-6 form-group">
                         <label for="birth_date">{{ __('labels.user.birth_date') }}</label>
-                        <input type="text" name="birth_date" class="form-control date" id="birth_date" data-date="0" data-format="D MMM YYYY">
+                        <input type="text" name="birth_date" class="form-control date" id="birth_date" data-options="['startEmpty']" data-date="0" data-format="D MMM YYYY">
                         <input type="hidden" id="_birth_date" name="_birth_date" value="">
                         <div class="text-danger" id="birth_dateError"></div>
                     </div>
@@ -192,7 +192,7 @@
                     <div class="col-md-6 form-group">
                         <label for="naf_code">{{ __('labels.membership.naf_code') }}</label>
                         <input type="text" name="naf_code" class="form-control" id="naf_code" required>
-                        <div class="text-danger" id="nafCodeError"></div>
+                        <div class="text-danger" id="naf_codeError"></div>
                     </div>
                 </div>
                 <div class="row">

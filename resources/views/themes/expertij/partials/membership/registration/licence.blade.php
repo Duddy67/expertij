@@ -10,35 +10,35 @@
         </div>
         <div class="col-md-6 form-group">
             <label for="since_{{ $i }}">{{ __('labels.generic.since') }}</label>
-            <select name="licences[{{ $i }}][since]" class="form-select" id="since_{{ $i }}" required>
+            <select name="licences[{{ $i }}][since]" class="form-select" id="licences.{{ $i }}.since" required>
                 <option value="">{{ __('labels.generic.select_option') }}</option>
                 @foreach ($options['since'] as $option)
                     <option value="{{ $option['value'] }}">{{ $option['text'] }}</option>
                 @endforeach
             </select>
-            <div class="text-danger" id="since_{{ $i }}Error"></div>
+            <div class="text-danger" id="licences.{{ $i }}.sinceError"></div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-6 form-group">
             <label for="court_{{ $i }}">{{ __('labels.membership.court') }}</label>
-            <select name="licences[{{ $i }}][court]" class="form-select" id="court_{{ $i }}" required>
+            <select name="licences[{{ $i }}][court]" class="form-select" id="licences.{{ $i }}.court_{{ $i }}" required>
                 <option value="">{{ __('labels.generic.select_option') }}</option>
                 @foreach ($options['jurisdictions']['court'] as $option)
                     <option value="{{ $option['value'] }}">{{ $option['text'] }}</option>
                 @endforeach
             </select>
-            <div class="text-danger" id="court_{{ $i }}Error"></div>
+            <div class="text-danger" id="licences.{{ $i }}.courtError"></div>
         </div>
         <div class="col-md-6 form-group">
             <label for="appeal_court_{{ $i }}">{{ __('labels.membership.appeal_court') }}</label>
-            <select name="licences[{{ $i }}][appeal_court]" class="form-select" id="appeal_court_{{ $i }}" required>
+            <select name="licences[{{ $i }}][appeal_court]" class="form-select" id="licences.{{ $i }}.appeal_court" required>
                 <option value="">{{ __('labels.generic.select_option') }}</option>
                 @foreach ($options['jurisdictions']['appeal_court'] as $option)
                     <option value="{{ $option['value'] }}">{{ $option['text'] }}</option>
                 @endforeach
             </select>
-            <div class="text-danger" id="appeal_court_{{ $i }}Error"></div>
+            <div class="text-danger" id="licences.{{ $i }}.appeal_courtError"></div>
         </div>
     </div>
 

@@ -196,6 +196,21 @@ class User extends Authenticatable
     }
 
     /*
+     * Returns the user validation rules.
+     *
+     * @return Array
+     */
+    public static function getValidationRules()
+    {
+        return [
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ];
+    }
+
+    /*
      * Builds the options for the 'role' select field.
      *
      * @param  \App\Models\User $request (optional)

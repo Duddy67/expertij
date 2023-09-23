@@ -10,6 +10,7 @@
           'singleDatePicker': true,
           'timePicker': true,
           'timePicker24Hour': true,
+          'showDropdowns': true,
           //'autoUpdateInput': false,
       },
       function(start, end, label) {
@@ -76,6 +77,12 @@
 
               // Initialize the date field.
               $('#'+fields[i].id).data('daterangepicker').setStartDate(startDate);
+
+              // Check if the field should be empty in the first place.
+              // N.B: Do not use the autoUpdateInput property here has it generates a weird behavior (bug ?).
+              if (document.getElementById(fields[i].id).hasAttribute('data-options') && $('#'+fields[i].id).data('options').includes('startEmpty')) {
+                  $('#'+fields[i].id).val('');
+              }
           }
       }
   }
