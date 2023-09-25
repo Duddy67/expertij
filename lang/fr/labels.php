@@ -97,6 +97,7 @@ return [
 	'cassation' => 'Court de cassation',
 	'professional_status' => 'Statut professionel',
 	'professional_status_info' => 'Information statut professionel',
+	'professional_attestation' => 'Attestation professionnelle',
 	'siret_number' => 'Numéro Siret',
 	'naf_code' => 'Code NAF',
 	'linguistic_training' => 'Expérience linguistique',

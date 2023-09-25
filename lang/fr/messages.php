@@ -50,6 +50,13 @@ return [
         'edit_not_auth' => 'Vous n\'êtes pas autorisé(e) à éditer des groupes.',
         'delete_not_auth' => 'Vous n\'êtes pas autorisé(e) à supprimer des groupes.',
     ],
+    'membership' => [
+        'professional_status_info_required' => 'Le champ :attribute est obligatoire.',
+        'appeal_court_required' => 'Le champ :attribute est obligatoire.',
+        'court_required' => 'Le champ :attribute est obligatoire.',
+        'interpreter_required' => 'Veuillez indiquer si vous êtes interprète ou traducteur.',
+        'translator_required' => '',
+    ],
     'post' => [
         'create_success' => 'Post créé avec succès.',
         'update_success' => 'Post mis à jour avec succès.',

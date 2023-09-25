@@ -14,18 +14,20 @@
             <label for="#">&nbsp;</label>
             <div class="">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" name="licences[{{ $i }}][attestations][{{ $j }}][skills][{{ $k }}][interpreter]" id="interpreter-{{ $i }}-{{ $j }}-{{ $k }}">
-                    <label class="form-check-label" for="interpreter-{{ $i }}-{{ $j }}-{{ $k }}">{{ __('labels.membership.interpreter') }}</label>
+                    <input class="form-check-input" type="checkbox" name="licences[{{ $i }}][attestations][{{ $j }}][skills][{{ $k }}][interpreter]" id="licences.{{ $i }}.attestations.{{ $j }}.skills.{{ $k }}.interpreter">
+                    <label class="form-check-label" for="licences.{{ $i }}.attestations.{{ $j }}.skills.{{ $k }}.interpreter">{{ __('labels.membership.interpreter') }}</label>
                 </div>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="checkbox" name="licences[{{ $i }}][attestations][{{ $j }}][skills][{{ $k }}][interpreter_cassation]" id="interpreter-cassation-{{ $i }}-{{ $j }}-{{ $k }}">
                     <label class="form-check-label" for="interpreter-cassation-{{ $i }}-{{ $j }}-{{ $k }}">{{ __('labels.membership.cassation') }}</label>
                 </div>
+                <div class="text-danger" id="licences.{{ $i }}.attestations.{{ $j }}.skills.{{ $k }}.interpreterError"></div>
             </div>
             <div class="">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" name="licences[{{ $i }}][attestations][{{ $j }}][skills][{{ $k }}][translator]" id="translator-{{ $i }}-{{ $j }}-{{ $k }}">
-                    <label class="form-check-label" for="translator-{{ $i }}-{{ $j }}-{{ $k }}">{{ __('labels.membership.translator') }}</label>
+                    <input class="form-check-input" type="checkbox" name="licences[{{ $i }}][attestations][{{ $j }}][skills][{{ $k }}][translator]" id="licences.{{ $i }}.attestations.{{ $j }}.skills.{{ $k }}.translator">
+                    <label class="form-check-label" for="licences.{{ $i }}.attestations.{{ $j }}.skills.{{ $k }}.translator">{{ __('labels.membership.translator') }}</label>
+                    <div class="text-danger" id="licences.{{ $i }}.attestations.{{ $j }}.skills.{{ $k }}.translatorError"></div>
                 </div>
                 <div class="form-check form-check-inline">
                     <input class="form-check-input" type="checkbox" name="licences[{{ $i }}][attestations][{{ $j }}][skills][{{ $k }}][translator_cassation]" id="translator-cassation-{{ $i }}-{{ $j }}-{{ $k }}">

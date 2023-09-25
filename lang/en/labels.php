@@ -97,6 +97,7 @@ return [
 	'cassation' => 'Court of cassation',
 	'professional_status' => 'Professional status',
 	'professional_status_info' => 'Professional status information',
+	'professional_attestation' => 'Professional attestation',
 	'siret_number' => 'Siret number',
 	'naf_code' => 'NAF code',
 	'linguistic_training' => 'Linguistic training',

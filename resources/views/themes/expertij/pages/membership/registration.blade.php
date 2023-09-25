@@ -198,7 +198,7 @@
                 <div class="row">
                     <div class="col-md-6 form-group">
                         <label for="professional_attestation">{{ __('labels.generic.attestation') }}</label>
-                        <input type="file" name="professional_attestation" class="form-control" id="professional_attestation" required>
+                        <input type="file" name="professional_attestation" class="form-control" id="professional_attestation">
                         <div class="text-danger" id="professional_attestationError"></div>
                     </div>
                 </div>

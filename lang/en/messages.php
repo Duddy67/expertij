@@ -50,6 +50,13 @@ return [
         'edit_not_auth' => 'You are not authorised to edit groups.',
         'delete_not_auth' => 'You are not authorised to delete groups.',
     ],
+    'membership' => [
+        'professional_status_info_required' => 'The :attribute field is required.',
+        'appeal_court_required' => 'The :attribute field is required.',
+        'court_required' => 'The :attribute field is required.',
+        'interpreter_required' => 'Please indicate if you are a interpreter or a translator.',
+        'translator_required' => '',
+    ],
     'post' => [
         'create_success' => 'Post successfully created.',
         'update_success' => 'Post successfully updated.',

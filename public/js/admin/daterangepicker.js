@@ -5,6 +5,9 @@
       $.fn.initDatePickers();
   });
 
+  // IMPORTANT: Do not use the jQuery # selector to get elements by id or the elements
+  //            containing a dot in their id won't be taken into account. 
+
   $.fn.initDatePickers = function() {
       $('.date').daterangepicker({
           'singleDatePicker': true,
@@ -23,13 +26,13 @@
           let time = picker.startDate.format('HH:mm');
 
           // Set the hidden field to the selected datetime
-          $('#_'+$(this).attr('id')).val(date+' '+time);
+          $('input[id="_'+$(this).attr('id')+'"]').val(date+' '+time);
 
           // Set the data attributes.
-          $('#'+$(this).attr('id')).attr('data-date', date);
+          $('input[id="'+$(this).attr('id')+'"]').attr('data-date', date);
           // Check first whether a time picker is used.
-          if ($('#'+$(this).attr('id')).data('time') !== undefined) {
-              $('#'+$(this).attr('id')).attr('data-time', time);
+          if ($('input[id="'+$(this).attr('id')+'"]').data('time') !== undefined) {
+              $('input[id="'+$(this).attr('id')+'"]').attr('data-time', time);
           }
       });
 
@@ -46,42 +49,42 @@
       
       for (let i = 0; i < fields.length; i++) {
           // Check first whether the element exists.
-          if ($('#'+fields[i].id).length) {
+          if ($('input[id="'+fields[i].id+'"]').length) {
               // Check if a date format is available for this field or set it to the default format.
-              let format = document.getElementById(fields[i].id).hasAttribute('data-format') ? $('#'+fields[i].id).data('format') : 'DD/MM/YYYY HH:mm';
+              let format = document.getElementById(fields[i].id).hasAttribute('data-format') ? $('input[id="'+fields[i].id+'"]').data('format') : 'DD/MM/YYYY HH:mm';
 
               // Change the locale date format of that picker. 
-              $('#'+fields[i].id).data('daterangepicker').locale.format = format;
+              $('input[id="'+fields[i].id+'"]').data('daterangepicker').locale.format = format;
               // Check whether a time picker is needed (ie: whether a "time" dataset is defined).
-              let timePicker = ($('#'+fields[i].id).data('time') === undefined) ? false : true;
+              let timePicker = ($('input[id="'+fields[i].id+'"]').data('time') === undefined) ? false : true;
               // Set the datepicker accordingly.
-              $('#'+fields[i].id).data('daterangepicker').timePicker = timePicker;
+              $('input[id="'+fields[i].id+'"]').data('daterangepicker').timePicker = timePicker;
 
               // By defaut set the start date to the current date.
               let startDate = moment().format(format);
 
               // A datetime has been previously set.
-              if ($('#'+fields[i].id).data('date') != 0) {
+              if ($('input[id="'+fields[i].id+'"]').data('date') != 0) {
                   // Set time to 00:00 when no time picker is available.
-                  let time = (timePicker) ? $('#'+fields[i].id).data('time') : '00:00';
+                  let time = (timePicker) ? $('input[id="'+fields[i].id+'"]').data('time') : '00:00';
                   // Concatenate date and time dataset parameters. 
-                  let datetime = $('#'+fields[i].id).data('date')+' '+time;
+                  let datetime = $('input[id="'+fields[i].id+'"]').data('date')+' '+time;
                   startDate = moment(datetime).format(format);
                   // Set the hidden field to the datetime previously set.
-                  $('#_'+fields[i].id).val(datetime);
+                  $('input[id="_'+fields[i].id+'"]').val(datetime);
               }
               else {
                   // Set the hidden field to the current datetime in MySQL format.
-                  $('#_'+fields[i].id).val(moment().format('YYYY-MM-DD HH:mm'));
+                  $('input[id="'+fields[i].id+'"]').val(moment().format('YYYY-MM-DD HH:mm'));
               }
 
               // Initialize the date field.
-              $('#'+fields[i].id).data('daterangepicker').setStartDate(startDate);
+              $('input[id="'+fields[i].id+'"]').data('daterangepicker').setStartDate(startDate);
 
               // Check if the field should be empty in the first place.
               // N.B: Do not use the autoUpdateInput property here has it generates a weird behavior (bug ?).
-              if (document.getElementById(fields[i].id).hasAttribute('data-options') && $('#'+fields[i].id).data('options').includes('startEmpty')) {
-                  $('#'+fields[i].id).val('');
+              if (document.getElementById(fields[i].id).hasAttribute('data-options') && $('input[id="'+fields[i].id+'"]').data('options').includes('startEmpty')) {
+                  $('input[id="'+fields[i].id+'"]').val('');
               }
           }
       }
