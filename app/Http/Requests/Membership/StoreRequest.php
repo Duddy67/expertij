@@ -41,9 +41,14 @@ class StoreRequest extends FormRequest
         $rules['city'] = 'required|max:150';
         $rules['phone'] = 'required|max:20';
 
+        if (isset($this->request->all()['associated_member'])) {
+            // Associated members have no licence and no professional status.
+            return $rules;
+        }
+
         // licences, attestations, skills
 
-        $licences = $this->request->all('licences');
+        $licences = $this->request->all()['licences'];
         // Loop through attestations in each licence and set a rule accordingly.
         foreach ($licences as $i => $licence) {
             foreach ($licence['attestations'] as $j => $attestation) {
@@ -58,6 +63,7 @@ class StoreRequest extends FormRequest
         $rules['licences.*.attestations.*.skills.*.alpha_3'] = 'required';
         $rules['licences.*.attestations.*.skills.*.interpreter'] = 'required_without:licences.*.attestations.*.skills.*.translator';
         $rules['licences.*.attestations.*.skills.*.translator'] = 'required_without:licences.*.attestations.*.skills.*.interpreter';
+
         // professional status
         $rules['professional_status'] = 'required';
         $rules['professional_status_info'] = 'required_if:professional_status,other|max:50';
@@ -109,7 +115,7 @@ class StoreRequest extends FormRequest
             'attestation_.*._.*' => __('labels.generic.attestation'), 
         ];
 
-        $licences = $this->request->all('licences');
+        $licences = $this->request->all()['licences'];
         // Loop through attestations in each licence and set a label accordingly.
         foreach ($licences as $i => $licence) {
             foreach ($licence['attestations'] as $j => $attestation) {

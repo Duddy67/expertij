@@ -133,10 +133,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         else if (status === 422) {
             displayMessage('danger', 'Please check the form below for errors.');
+            let latestElementId;
             // Loop through the returned errors and set the messages accordingly.
             for (const [name, message] of Object.entries(result.errors)) {
                 document.getElementById(name+'Error').innerHTML = message;
+                latestElementId = name;
             }
+          
+            showTab(latestElementId);
         }
         else {
             displayMessage('danger', 'Error '+status+': '+result.message);
@@ -163,6 +167,32 @@ document.addEventListener('DOMContentLoaded', () => {
         messageAlert.classList.remove('d-none', 'alert-success', 'alert-danger', 'alert-warning', 'alert-info');
         messageAlert.classList.add('alert-'+type);
         document.getElementById('ajax-message').innerHTML = message;
+    }
+
+    function showTab(elementId) {
+        // Get the tab div container that contains the given element.  
+        let divContainer = document.getElementById(elementId).closest('.tab-pane');
+
+        if (divContainer !== null) {
+            // The div container id corresponds to the tab id.
+            let tabId = divContainer.id;
+            // Get all the tab div containers.
+            let elements = document.getElementsByClassName('tab-pane');
+
+            Array.prototype.forEach.call(elements, function(element) {
+                // Look for the tab to show.
+                if (element.id == tabId) {
+                    // Make the tab div container active
+                    element.classList.add('active');
+                    // as well as its corresponding tab.
+                    document.getElementById(element.id+'-tab').classList.add('active');
+                }
+                else {
+                    element.classList.remove('active');
+                    document.getElementById(element.id+'-tab').classList.remove('active');
+                }
+            });
+        }
     }
 });
 

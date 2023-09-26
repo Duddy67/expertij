@@ -9,9 +9,9 @@
         <input type="hidden" id="store" value="{{ route('memberships.store') }}">
 
         <nav class="nav nav-tabs">
-            <a class="nav-item nav-link active" href="#personal_information" data-bs-toggle="tab">{{ __('labels.generic.personal_information') }}</a>
-            <a class="nav-item nav-link" id="licence-tab" href="#licences" data-bs-toggle="tab">{{ __('labels.membership.licences') }}</a>
-            <a class="nav-item nav-link" id="professional-status-tab" href="#professional_status" data-bs-toggle="tab">{{ __('labels.membership.professional_status') }}</a>
+            <a class="nav-item nav-link active" id="personal_information-tab" href="#personal_information" data-bs-toggle="tab">{{ __('labels.generic.personal_information') }}</a>
+            <a class="nav-item nav-link" id="licences-tab" href="#licences" data-bs-toggle="tab">{{ __('labels.membership.licences') }}</a>
+            <a class="nav-item nav-link" id="professional_status-tab" href="#professional_status" data-bs-toggle="tab">{{ __('labels.membership.professional_status') }}</a>
         </nav>
 
         <div class="tab-content">
