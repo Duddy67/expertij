@@ -10,8 +10,8 @@
 
         <nav class="nav nav-tabs">
             <a class="nav-item nav-link active" href="#personal_information" data-bs-toggle="tab">{{ __('labels.generic.personal_information') }}</a>
-            <a class="nav-item nav-link" href="#licences" data-bs-toggle="tab">{{ __('labels.membership.licences') }}</a>
-            <a class="nav-item nav-link" href="#professional_status" data-bs-toggle="tab">{{ __('labels.membership.professional_status') }}</a>
+            <a class="nav-item nav-link" id="licence-tab" href="#licences" data-bs-toggle="tab">{{ __('labels.membership.licences') }}</a>
+            <a class="nav-item nav-link" id="professional-status-tab" href="#professional_status" data-bs-toggle="tab">{{ __('labels.membership.professional_status') }}</a>
         </nav>
 
         <div class="tab-content">
@@ -131,7 +131,7 @@
                 <div class="row">
                     <div class="col-md-6 form-group mt-3 mt-md-0">
                         <label for="associated_member">{{ __('labels.membership.associated_member') }}</label><br />
-                        <input type="checkbox" class="form-check-input" name="associated_member" id="associated_member" />
+                        <input type="checkbox" class="form-check-input" name="associated_member" id="associated-member" />
                         <div class="text-danger" id="associated_memberError"></div>
                     </div>
                 </div>

@@ -1,12 +1,60 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Use event delegation to ckeck whenever a button in the form is clicked.
+    // Use event delegation to ckeck whenever an element in the form is clicked.
     document.body.addEventListener('click', function (evt) {
-        // Handle only the elements with the form-action-btn class.
+        // Handle the add, delete and submit buttons
         if (evt.target.classList.contains('form-action-btn')) {
             setAjaxRequest(evt.target);
         }
+
+        if (evt.target.classList.contains('licence-type')) {
+            switchJurisdiction(evt.target);
+        }
+
+        if (evt.target.classList.contains('language-skill')) {
+            setCassationOption(evt.target);
+        }
+
+        if (evt.target.getAttribute('id') == 'associated-member') {
+            setForm(evt.target);
+        }
     }, false);
+
+    function switchJurisdiction(element) {
+        if (element.dataset.type == 'expert') {
+            document.getElementById('licences.'+element.dataset.licenceIndex+'.court').disabled = true;
+            document.getElementById('licences.'+element.dataset.licenceIndex+'.appeal_court').disabled = false;
+        }
+        // ceseda
+        else {
+            document.getElementById('licences.'+element.dataset.licenceIndex+'.appeal_court').disabled = true;
+            document.getElementById('licences.'+element.dataset.licenceIndex+'.court').disabled = false;
+        }
+    }
+
+    function setCassationOption(element) {
+        if (element.checked) {
+          document.getElementById('licences.'+element.dataset.licenceIndex+'.attestations.'+element.dataset.attestationIndex+'.skills.'+element.dataset.skillIndex+'.'+element.dataset.type+'_cassation').disabled = false;
+        }
+        else {
+          document.getElementById('licences.'+element.dataset.licenceIndex+'.attestations.'+element.dataset.attestationIndex+'.skills.'+element.dataset.skillIndex+'.'+element.dataset.type+'_cassation').disabled = true;
+          // In case the checkbox is checked.
+          document.getElementById('licences.'+element.dataset.licenceIndex+'.attestations.'+element.dataset.attestationIndex+'.skills.'+element.dataset.skillIndex+'.'+element.dataset.type+'_cassation').checked = false;
+        }
+    }
+
+    function setForm(element) {
+        if (element.checked) {
+            // Associated members have no licence and no professional status.
+            document.getElementById('licence-tab').style.display = 'none';
+            document.getElementById('professional-status-tab').style.display = 'none';
+        }
+        else {
+            // Regular members have both licences and professional status.
+            document.getElementById('licence-tab').style.display = 'block';
+            document.getElementById('professional-status-tab').style.display = 'block';
+        }
+    }
 
     function setAjaxRequest(element) {
         const spinner = document.getElementById('ajax-progress');

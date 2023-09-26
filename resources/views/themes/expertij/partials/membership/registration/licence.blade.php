@@ -1,12 +1,12 @@
 <div class="row border border-primary rounded p-3 mt-3" id="licence-{{ $i }}">
     <div class="row">
         <div class="col-md-6 form-group">
-            <label for="licence_type_{{ $i }}">{{ __('labels.generic.type') }}</label>
-            <select name="licences[{{ $i }}][type]" class="form-select" id="licence_type_{{ $i }}">
-                @foreach ($options['licence_type'] as $option)
-                    <option value="{{ $option['value'] }}">{{ $option['text'] }}</option>
-                @endforeach
-            </select>
+            @foreach ($options['licence_type'] as $option)
+                <input class="form-check-input licence-type" type="radio" data-type="{{ $option['value'] }}" data-licence-index="{{ $i }}" name="licences[{{ $i }}][type]" {{ ($option['value'] == 'expert') ? 'checked="checked"' : '' }} id="licences.{{ $i }}.{{ $option['value'] }}" value="{{ $option['value'] }}">
+                <label class="form-check-label" for="licences.{{ $i }}.{{ $option['value'] }}">
+                  {{ $option['text'] }}
+                </label>
+            @endforeach
         </div>
         <div class="col-md-6 form-group">
             <label for="since_{{ $i }}">{{ __('labels.generic.since') }}</label>
@@ -22,7 +22,7 @@
     <div class="row">
         <div class="col-md-6 form-group">
             <label for="court_{{ $i }}">{{ __('labels.membership.court') }}</label>
-            <select name="licences[{{ $i }}][court]" class="form-select" id="licences.{{ $i }}.court_{{ $i }}" required>
+            <select name="licences[{{ $i }}][court]" class="form-select" id="licences.{{ $i }}.court" disabled required>
                 <option value="">{{ __('labels.generic.select_option') }}</option>
                 @foreach ($options['jurisdictions']['court'] as $option)
                     <option value="{{ $option['value'] }}">{{ $option['text'] }}</option>

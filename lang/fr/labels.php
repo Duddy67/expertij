@@ -78,7 +78,7 @@ return [
 	'liberal_profession' => 'Profession libérale',
 	'micro_entrepreneur' => 'Micro-entrepreneur',
 	'company' => 'Société',
-	'court' => 'Cour',
+	'court' => 'Tribunal judiciaire',
 	'appeal_court' => 'Cour d\'appel',
 	'licences' => 'Certificats',
 	'add_licence' => 'Ajouter une licence',
