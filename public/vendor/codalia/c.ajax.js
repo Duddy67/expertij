@@ -55,6 +55,7 @@ const C_Ajax = (function() {
         _params.indicateFormat = params.indicateFormat === undefined ? false : params.indicateFormat;
         _params.headers = params.headers === undefined ? {} : params.headers;
         _params.data = params.data === undefined ? null : params.data;
+        _params.progressBar = params.progressBar === undefined ? null : params.progressBar;
 
         // Prepares the Ajax request with the given parameters and data.
 
@@ -91,6 +92,15 @@ const C_Ajax = (function() {
         }
         else {
             _xhr.overrideMimeType('text/plain');
+        }
+
+        if (_params.progressBar) {
+            _xhr.upload.addEventListener('progress', e => {
+                // Compute the percentage.
+                const percent = e.lengthComputable ? (e.loaded / e.total) * 100 : 0;
+                document.getElementById(_params.progressBar).style.width = percent.toFixed(2) + '%';
+                document.getElementById(_params.progressBar).innerHTML = percent.toFixed(2) + '%';
+            });
         }
 
         if (_params.method == 'POST') {

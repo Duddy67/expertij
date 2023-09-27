@@ -117,6 +117,9 @@ class StoreRequest extends FormRequest
             'licences.*.attestations.*.expiry_date' => __('labels.membership.expiry_date'), 
             'licences.*.attestations.*.skills.*.alpha_3' => __('labels.membership.language'), 
             'attestation_.*._.*' => __('labels.generic.attestation'), 
+            '_code_of_ethics' => __('labels.generic.code_of_ethics'), 
+            '_statuses' => __('labels.generic.statuses'), 
+            '_internal_rules' => __('labels.generic.internal_rules'), 
         ];
 
         $licences = $this->request->all()['licences'];

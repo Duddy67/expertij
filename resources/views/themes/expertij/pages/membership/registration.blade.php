@@ -274,10 +274,6 @@
     @method('post')
 </form>
 
-<div class="ajax-progress d-none" id="ajax-progress">
-    <img src="{{ asset('/images/progress-icon.gif') }}" class="progress-icon" style="top:20%;" />
-</div>
-
 @push ('scripts')
     <script type="text/javascript" src="{{ asset('/vendor/adminlte/plugins/moment/moment.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/vendor/adminlte/plugins/daterangepicker/daterangepicker.js') }}"></script>

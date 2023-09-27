@@ -26,6 +26,7 @@
     </head>
     <body>
 
+        @include('themes.expertij.partials.site.progress-bar')
 	<div class="container">
 	    <!-- Header -->
 	    <header id="layout-header">

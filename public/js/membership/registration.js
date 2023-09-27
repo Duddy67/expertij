@@ -72,8 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function setAjaxRequest(element) {
-        const spinner = document.getElementById('ajax-progress');
-        spinner.classList.remove('d-none');
+        document.getElementById('progress-container').classList.remove('d-none');
 
         let route = element.dataset.route;
         let url = document.getElementById(route).value;
@@ -98,7 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
             // Count the number of (first) children into a item container to set the new item index.
             let newIndex = document.getElementById(element.dataset.type+'-container'+containerIndex).children.length;
             url = url+'&_new_index='+newIndex;
-//console.log(element.dataset.type+containerIndex+'-'+newIndex);
         }
 
         // Check for items to delete.
@@ -118,6 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
             url: url,
             dataType: 'json',
             data: formData,
+            progressBar: 'progress-bar',
             headers: {'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'), 'Accept': 'application/json'}
         });
 
@@ -130,8 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function getAjaxResult(status, result) {
-        const spinner = document.getElementById('ajax-progress');
-        spinner.classList.add('d-none');
+        document.getElementById('progress-container').classList.add('d-none');
 
         if (status === 200) {
             // An item has to be added.
@@ -156,6 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
           
             showTab(latestElementId);
+            window.scrollTo(0, 0);
         }
         else {
             displayMessage('danger', 'Error '+status+': '+result.message);
