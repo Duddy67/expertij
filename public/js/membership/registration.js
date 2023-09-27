@@ -20,6 +20,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, false);
 
+    // Show or hide the professional_status_info field according to the professional_status field value.
+    if (document.getElementById('professional_status')) { 
+        // The field is hidden by default.
+        document.getElementById('professional_status_info_row').style.display = 'none';
+
+        document.getElementById('professional_status').onchange= function() { 
+          if (this.value == 'other') {
+              document.getElementById('professional_status_info_row').style.display = 'block';
+          }
+          else {
+              document.getElementById('professional_status_info_row').style.display = 'none';
+          }
+        }
+    }
+
     function switchJurisdiction(element) {
         if (element.dataset.type == 'expert') {
             document.getElementById('licences.'+element.dataset.licenceIndex+'.court').disabled = true;

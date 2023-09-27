@@ -9,7 +9,7 @@
             @endforeach
         </div>
         <div class="col-md-6 form-group">
-            <label for="since_{{ $i }}">{{ __('labels.generic.since') }}</label>
+            <label for="licences.{{ $i }}.since">{{ __('labels.generic.since') }}</label>
             <select name="licences[{{ $i }}][since]" class="form-select" id="licences.{{ $i }}.since" required>
                 <option value="">{{ __('labels.generic.select_option') }}</option>
                 @foreach ($options['since'] as $option)
@@ -21,7 +21,7 @@
     </div>
     <div class="row">
         <div class="col-md-6 form-group">
-            <label for="court_{{ $i }}">{{ __('labels.membership.court') }}</label>
+            <label for="licences.{{ $i }}.court">{{ __('labels.membership.court') }}</label>
             <select name="licences[{{ $i }}][court]" class="form-select" id="licences.{{ $i }}.court" disabled required>
                 <option value="">{{ __('labels.generic.select_option') }}</option>
                 @foreach ($options['jurisdictions']['court'] as $option)
@@ -31,7 +31,7 @@
             <div class="text-danger" id="licences.{{ $i }}.courtError"></div>
         </div>
         <div class="col-md-6 form-group">
-            <label for="appeal_court_{{ $i }}">{{ __('labels.membership.appeal_court') }}</label>
+            <label for="licences.{{ $i }}.appeal_court">{{ __('labels.membership.appeal_court') }}</label>
             <select name="licences[{{ $i }}][appeal_court]" class="form-select" id="licences.{{ $i }}.appeal_court" required>
                 <option value="">{{ __('labels.generic.select_option') }}</option>
                 @foreach ($options['jurisdictions']['appeal_court'] as $option)

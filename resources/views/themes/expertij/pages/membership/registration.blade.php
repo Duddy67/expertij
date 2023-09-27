@@ -11,7 +11,7 @@
         <nav class="nav nav-tabs">
             <a class="nav-item nav-link active" id="personal_information-tab" href="#personal_information" data-bs-toggle="tab">{{ __('labels.generic.personal_information') }}</a>
             <a class="nav-item nav-link" id="licences-tab" href="#licences" data-bs-toggle="tab">{{ __('labels.membership.licences') }}</a>
-            <a class="nav-item nav-link" id="professional_status-tab" href="#professional_status" data-bs-toggle="tab">{{ __('labels.membership.professional_status') }}</a>
+            <a class="nav-item nav-link" id="professional_information-tab" href="#professional_information" data-bs-toggle="tab">{{ __('labels.membership.professional_status') }}</a>
         </nav>
 
         <div class="tab-content">
@@ -130,7 +130,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6 form-group mt-3 mt-md-0">
-                        <label for="associated_member">{{ __('labels.membership.associated_member') }}</label><br />
+                        <label for="associated-member">{{ __('labels.membership.associated_member') }}</label><br />
                         <input type="checkbox" class="form-check-input" name="associated_member" id="associated-member" />
                         <div class="text-danger" id="associated_memberError"></div>
                     </div>
@@ -152,8 +152,8 @@
                 <input type="hidden" id="deleteItem" value="{{ url('/').'/memberships/delete-item' }}">
             </div>
 
-            <div class="tab-pane" id="professional_status">
-                <!-- Professional status -->
+            <div class="tab-pane" id="professional_information">
+                <!-- Professional information -->
                 <div class="row">
                     <div class="col-md-6 form-group">
                         <label for="professional_status">{{ __('labels.membership.professional_status') }}</label>
@@ -176,7 +176,7 @@
                         <div class="text-danger" id="sinceError"></div>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" id="professional_status_info_row">
                     <div class="col-md-6 form-group">
                         <label for="professional_status_info">{{ __('labels.membership.professional_status_info') }}</label>
                         <input type="text" name="professional_status_info" class="form-control" id="professional_status_info">
@@ -240,6 +240,27 @@
                 </div>
             </div>
         </div>
+
+        <div class="row mt-4">
+            <div class="form-check form-check-inline">
+                <input type="checkbox" name="_code_of_ethics" class="form-check-input" id="_code_of_ethics">
+                <label class="form-check-label" for="_code_of_ethics">{{ __('labels.generic.code_of_ethics') }}</label>
+            </div>
+            <div class="text-danger" id="_code_of_ethicsError"></div>
+
+            <div class="form-check form-check-inline">
+                <input type="checkbox" name="_statuses" class="form-check-input" id="_statuses">
+                <label class="form-check-label" for="_statuses">{{ __('labels.generic.statuses') }}</label>
+            </div>
+            <div class="text-danger" id="_statusesError"></div>
+
+            <div class="form-check form-check-inline">
+                <input type="checkbox" name="_internal_rules" class="form-check-input" id="_internal_rules">
+                <label class="form-check-label" for="_internal_rules">{{ __('labels.generic.internal_rules') }}</label>
+            </div>
+            <div class="text-danger" id="_internal_rulesError"></div>
+        </div>
+
         <div class="text-center mt-3">
             <button class="btn btn-success form-action-btn" data-form="registration" data-route="store" type="button">
                 {{ __('labels.membership.submit_application') }}

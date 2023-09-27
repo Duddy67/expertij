@@ -40,6 +40,10 @@ class StoreRequest extends FormRequest
         $rules['postcode'] = 'required|numeric|size:5';
         $rules['city'] = 'required|max:150';
         $rules['phone'] = 'required|max:20';
+        // acknowledgements
+        $rules['_code_of_ethics'] = 'required';
+        $rules['_statuses'] = 'required';
+        $rules['_internal_rules'] = 'required';
 
         if (isset($this->request->all()['associated_member'])) {
             // Associated members have no licence and no professional status.

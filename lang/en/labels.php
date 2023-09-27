@@ -261,6 +261,9 @@ return [
         'attestation' => 'Attestation',
 	'personal_information' => 'Personal information',
 	'other' => 'Other',
+	'code_of_ethics' => 'Code of ethics',
+	'statuses' => 'Statuses',
+	'internal_rules' => 'Internal rules',
     ],
     'filter' => [
 	'search' => 'Search',

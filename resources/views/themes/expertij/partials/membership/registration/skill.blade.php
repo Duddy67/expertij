@@ -1,7 +1,7 @@
 <div class="row border border-warning rounded p-3 m-3" id="skill-{{ $i }}-{{ $j }}-{{ $k }}">
     <div class="row">
         <div class="col-md-6 form-group">
-            <label for="language_{{ $i }}-{{ $j }}-{{ $k }}">{{ __('labels.membership.language') }}</label>
+            <label for="licences.{{ $i }}.attestations.{{ $j }}.skills.{{ $k }}.alpha_3">{{ __('labels.membership.language') }}</label>
             <select name="licences[{{ $i }}][attestations][{{ $j }}][skills][{{ $k }}][alpha_3]" class="form-select" id="licences.{{ $i }}.attestations.{{ $j }}.skills.{{ $k }}.alpha_3" required>
                 <option value="">{{ __('labels.generic.select_option') }}</option>
                 @foreach ($options['language'] as $option)
@@ -11,8 +11,7 @@
             <div class="text-danger" id="licences.{{ $i }}.attestations.{{ $j }}.skills.{{ $k }}.alpha_3Error"></div>
         </div>
         <div class="col-md-6 form-group">
-            <label for="#">&nbsp;</label>
-            <div class="">
+            <div class="mt-3">
                 <div class="form-check form-check-inline">
                     <input class="form-check-input language-skill" type="checkbox" data-type="interpreter" data-licence-index="{{ $i }}" data-attestation-index="{{ $j }}" data-skill-index="{{ $k }}" name="licences[{{ $i }}][attestations][{{ $j }}][skills][{{ $k }}][interpreter]" id="licences.{{ $i }}.attestations.{{ $j }}.skills.{{ $k }}.interpreter">
                     <label class="form-check-label" for="licences.{{ $i }}.attestations.{{ $j }}.skills.{{ $k }}.interpreter">{{ __('labels.membership.interpreter') }}</label>

@@ -262,6 +262,9 @@ return [
         'attestation' => 'Attestation',
 	'personal_information' => 'Informations personnelles',
 	'other' => 'Autre',
+	'code_of_ethics' => 'Code de déontologie',
+	'statuses' => 'Statuts',
+	'internal_rules' => 'Réglement interne',
     ],
     'filter' => [
 	'search' => 'Recherche',
