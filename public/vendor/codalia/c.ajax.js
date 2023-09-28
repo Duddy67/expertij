@@ -95,8 +95,9 @@ const C_Ajax = (function() {
         }
 
         if (_params.progressBar) {
+            // Create a progress event that fires off every so often during the AJAX request process.
             _xhr.upload.addEventListener('progress', e => {
-                // Compute the percentage.
+                // Compute the percentage then update the given element. 
                 const percent = e.lengthComputable ? (e.loaded / e.total) * 100 : 0;
                 document.getElementById(_params.progressBar).style.width = percent.toFixed(2) + '%';
                 document.getElementById(_params.progressBar).innerHTML = percent.toFixed(2) + '%';

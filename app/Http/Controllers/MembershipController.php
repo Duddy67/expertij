@@ -59,6 +59,7 @@ class MembershipController extends Controller
      */
     public function store(StoreRequest $request)
     {
+//file_put_contents('debog_file.txt', print_r($request->all(), true));
         return response()->json();
     }
 

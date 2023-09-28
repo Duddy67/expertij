@@ -83,7 +83,10 @@
 
               // Check if the field should be empty in the first place.
               // N.B: Do not use the autoUpdateInput property here has it generates a weird behavior (bug ?).
-              if (document.getElementById(fields[i].id).hasAttribute('data-options') && $('input[id="'+fields[i].id+'"]').data('options').includes('startEmpty')) {
+              if (document.getElementById(fields[i].id).hasAttribute('data-options') &&
+                  $('input[id="'+fields[i].id+'"]').data('options').includes('startEmpty') &&
+                  // Check also that no date has been previously set.
+                  $('input[id="'+fields[i].id+'"]').data('date') == 0) {
                   $('input[id="'+fields[i].id+'"]').val('');
               }
           }

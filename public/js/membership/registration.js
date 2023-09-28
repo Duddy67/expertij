@@ -72,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function setAjaxRequest(element) {
+        // Show the progress bar.
         document.getElementById('progress-container').classList.remove('d-none');
 
         let route = element.dataset.route;
@@ -129,6 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function getAjaxResult(status, result) {
+        // Hide the progress bar.
         document.getElementById('progress-container').classList.add('d-none');
 
         if (status === 200) {
@@ -154,7 +156,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
           
             showTab(latestElementId);
-            window.scrollTo(0, 0);
+
+            // Scroll to the element with error.
+            location.href = '#';
+            location.href = '#'+latestElementId;
         }
         else {
             displayMessage('danger', 'Error '+status+': '+result.message);

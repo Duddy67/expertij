@@ -26,7 +26,6 @@ class StoreRequest extends FormRequest
     {
         // First get the user validation rules.
         $rules = User::getValidationRules();
-
         // then add the membership validation rules.
 
         // profile
@@ -37,7 +36,7 @@ class StoreRequest extends FormRequest
         $rules['birth_location'] = 'required|max:50';
         // address
         $rules['street'] = 'required|max:150';
-        $rules['postcode'] = 'required|numeric|size:5';
+        $rules['postcode'] = 'required|digits:5';
         $rules['city'] = 'required|max:150';
         $rules['phone'] = 'required|max:20';
         // acknowledgements
@@ -72,7 +71,7 @@ class StoreRequest extends FormRequest
         $rules['professional_status'] = 'required';
         $rules['professional_status_info'] = 'required_if:professional_status,other|max:50';
         $rules['since'] = 'required';
-        $rules['siret_number'] = 'required|numeric|size:14';
+        $rules['siret_number'] = 'required|digits:14';
         $rules['naf_code'] = 'required|size:5';
         $rules['professional_attestation'] = 'required|mimes:pdf,doc,docx,png,jpg,jpeg|max:10000';
         $rules['linguistic_training'] = 'required';

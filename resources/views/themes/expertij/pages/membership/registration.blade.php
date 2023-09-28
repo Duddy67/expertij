@@ -205,36 +205,31 @@
                 <div class="row">
                     <div class="col-md-6 form-group">
                         <label for="linguistic_training">{{ __('labels.membership.linguistic_training') }}</label>
-                        <textarea name="linguistic_training" rows="5" cols="35" class="form-control" id="linguistic_training" required>
-                        </textarea>
+                        <textarea name="linguistic_training" rows="5" cols="35" class="form-control" id="linguistic_training" required></textarea>
                         <div class="text-danger" id="linguistic_trainingError"></div>
                     </div>
                     <div class="col-md-6 form-group">
                         <label for="extra_linguistic_training">{{ __('labels.membership.extra_linguistic_training') }}</label>
-                        <textarea name="extra_linguistic_training" rows="5" cols="35" class="form-control" id="extra_linguistic_training" required>
-                        </textarea>
+                        <textarea name="extra_linguistic_training" rows="5" cols="35" class="form-control" id="extra_linguistic_training" required></textarea>
                         <div class="text-danger" id="extra_linguistic_trainingError"></div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 form-group">
                         <label for="professional_experience">{{ __('labels.membership.professional_experience') }}</label>
-                        <textarea name="professional_experience" rows="5" cols="35" class="form-control" id="professional_experience" required>
-                        </textarea>
+                        <textarea name="professional_experience" rows="5" cols="35" class="form-control" id="professional_experience" required></textarea>
                         <div class="text-danger" id="professional_experienceError"></div>
                     </div>
                     <div class="col-md-6 form-group">
                         <label for="observations">{{ __('labels.membership.observations') }}</label>
-                        <textarea name="observations" rows="5" cols="35" class="form-control" id="observations">
-                        </textarea>
+                        <textarea name="observations" rows="5" cols="35" class="form-control" id="observations"></textarea>
                         <div class="text-danger" id="observationsError"></div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 form-group">
                         <label for="why_expertij">{{ __('labels.membership.why_expertij') }}</label>
-                        <textarea name="why_expertij" rows="5" cols="35" class="form-control" id="why_expertij" required>
-                        </textarea>
+                        <textarea name="why_expertij" rows="5" cols="35" class="form-control" id="why_expertij" required></textarea>
                         <div class="text-danger" id="why_expertijError"></div>
                     </div>
                 </div>
