@@ -6,8 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Models\Licence;
-use App\Models\Skill;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use App\Models\Cms\Document;
+use App\Models\Membership\Licence;
+use App\Models\Membership\Skill;
 
 class Attestation extends Model
 {
@@ -54,5 +56,31 @@ class Attestation extends Model
     public function skills(): HasMany
     {
         return $this->hasMany(Skill::class);
+    }
+
+    /**
+     * The attestation's document.
+     */
+    public function document(): MorphOne
+    {
+        return $this->morphOne(Document::class, 'documentable')->where('field', 'licence_attestation');
+    }
+
+    /**
+     * Delete the model from the database (override).
+     *
+     * @return bool|null
+     *
+     * @throws \LogicException
+     */
+    public function delete()
+    {
+        $this->skills()->delete();
+
+        if ($this->document) {
+            $this->document->delete();
+        }
+
+        parent::delete();
     }
 }

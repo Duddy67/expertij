@@ -57,6 +57,6 @@ class Address extends Model
      */
     public function country(): BelongsTo
     {
-        return $this->belongsTo(Country::class, 'country_id', 'alpha_3');
+        return $this->belongsTo(Country::class, 'alpha_3');
     }
 }

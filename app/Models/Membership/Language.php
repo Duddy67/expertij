@@ -5,7 +5,7 @@ namespace App\Models\Membership;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use App\Models\Skill;
+use App\Models\Membership\Skill;
 
 class Language extends Model
 {
@@ -42,6 +42,6 @@ class Language extends Model
      */
     public function skills(): HasMany
     {
-        return $this->hasMany(Skill::class);
+        return $this->hasMany(Skill::class, 'language_id', 'alpha_3');
     }
 }

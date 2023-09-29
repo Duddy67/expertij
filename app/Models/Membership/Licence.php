@@ -7,8 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\Membership;
-use App\Models\Jurisdiction;
-use App\Models\Attestation;
+use App\Models\Membership\Jurisdiction;
+use App\Models\Membership\Attestation;
 
 class Licence extends Model
 {
@@ -63,5 +63,19 @@ class Licence extends Model
     public function attestations(): HasMany
     {
         return $this->hasMany(Attestation::class);
+    }
+
+    /**
+     * Delete the model from the database (override).
+     *
+     * @return bool|null
+     *
+     * @throws \LogicException
+     */
+    public function delete()
+    {
+        $this->attestations()->delete();
+
+        parent::delete();
     }
 }

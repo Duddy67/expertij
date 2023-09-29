@@ -5,8 +5,8 @@ namespace App\Models\Membership;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use App\Models\Attestation;
-use App\Models\Language;
+use App\Models\Membership\Attestation;
+use App\Models\Membership\Language;
 
 class Skill extends Model
 {
@@ -18,6 +18,13 @@ class Skill extends Model
      * @var string
      */
     protected $table = 'membership_skills';
+
+    /**
+     * No timestamps.
+     *
+     * @var boolean
+     */
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
@@ -44,6 +51,6 @@ class Skill extends Model
      */
     public function language(): BelongsTo
     {
-        return $this->belongsTo(Language::class);
+        return $this->belongsTo(Language::class, 'alpha_3');
     }
 }

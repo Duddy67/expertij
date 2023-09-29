@@ -7,16 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use App\Traits\AccessLevel;
 use App\Traits\CheckInCheckOut;
 use App\Traits\OptionList;
 use App\Models\User;
+use App\Models\Cms\Document;
+use App\Models\Cms\Payment;
 use App\Models\Membership\Insurance;
 use App\Models\Membership\Licence;
 use App\Models\Membership\Language;
 use App\Models\Membership\Jurisdiction;
 use App\Models\Membership\Vote;
-use App\Models\Payment;
 
 class Membership extends Model
 {
@@ -36,8 +38,9 @@ class Membership extends Model
      */
     protected $fillable = [
         'status',
-        'pro_status',
-        'pro_status_info',
+        'since',
+        'professional_status',
+        'professional_status_info',
         'siret_number',
         'naf_code',
         'linguistic_training',
@@ -101,6 +104,34 @@ class Membership extends Model
     public function payments(): MorphMany
     {
         return $this->morphMany(Payment::class, 'payable');
+    }
+
+    /**
+     * The professional attestation that belongs to the membership.
+     */
+    public function professionalAttestation(): MorphOne
+    {
+        return $this->morphOne(Document::class, 'documentable')->where('field', 'professional_attestation');
+    }
+
+    /**
+     * Delete the model from the database (override).
+     *
+     * @return bool|null
+     *
+     * @throws \LogicException
+     */
+    public function delete()
+    {
+        $this->licences()->delete();
+        $this->votes()->delete();
+        $this->payments()->delete();
+
+        if ($this->professionalAttestation) {
+            $this->professionalAttestation->delete();
+        }
+
+        parent::delete();
     }
 
     public function getLicenceTypeOptions(): array

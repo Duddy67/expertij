@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use App\Models\User\Role;
@@ -15,6 +16,7 @@ use App\Models\User\Citizenship;
 use App\Models\Cms\Document;
 use App\Models\Cms\Setting;
 use App\Models\Cms\Address;
+use App\Models\Membership;
 use App\Traits\CheckInCheckOut;
 use App\Traits\OptionList;
 use Illuminate\Http\Request;
@@ -83,26 +85,6 @@ class User extends Authenticatable
     }
 
     /**
-     * The group ids the user is in.
-     *
-     * @return array
-     */
-    public function getGroupIds()
-    {
-        return $this->groups()->pluck('groups.id')->toArray();
-    }
-
-    /**
-     * The group ids with read/write permission the user is in.
-     *
-     * @return array
-     */
-    public function getReadWriteGroupIds()
-    {
-        return $this->groups()->where('permission', 'read_write')->pluck('groups.id')->toArray();
-    }
-
-    /**
      * The user's documents.
      */
     public function documents()
@@ -131,7 +113,15 @@ class User extends Authenticatable
      */
     public function citizenship(): BelongsTo
     {
-        return $this->belongsTo(Citizenship::class);
+        return $this->belongsTo(Citizenship::class, 'alpha_3');
+    }
+
+    /**
+     * Get the membership associated with the user.
+     */
+    public function membership(): HasOne
+    {
+        return $this->hasOne(Membership::class);
     }
 
     /**
@@ -152,9 +142,37 @@ class User extends Authenticatable
             $this->photo->delete();
         }
 
+        if ($this->address) {
+           $this->address->delete();
+        }
+
+        if ($this->membership) {
+            $this->membership->delete();
+        }
+
         $this->groups()->detach();
 
         parent::delete();
+    }
+
+    /**
+     * The group ids the user is in.
+     *
+     * @return array
+     */
+    public function getGroupIds()
+    {
+        return $this->groups()->pluck('groups.id')->toArray();
+    }
+
+    /**
+     * The group ids with read/write permission the user is in.
+     *
+     * @return array
+     */
+    public function getReadWriteGroupIds()
+    {
+        return $this->groups()->where('permission', 'read_write')->pluck('groups.id')->toArray();
     }
 
     /*

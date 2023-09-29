@@ -29,11 +29,11 @@ return new class extends Migration
             $table->unsignedSmallInteger('since');
             $table->string('siret_number', 14);
             $table->string('naf_code', 5);
-            $table->string('linguistic_training')->nullable();
-            $table->string('extra_linguistic_training')->nullable();
-            $table->string('professional_experience')->nullable();
-            $table->string('observations')->nullable();
-            $table->string('why_expertij')->nullable();
+            $table->text('linguistic_training')->nullable();
+            $table->text('extra_linguistic_training')->nullable();
+            $table->text('professional_experience')->nullable();
+            $table->text('observations')->nullable();
+            $table->text('why_expertij')->nullable();
             $table->unsignedBigInteger('checked_out')->nullable();
             $table->timestamp('checked_out_time')->nullable();
             $table->unsignedBigInteger('owned_by');
