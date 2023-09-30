@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('first_name', 30)->after('civility');
             $table->string('last_name', 30)->after('first_name');
             $table->string('birth_name', 30)->nullable()->after('last_name');
-            $table->timestamp('birth_date')->nullable()->after('birth_name');
+            $table->date('birth_date')->nullable()->after('birth_name');
             $table->string('birth_location', 30)->nullable()->after('birth_date');
             $table->char('citizenship_id', 3)->nullable()->after('birth_location');
 	});

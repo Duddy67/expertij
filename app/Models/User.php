@@ -41,6 +41,10 @@ class User extends Authenticatable
         'last_logged_in_at',
         'last_logged_in_ip',
         'last_seen_at',
+        'civility',
+        'birth_name',
+        'birth_date',
+        'birth_location',
     ];
 
     /**
@@ -73,6 +77,7 @@ class User extends Authenticatable
         'checked_out_time',
         'last_logged_in_at',
         'last_seen_at',
+        'birth_date',
     ];
 
 

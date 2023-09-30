@@ -95,62 +95,64 @@ class MembershipController extends Controller
         $citizenship = Citizenship::where('alpha_3', $request->input('citizenship'))->first();
         $citizenship->users()->save($user);
 
-        $membership = new Membership([
-            'professional_status' => $request->input('professional_status'),
-            'professional_status_info' => $request->input('professional_status_info'),
-            'since' => $request->input('since'),
-            'siret_number' => $request->input('siret_number'),
-            'naf_code' => $request->input('naf_code'),
-            'linguistic_training' => $request->input('linguistic_training'),
-            'extra_linguistic_training' => $request->input('extra_linguistic_training'),
-            'professional_experience' => $request->input('professional_experience'),
-            'observations' => $request->input('observations'),
-            'why_expertij' => $request->input('why_expertij'),
-            // New subscriptions are pending by default.
-            'status' => 'pending',
-            'owned_by' => $user->id,
-        ]);
-
-        $professionalAttestation = $this->uploadDocument($request, 'professional_attestation'); 
-        $membership->professionalAttestation()->save($professionalAttestation);
-        $user->membership()->save($membership);
-
-
-        foreach ($request->input('licences') as $i => $licenceItem) {
-            $licence = new Licence([
-                'type' => $licenceItem['type'],
-                'since' => $licenceItem['since'],
+        if (!$request->input('associated_member', null)) {
+            $membership = new Membership([
+                'professional_status' => $request->input('professional_status'),
+                'professional_status_info' => $request->input('professional_status_info'),
+                'since' => $request->input('since'),
+                'siret_number' => $request->input('siret_number'),
+                'naf_code' => $request->input('naf_code'),
+                'linguistic_training' => $request->input('linguistic_training'),
+                'extra_linguistic_training' => $request->input('extra_linguistic_training'),
+                'professional_experience' => $request->input('professional_experience'),
+                'observations' => $request->input('observations'),
+                'why_expertij' => $request->input('why_expertij'),
+                // New subscriptions are pending by default.
+                'status' => 'pending',
+                'owned_by' => $user->id,
             ]);
 
-            // Set the jurisdiction type according to the licence type.
-            $jurisdictionType = ($licence->type == 'expert') ? 'appeal_court' : 'court';
-            $jurisdiction = Jurisdiction::where('id', $licenceItem[$jurisdictionType])->first();
-            $jurisdiction->licences()->save($licence);
+            $professionalAttestation = $this->uploadDocument($request, 'professional_attestation'); 
+            $membership->professionalAttestation()->save($professionalAttestation);
+            $user->membership()->save($membership);
 
-            $membership->licences()->save($licence);
 
-            foreach ($licenceItem['attestations'] as $j => $attestationItem) {
-                $attestation = new Attestation([
-                    'expiry_date' => $attestationItem['_expiry_date'],
+            foreach ($request->input('licences') as $i => $licenceItem) {
+                $licence = new Licence([
+                    'type' => $licenceItem['type'],
+                    'since' => $licenceItem['since'],
                 ]);
 
-                $document = $this->uploadDocument($request, 'attestation_'.$i.'_'.$j, 'licence_attestation'); 
-                $attestation->document()->save($document);
+                // Set the jurisdiction type according to the licence type.
+                $jurisdictionType = ($licence->type == 'expert') ? 'appeal_court' : 'court';
+                $jurisdiction = Jurisdiction::where('id', $licenceItem[$jurisdictionType])->first();
+                $jurisdiction->licences()->save($licence);
 
-                $licence->attestations()->save($attestation);
+                $membership->licences()->save($licence);
 
-                foreach ($attestationItem['skills'] as $skillItem) {
-                    $skill = new Skill([
-                        'interpreter' => (isset($skillItem['interpreter'])) ? true : false,
-                        'interpreter_cassation' => (isset($skillItem['interpreter_cassation'])) ? true : false,
-                        'translator' => (isset($skillItem['translator'])) ? true : false,
-                        'translator_cassation' => (isset($skillItem['translator_cassation'])) ? true : false,
+                foreach ($licenceItem['attestations'] as $j => $attestationItem) {
+                    $attestation = new Attestation([
+                        'expiry_date' => $attestationItem['_expiry_date'],
                     ]);
 
-                    $language = Language::where('alpha_3', $skillItem['alpha_3'])->first();
-                    $language->skills()->save($skill);
+                    $document = $this->uploadDocument($request, 'attestation_'.$i.'_'.$j, 'licence_attestation'); 
+                    $attestation->document()->save($document);
 
-                    $attestation->skills()->save($skill);
+                    $licence->attestations()->save($attestation);
+
+                    foreach ($attestationItem['skills'] as $skillItem) {
+                        $skill = new Skill([
+                            'interpreter' => (isset($skillItem['interpreter'])) ? true : false,
+                            'interpreter_cassation' => (isset($skillItem['interpreter_cassation'])) ? true : false,
+                            'translator' => (isset($skillItem['translator'])) ? true : false,
+                            'translator_cassation' => (isset($skillItem['translator_cassation'])) ? true : false,
+                        ]);
+
+                        $language = Language::where('alpha_3', $skillItem['alpha_3'])->first();
+                        $language->skills()->save($skill);
+
+                        $attestation->skills()->save($skill);
+                    }
                 }
             }
         }

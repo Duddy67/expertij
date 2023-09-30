@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Cms\Setting;
+use App\Models\Membership;
 
 
 class ProfileController extends Controller
@@ -25,8 +27,14 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        $theme = Setting::getValue('website', 'theme', 'starter');
+        $page = Setting::getPage('profile');
+        $user = Auth::user();
 
-        return view('themes.'.$theme.'.profile');
+        $options = [];
+        $membership = new Membership;
+        $options['citizenship'] = $membership->getCitizenshipOptions();
+        $options['civility'] = $membership->getCivilityOptions();
+
+        return view('themes.'.$page['theme'].'.index', compact('page', 'user', 'options'));
     }
 }
