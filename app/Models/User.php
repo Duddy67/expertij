@@ -21,6 +21,7 @@ use App\Traits\CheckInCheckOut;
 use App\Traits\OptionList;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 
 class User extends Authenticatable
@@ -219,11 +220,11 @@ class User extends Authenticatable
     }
 
     /*
-     * Returns the user validation rules.
+     * Returns the store validation rules.
      *
      * @return Array
      */
-    public static function getValidationRules()
+    public static function getStoreValidationRules()
     {
         return [
             'first_name' => ['required', 'string', 'max:255'],
@@ -231,6 +232,21 @@ class User extends Authenticatable
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ];
+    }
+
+    /*
+     * Returns the update validation rules.
+     *
+     * @return Array
+     */
+    public static function getUpdateValidationRules(int $userId)
+    {
+        $rules = self::getStoreValidationRules();
+        // Modify some fields for the updating context.
+        $rules['email'] = ['bail', 'required', 'email', Rule::unique('users')->ignore($userId)];
+	$rules['password'] = 'nullable|confirmed|min:8';
+
+        return $rules;
     }
 
     /*

@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cms\Setting;
 use App\Models\Membership;
+use App\Models\User\Citizenship;
+use App\Http\Requests\Profile\UpdateRequest;
+use Illuminate\Support\Facades\Hash;
 
 
 class ProfileController extends Controller
@@ -21,20 +24,70 @@ class ProfileController extends Controller
     }
 
     /**
-     * Show the application dashboard.
+     * Show the form for editing the current user profile.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function edit()
     {
         $page = Setting::getPage('profile');
         $user = Auth::user();
-
         $options = [];
-        $membership = new Membership;
-        $options['citizenship'] = $membership->getCitizenshipOptions();
-        $options['civility'] = $membership->getCivilityOptions();
+
+        if ($user->membership()->exists()) {
+            $options['citizenship'] = $user->membership->getCitizenshipOptions();
+            $options['civility'] = $user->membership->getCivilityOptions();
+        }
 
         return view('themes.'.$page['theme'].'.index', compact('page', 'user', 'options'));
+    }
+
+    /**
+     * Update the current user profile in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UpdateRequest $request)
+    {
+        $user = Auth::user();
+
+        $user->last_name = $request->input('last_name');
+        $user->first_name = $request->input('first_name');
+        $user->name = $request->input('first_name').' '.$request->input('last_name');
+        $user->email = $request->input('email');
+
+        if (!empty($request->input('password'))) {
+            $user->password = Hash::make($request->input('password'));
+        }
+
+        if ($user->membership()->exists()) {
+            $user->civility = $request->input('civility');
+            $user->birth_name = $request->input('birth_name');
+            $user->birth_date = $request->input('_birth_date');
+            $user->birth_location = $request->input('birth_location');
+            // address
+            $user->address->street = $request->input('street');
+            $user->address->additional_address = $request->input('additional_address');
+            $user->address->postcode = $request->input('postcode');
+            $user->address->city = $request->input('city');
+            $user->address->phone = $request->input('phone');
+            $user->address->save();
+            /*$user->address()->update([
+                'street' => $request->input('street'),
+                'additional_address' => $request->input('additional_address'),
+                'postcode' => $request->input('postcode'),
+                'city' => $request->input('city'),
+                'phone' => $request->input('phone'),
+            ]);*/
+
+            $citizenship = Citizenship::where('alpha_3', $request->input('citizenship'))->first();
+            $citizenship->users()->save($user);
+        }
+
+        $user->save();
+
+        return response()->json(['success' => __('messages.post.update_success')]);
+        //file_put_contents('debog_file.txt', print_r($request->all(), true));
     }
 }

@@ -87,7 +87,6 @@
                     <div class="col-md-6 form-group">
                         <label for="additional_address">{{ __('labels.address.additional_address') }}</label>
                         <input type="text" name="additional_address" class="form-control" id="additional_address">
-                        <div class="text-danger" id="additional_addressError"></div>
                     </div>
                 </div>
                 <div class="row">
@@ -149,7 +148,7 @@
                 </div>
 
                 <input type="hidden" id="addItem" value="{{ route('memberships.addItem') }}">
-                <input type="hidden" id="deleteItem" value="{{ url('/').'/memberships/delete-item' }}">
+                <input type="hidden" id="deleteItem" value="{{ route('memberships.deleteItem') }}">
             </div>
 
             <div class="tab-pane" id="professional_information">

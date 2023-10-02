@@ -145,6 +145,20 @@ document.addEventListener('DOMContentLoaded', () => {
             if (result.target !== undefined) {
                 document.getElementById(result.target).remove();
             }
+
+            // Loop through the returned result.
+            for (const [key, value] of Object.entries(result)) {
+                if (key == 'redirect') {
+                    window.location.href = result.redirect;
+                }
+                else if (key == 'refresh') {
+                    refreshFieldValues(result.refresh);
+                }
+                // messages
+                else if (['success', 'warning', 'info'].includes(key)) {
+                    displayMessage(key, value);
+                }
+            }
         }
         else if (status === 422) {
             displayMessage('danger', 'Please check the form below for errors.');

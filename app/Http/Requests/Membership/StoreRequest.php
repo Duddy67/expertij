@@ -25,7 +25,7 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         // First get the user validation rules.
-        $rules = User::getValidationRules();
+        $rules = User::getStoreValidationRules();
         // then add the membership validation rules.
 
         // profile

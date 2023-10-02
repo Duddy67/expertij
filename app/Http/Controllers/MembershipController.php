@@ -258,10 +258,9 @@ class MembershipController extends Controller
      * @param  int  $id
      * @return JSON
      */
-    public function deleteItem(Request $request, int $id)
+    public function deleteItem(Request $request, ?int $id = 0)
     {
         $type = $request->input('_type');
-
         // The item exists in database.
         if ($id > 0) {
         }

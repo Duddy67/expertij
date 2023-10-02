@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
@@ -12,6 +11,7 @@ use App\Http\Controllers\Cms\FileController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\Post\CategoryController as PostCategoryController;
 use App\Http\Controllers\SiteController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\TokenController;
 use App\Http\Controllers\SearchController;
@@ -39,9 +39,10 @@ Route::get('/'.$segments['posts'].'/'.$segments['categories'].'/{id}/{slug}', [P
 
 Route::resource('memberships', MembershipController::class)->except(['index']);
 Route::post('/memberships/add-item', [MembershipController::class, 'addItem'])->name('memberships.addItem');
-Route::delete('/memberships/delete-item/{id}', [MembershipController::class, 'deleteItem'])->name('memberships.deleteItem');
+Route::delete('/memberships/delete-item/{id?}', [MembershipController::class, 'deleteItem'])->name('memberships.deleteItem');
 
-Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
