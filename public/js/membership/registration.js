@@ -78,8 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let route = element.dataset.route;
         let url = document.getElementById(route).value;
 
-        // Check for items to add.
-        if (route.startsWith('add')) {
+        // Check for items to add to the DOM.
+        if (route.startsWith('create')) {
             let containerIndex = '';
             url = url+'?_type='+element.dataset.type;
 
@@ -104,10 +104,17 @@ document.addEventListener('DOMContentLoaded', () => {
         if (route.startsWith('delete')) {
             // Set the Laravel method field to "delete".
             document.getElementsByName('_method')[0].value = 'delete';
-            // Set the item id to zero if no parameter is given (ie: the item is not in database).
-            let id = (element.dataset.itemId !== undefined) ? element.dataset.itemId : 0;
-            // Add the item id and the item type and the element index to the route url.
-            url = url+'/'+id+'?_type='+element.dataset.type+'&_index='+element.dataset.index;
+
+            // The item exists in database and has to be deleted.
+            if (element.dataset.itemId !== undefined) {
+                // Remove the default zero id at the end of the url.
+                url = url.slice(0, -1);
+                // Add the id of the item to delete.
+                url = url+element.dataset.itemId;
+            }
+
+            // Add the item type and the element index to the route url.
+            url = url+'?_type='+element.dataset.type+'&_index='+element.dataset.index;
         }
 
         let formData = new FormData(document.getElementById(element.dataset.form));
@@ -134,18 +141,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('progress-container').classList.add('d-none');
 
         if (status === 200) {
-            // An item has to be added.
-            if (result.html !== undefined) {
-                document.getElementById(result.destination).insertAdjacentHTML('beforeend', result.html);
-                // Refresh the date inputs.
-                $.fn.initDatePickers();
-            }
-
-            // An item has to be removed.
-            if (result.target !== undefined) {
-                document.getElementById(result.target).remove();
-            }
-
             // Loop through the returned result.
             for (const [key, value] of Object.entries(result)) {
                 if (key == 'redirect') {
@@ -157,6 +152,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 // messages
                 else if (['success', 'warning', 'info'].includes(key)) {
                     displayMessage(key, value);
+                }
+                // An item has to be added.
+                else if (key == 'html') {
+                    document.getElementById(result.destination).insertAdjacentHTML('beforeend', result.html);
+                    // Refresh the date inputs.
+                    $.fn.initDatePickers();
+                }
+                // An item has to be removed.
+                else if (key == 'target') {
+                    document.getElementById(result.target).remove();
                 }
             }
         }

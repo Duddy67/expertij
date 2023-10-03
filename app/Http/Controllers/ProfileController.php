@@ -66,6 +66,7 @@ class ProfileController extends Controller
             $user->birth_name = $request->input('birth_name');
             $user->birth_date = $request->input('_birth_date');
             $user->birth_location = $request->input('birth_location');
+            $user->citizenship_id = $request->input('citizenship');
             // address
             $user->address->street = $request->input('street');
             $user->address->additional_address = $request->input('additional_address');
@@ -73,21 +74,10 @@ class ProfileController extends Controller
             $user->address->city = $request->input('city');
             $user->address->phone = $request->input('phone');
             $user->address->save();
-            /*$user->address()->update([
-                'street' => $request->input('street'),
-                'additional_address' => $request->input('additional_address'),
-                'postcode' => $request->input('postcode'),
-                'city' => $request->input('city'),
-                'phone' => $request->input('phone'),
-            ]);*/
-
-            $citizenship = Citizenship::where('alpha_3', $request->input('citizenship'))->first();
-            $citizenship->users()->save($user);
         }
 
         $user->save();
 
-        return response()->json(['success' => __('messages.post.update_success')]);
-        //file_put_contents('debog_file.txt', print_r($request->all(), true));
+        return response()->json(['success' => __('messages.profile.update_success')]);
     }
 }

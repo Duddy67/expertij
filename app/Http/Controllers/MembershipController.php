@@ -32,7 +32,7 @@ class MembershipController extends Controller
      */
     public function __construct()
     {
-        //$this->middleware('auth');
+        $this->middleware('auth', ['except' => ['create', 'store', 'createItem', 'deleteItem']]);
         $this->item = new Membership;
     }
 
@@ -68,7 +68,6 @@ class MembershipController extends Controller
      */
     public function store(StoreRequest $request)
     {
-//file_put_contents('debog_file.txt', print_r($request->all(), true));
         $user = User::create([
             'first_name' => $request->input('first_name'),
             'last_name' => $request->input('last_name'),
@@ -79,6 +78,7 @@ class MembershipController extends Controller
             'birth_name' => $request->input('birth_name'),
             'birth_location' => $request->input('birth_location'),
             'birth_date' => $request->input('_birth_date'),
+            'citizenship_id' => $request->input('citizenship'),
         ]);
 
         $user->assignRole('registered');
@@ -92,8 +92,6 @@ class MembershipController extends Controller
         ]);
 
         $user->address()->save($address);
-        $citizenship = Citizenship::where('alpha_3', $request->input('citizenship'))->first();
-        $citizenship->users()->save($user);
 
         if (!$request->input('associated_member', null)) {
             $membership = new Membership([
@@ -212,12 +210,12 @@ class MembershipController extends Controller
     }
 
     /**
-     * Add a new item to the membership. (AJAX)
+     * Create a new item to the membership. (AJAX)
      *
      * @param  \Illuminate\Http\Request  $request
      * @return JSON
      */
-    public function addItem(Request $request)
+    public function createItem(Request $request)
     {
         $type = $request->input('_type');
         $newIndex = $request->input('_new_index');
@@ -258,9 +256,10 @@ class MembershipController extends Controller
      * @param  int  $id
      * @return JSON
      */
-    public function deleteItem(Request $request, ?int $id = 0)
+    public function deleteItem(Request $request, int $id)
     {
         $type = $request->input('_type');
+
         // The item exists in database.
         if ($id > 0) {
         }

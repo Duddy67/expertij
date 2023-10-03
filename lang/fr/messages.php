@@ -21,6 +21,9 @@ return [
         'alert_user_dependencies' => 'Vous ne pouvez pas supprimer l\'utilisateur: :name car il possède :number :dependencies. Veuillez modifier ces dépendances et essayer à nouveau.',
         'unknown_user' => 'Utilisateur inconnu.',
     ],
+    'profile' => [
+        'update_success' => 'Profil mis à jour avec succès.',
+    ],
     'role' => [
         'create_success' => 'Rôle créé avec succès.',
         'update_success' => 'Rôle mis à jour avec succès.',

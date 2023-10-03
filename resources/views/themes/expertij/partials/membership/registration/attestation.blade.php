@@ -17,7 +17,7 @@
         @include('themes.expertij.partials.membership.registration.skill')
     </div> <!-- skill container -->
     <div class="text-end pe-4">
-        <button class="btn btn-success form-action-btn" data-form="items" data-type="skill" data-licence-index="{{ $i }}" data-attestation-index="{{ $j }}" data-route="addItem" type="button">
+        <button class="btn btn-success form-action-btn" data-form="items" data-type="skill" data-licence-index="{{ $i }}" data-attestation-index="{{ $j }}" data-route="createItem" type="button">
         {{ __('labels.membership.add_skill') }}</button>
     </div>
 

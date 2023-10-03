@@ -21,6 +21,9 @@ return [
         'alert_user_dependencies' => 'You cannot delete this user: :name as he/she owns :number :dependencies. Please modify these dependencies accordingly then try again.',
         'unknown_user' => 'Unknown user.',
     ],
+    'profile' => [
+        'update_success' => 'Profile successfully updated.',
+    ],
     'role' => [
         'create_success' => 'Role successfully created.',
         'update_success' => 'Role successfully updated.',

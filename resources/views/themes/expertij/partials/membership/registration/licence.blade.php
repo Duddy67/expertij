@@ -46,7 +46,7 @@
         @include('themes.expertij.partials.membership.registration.attestation')
     </div> <!-- attestation container -->
     <div class="text-end pe-4">
-        <button class="btn btn-success form-action-btn" data-form="items" data-type="attestation" data-licence-index="{{ $i }}" data-route="addItem" type="button">
+        <button class="btn btn-success form-action-btn" data-form="items" data-type="attestation" data-licence-index="{{ $i }}" data-route="createItem" type="button">
             {{ __('labels.membership.add_attestation') }}
         </button>
     </div>

@@ -142,13 +142,13 @@
                     @include('themes.expertij.partials.membership.registration.licence')
                 </div> <!-- licence container -->
                 <div class="text-end mt-3">
-                    <button class="btn btn-success form-action-btn" data-form="items" data-type="licence" data-route="addItem" type="button">
+                    <button class="btn btn-success form-action-btn" data-form="items" data-type="licence" data-route="createItem" type="button">
                         {{ __('labels.membership.add_licence') }}
                     </button>
                 </div>
 
-                <input type="hidden" id="addItem" value="{{ route('memberships.addItem') }}">
-                <input type="hidden" id="deleteItem" value="{{ route('memberships.deleteItem') }}">
+                <input type="hidden" id="createItem" value="{{ route('memberships.items.create') }}">
+                <input type="hidden" id="deleteItem" value="{{ route('memberships.items.delete', 0) }}">
             </div>
 
             <div class="tab-pane" id="professional_information">

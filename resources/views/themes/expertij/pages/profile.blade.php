@@ -137,7 +137,7 @@
         <div class="row mt-5 d-flex align-items-center justify-content-center">
             <div class="col-md-6 offset-md-4">
                 <button class="btn btn-success form-action-btn" data-form="updateProfile" data-route="update" type="button">
-                    {{ __('labels.generic.update') }}
+                    {{ __('labels.button.update') }}
                 </button>
             </div>
         </div>

@@ -38,11 +38,11 @@ Route::delete('/'.$segments['posts'].'/comments/{comment}', [PostController::cla
 Route::get('/'.$segments['posts'].'/'.$segments['categories'].'/{id}/{slug}', [PostCategoryController::class, 'index'])->name('posts.categories');
 
 Route::resource('memberships', MembershipController::class)->except(['index']);
-Route::post('/memberships/add-item', [MembershipController::class, 'addItem'])->name('memberships.addItem');
-Route::delete('/memberships/delete-item/{id?}', [MembershipController::class, 'deleteItem'])->name('memberships.deleteItem');
+Route::post('/memberships/items', [MembershipController::class, 'createItem'])->name('memberships.items.create');
+Route::delete('/memberships/items/{id}', [MembershipController::class, 'deleteItem'])->name('memberships.items.delete');
 
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');

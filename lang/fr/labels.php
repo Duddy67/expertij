@@ -16,6 +16,7 @@ return [
 	'blog' => 'Blog',
 	'posts' => 'Posts',
 	'memberships' => 'Adhésions',
+	'membership' => 'Adhésion',
 	'categories' => 'Catégories',
 	'menus' => 'Menus',
 	'menuitems' => 'Menu items',
