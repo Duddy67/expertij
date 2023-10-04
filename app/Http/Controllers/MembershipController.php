@@ -35,6 +35,7 @@ class MembershipController extends Controller
     {
         $this->middleware('auth', ['except' => ['create', 'store', 'createItem', 'deleteItem']]);
         $this->middleware('membership.registration', ['only' => ['create', 'store']]);
+        $this->middleware('membership.edit', ['only' => ['edit', 'update']]);
         $this->item = new Membership;
     }
 
@@ -57,8 +58,9 @@ class MembershipController extends Controller
     {
         $page = Setting::getPage('membership.registration');
         $options = $this->getOptions();
+        // Set indexes for licences, attestations and skills
         $i = $j = $k = 0;
-        // The user already exists.
+        // Get the user if he already exists.
         $user = (Auth::check()) ? Auth::user() : null;
 
         return view('themes.'.$page['theme'].'.index', compact('page', 'options', 'user', 'i', 'j', 'k'));
@@ -186,16 +188,17 @@ class MembershipController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit()
     {
         $page = Setting::getPage('membership');
         $options = $this->getOptions();
+        // Get the user's membership.
+        $membership = Auth::user()->membership;
         $i = $j = $k = 0;
 
-        return view('themes.'.$page['theme'].'.index', compact('page', 'options', 'i', 'j', 'k'));
+        return view('themes.'.$page['theme'].'.index', compact('page', 'options', 'membership', 'i', 'j', 'k'));
     }
 
     /**
