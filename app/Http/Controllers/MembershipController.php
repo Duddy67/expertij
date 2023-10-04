@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Membership;
 use App\Models\Membership\Licence;
 use App\Models\Membership\Attestation;
@@ -33,6 +34,7 @@ class MembershipController extends Controller
     public function __construct()
     {
         $this->middleware('auth', ['except' => ['create', 'store', 'createItem', 'deleteItem']]);
+        $this->middleware('membership.registration', ['only' => ['create', 'store']]);
         $this->item = new Membership;
     }
 
@@ -56,8 +58,10 @@ class MembershipController extends Controller
         $page = Setting::getPage('membership.registration');
         $options = $this->getOptions();
         $i = $j = $k = 0;
+        // The user already exists.
+        $user = (Auth::check()) ? Auth::user() : null;
 
-        return view('themes.'.$page['theme'].'.index', compact('page', 'options', 'i', 'j', 'k'));
+        return view('themes.'.$page['theme'].'.index', compact('page', 'options', 'user', 'i', 'j', 'k'));
     }
 
     /**
@@ -68,20 +72,35 @@ class MembershipController extends Controller
      */
     public function store(StoreRequest $request)
     {
-        $user = User::create([
-            'first_name' => $request->input('first_name'),
-            'last_name' => $request->input('last_name'),
-            'name' => $request->input('first_name').' '.$request->input('last_name'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
-            'civility' => $request->input('civility'),
-            'birth_name' => $request->input('birth_name'),
-            'birth_location' => $request->input('birth_location'),
-            'birth_date' => $request->input('_birth_date'),
-            'citizenship_id' => $request->input('citizenship'),
-        ]);
+        // The user already exists.
+        if (Auth::check()) {
+            $user = Auth::user();
+        }
+        else {
+            // Create a brand new user.
+            $user = User::create([
+                'first_name' => $request->input('first_name'),
+                'last_name' => $request->input('last_name'),
+                'name' => $request->input('first_name').' '.$request->input('last_name'),
+                'email' => $request->input('email'),
+                'password' => Hash::make($request->input('password')),
+                //'civility' => $request->input('civility'),
+                //'birth_name' => $request->input('birth_name'),
+                //'birth_location' => $request->input('birth_location'),
+                //'birth_date' => $request->input('_birth_date'),
+                //'citizenship_id' => $request->input('citizenship'),
+            ]);
 
-        $user->assignRole('registered');
+            $user->assignRole('registered');
+        }
+
+        // Add the membership attributes to the user.
+        $user->civility = $request->input('civility');
+        $user->birth_name = $request->input('birth_name');
+        $user->birth_location = $request->input('birth_location');
+        $user->birth_date = $request->input('_birth_date');
+        $user->citizenship_id = $request->input('citizenship');
+        $user->save();
 
         $address = new Address([
             'street' => $request->input('street'),
@@ -165,25 +184,18 @@ class MembershipController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
+        $page = Setting::getPage('membership');
+        $options = $this->getOptions();
+        $i = $j = $k = 0;
+
+        return view('themes.'.$page['theme'].'.index', compact('page', 'options', 'i', 'j', 'k'));
     }
 
     /**

@@ -37,7 +37,10 @@ Route::put('/'.$segments['posts'].'/comments/{comment}', [PostController::class,
 Route::delete('/'.$segments['posts'].'/comments/{comment}', [PostController::class, 'deleteComment'])->name('posts.comments.delete')->middleware('auth');
 Route::get('/'.$segments['posts'].'/'.$segments['categories'].'/{id}/{slug}', [PostCategoryController::class, 'index'])->name('posts.categories');
 
-Route::resource('memberships', MembershipController::class)->except(['index']);
+//Route::resource('memberships', MembershipController::class)->except(['index', 'show']);
+Route::get('/memberships/create', [MembershipController::class, 'create'])->name('memberships.create');
+Route::get('/memberships', [MembershipController::class, 'edit'])->name('memberships.edit');
+Route::post('/memberships', [MembershipController::class, 'store'])->name('memberships.store');
 Route::post('/memberships/items', [MembershipController::class, 'createItem'])->name('memberships.items.create');
 Route::delete('/memberships/items/{id}', [MembershipController::class, 'deleteItem'])->name('memberships.items.delete');
 

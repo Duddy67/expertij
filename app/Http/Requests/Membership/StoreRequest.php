@@ -4,6 +4,7 @@ namespace App\Http\Requests\Membership;
 
 use Illuminate\Foundation\Http\FormRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class StoreRequest extends FormRequest
 {
@@ -24,9 +25,10 @@ class StoreRequest extends FormRequest
      */
     public function rules()
     {
-        // First get the user validation rules.
-        $rules = User::getStoreValidationRules();
-        // then add the membership validation rules.
+        // Get the user validation rules if the user doesn't exist.
+        $rules = (!Auth::check()) ? User::getStoreValidationRules() : [];
+
+        // Add the membership validation rules.
 
         // profile
         $rules['civility'] = 'required';

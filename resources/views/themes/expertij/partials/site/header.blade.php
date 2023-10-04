@@ -5,6 +5,10 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
               <ul class="navbar-nav mr-auto">
                   @foreach ($page['menu']->getMenuItems() as $item)
+                      @if ($item->url == '/memberships/create' && Auth::check() && Auth::user()->membership()->exists())
+                          @continue
+                      @endif
+
                       @include ('themes.expertij.partials.menu.items')
                   @endforeach
               </ul>
@@ -22,7 +26,7 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             @if (Auth::user()->membership()->exists()) 
-                                <a class="dropdown-item" href="{{ route('admin') }}">{{ __('labels.title.membership') }}</a>
+                                <a class="dropdown-item" href="{{ route('memberships.edit') }}">{{ __('labels.title.membership') }}</a>
                             @endif
 
                             <a class="dropdown-item" href="{{ route('logout') }}"

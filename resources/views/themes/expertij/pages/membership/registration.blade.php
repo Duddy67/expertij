@@ -30,16 +30,28 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 form-group">
-                        <label for="last_name">{{ __('labels.user.last_name') }}</label>
-                        <input type="text" name="last_name" class="form-control" id="last_name" required>
-                        <div class="text-danger" id="last_nameError"></div>
-                    </div>
-                    <div class="col-md-6 form-group">
-                        <label for="first_name">{{ __('labels.user.first_name') }}</label>
-                        <input type="text" name="first_name" class="form-control" id="first_name" required>
-                        <div class="text-danger" id="first_nameError"></div>
-                    </div>
+
+                    @if ($user)
+                        <div class="col-md-6 form-group">
+                            <label for="last_name">{{ __('labels.user.last_name') }}</label>
+                            <input type="text" name="_last_name" class="form-control" value="{{ $user->last_name }}" disabled>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="first_name">{{ __('labels.user.first_name') }}</label>
+                            <input type="text" name="_first_name" class="form-control" value="{{ $user->first_name }}" disabled>
+                        </div>
+                    @else
+                        <div class="col-md-6 form-group">
+                            <label for="last_name">{{ __('labels.user.last_name') }}</label>
+                            <input type="text" name="last_name" class="form-control" id="last_name" required>
+                            <div class="text-danger" id="last_nameError"></div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="first_name">{{ __('labels.user.first_name') }}</label>
+                            <input type="text" name="first_name" class="form-control" id="first_name" required>
+                            <div class="text-danger" id="first_nameError"></div>
+                        </div>
+                    @endif
                 </div>
                 <div class="row">
                     <div class="col-md-6 form-group">
@@ -109,24 +121,36 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 form-group mt-3 mt-md-0">
-                        <label for="email">{{ __('labels.user.email') }}</label>
-                        <input type="email" class="form-control" name="email" id="email" required>
-                        <div class="text-danger" id="emailError"></div>
-                    </div>
+
+                    @if ($user)
+                        <div class="col-md-6 form-group mt-3 mt-md-0">
+                            <label for="email">{{ __('labels.user.email') }}</label>
+                            <input type="_email" class="form-control" name="email" value="{{ $user->email }}" disabled>
+                        </div>
+                    @else
+                        <div class="col-md-6 form-group mt-3 mt-md-0">
+                            <label for="email">{{ __('labels.user.email') }}</label>
+                            <input type="email" class="form-control" name="email" id="email" required>
+                            <div class="text-danger" id="emailError"></div>
+                        </div>
+                    @endif
                 </div>
-                <div class="row">
-                    <div class="col-md-6 form-group">
-                        <label for="password">{{ __('labels.user.password') }}</label>
-                        <input type="password" autocomplete="false" name="password" class="form-control" id="password" required>
-                        <div class="text-danger" id="passwordError"></div>
+
+                @if (!$user)
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="password">{{ __('labels.user.password') }}</label>
+                            <input type="password" autocomplete="false" name="password" class="form-control" id="password" required>
+                            <div class="text-danger" id="passwordError"></div>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="password_confirmation">{{ __('labels.user.confirm_password') }}</label>
+                            <input type="password" autocomplete="false" name="password_confirmation" class="form-control" id="password_confirmation" required>
+                            <div class="text-danger" id="password_confirmationError"></div>
+                        </div>
                     </div>
-                    <div class="col-md-6 form-group">
-                        <label for="password_confirmation">{{ __('labels.user.confirm_password') }}</label>
-                        <input type="password" autocomplete="false" name="password_confirmation" class="form-control" id="password_confirmation" required>
-                        <div class="text-danger" id="password_confirmationError"></div>
-                    </div>
-                </div>
+                @endif
+
                 <div class="row">
                     <div class="col-md-6 form-group mt-3 mt-md-0">
                         <label for="associated-member">{{ __('labels.membership.associated_member') }}</label><br />
