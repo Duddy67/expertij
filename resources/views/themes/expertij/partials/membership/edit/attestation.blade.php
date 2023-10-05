@@ -6,15 +6,23 @@
             <div class="text-danger" id="attestation_{{ $i }}_{{ $j }}Error"></div>
         </div>
         <div class="col-md-6 form-group">
+            <label>{{ __('labels.generic.attestation') }}</label>
+            <div id="professional_attestation_document">
+                <a class="btn btn-success" href="{{ url('/').$attestation->document->getUrl() }}" target="_blank">{{ $attestation->document->file_name }}</a>
+            </div>
+        </div>
+        <div class="col-md-6 form-group">
             <label for="licences.{{ $i }}.attestations.{{ $j }}.expiry_date">{{ __('labels.membership.expiry_date') }}</label>
-            <input type="text" name="licences[{{ $i }}][attestations][{{ $j }}][expiry_date]" class="form-control date" data-options="['startEmpty']" id="licences.{{ $i }}.attestations.{{ $j }}.expiry_date" data-date="0" data-format="D MMM YYYY">
-            <input type="hidden" id="_licences.{{ $i }}.attestations.{{ $j }}.expiry_date" name="licences[{{ $i }}][attestations][{{ $j }}][_expiry_date]" value="">
+            <input type="text" name="licences[{{ $i }}][attestations][{{ $j }}][expiry_date]" class="form-control date" data-options="['startEmpty']" id="licences.{{ $i }}.attestations.{{ $j }}.expiry_date" data-date="{{ $attestation->expiry_date->toDateString() }}" data-format="D MMM YYYY">
+            <input type="hidden" id="_licences.{{ $i }}.attestations.{{ $j }}.expiry_date" name="licences[{{ $i }}][attestations][{{ $j }}][_expiry_date]" value="{{ $attestation->expiry_date->toDateString() }}">
             <div class="text-danger" id="licences.{{ $i }}.attestations.{{ $j }}.expiry_dateError"></div>
         </div>
     </div>
 
     <div class="form-group" id="skill-container-{{ $i }}-{{ $j }}">
-        @include('themes.expertij.partials.membership.registration.skill')
+        @foreach ($attestation->skills as $k => $skill)
+            @include('themes.expertij.partials.membership.edit.skill', ['skill' => $skill, 'i' => $i, 'j' => $j, 'k' => $k])
+        @endforeach
     </div> <!-- skill container -->
     <div class="text-end pe-4">
         <button class="btn btn-success form-action-btn" data-form="items" data-type="skill" data-licence-index="{{ $i }}" data-attestation-index="{{ $j }}" data-route="createItem" type="button">

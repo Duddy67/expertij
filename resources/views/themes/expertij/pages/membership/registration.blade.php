@@ -289,7 +289,7 @@
 
 <form action="#" method="post" id="items" role="form">
     @csrf
-    @method('post')
+    <input type="hidden" name="_method" id="_item_form_method" value="post">
 </form>
 
 @push ('scripts')

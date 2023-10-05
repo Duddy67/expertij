@@ -196,21 +196,30 @@ class MembershipController extends Controller
         $options = $this->getOptions();
         // Get the user's membership.
         $membership = Auth::user()->membership;
-        $i = $j = $k = 0;
 
-        return view('themes.'.$page['theme'].'.index', compact('page', 'options', 'membership', 'i', 'j', 'k'));
+        return view('themes.'.$page['theme'].'.index', compact('page', 'options', 'membership'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request)
     {
-        //
+//file_put_contents('debog_file.txt', print_r($request->all(), true));
+        // Get the user's membership.
+        $membership = Auth::user()->membership;
+
+        $membership->professional_status = $request->input('professional_status');
+        $membership->professional_status_info = $request->input('professional_status_info');
+        $membership->since = $request->input('since');
+        $membership->siret_number = $request->input('siret_number');
+        $membership->naf_code = $request->input('naf_code');
+        $membership->save();
+
+        return response()->json(['success' => __('messages.membership.update_success')]);
     }
 
     /**

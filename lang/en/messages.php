@@ -54,6 +54,7 @@ return [
         'delete_not_auth' => 'You are not authorised to delete groups.',
     ],
     'membership' => [
+        'update_success' => 'Membership successfully updated.',
         'professional_status_info_required' => 'The :attribute field is required.',
         'appeal_court_required' => 'The :attribute field is required.',
         'court_required' => 'The :attribute field is required.',

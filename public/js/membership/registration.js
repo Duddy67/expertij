@@ -103,7 +103,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Check for items to delete.
         if (route.startsWith('delete')) {
             // Set the Laravel method field to "delete".
-            document.getElementsByName('_method')[0].value = 'delete';
+            //document.getElementsByName('_method')[0].value = 'delete';
+            document.getElementById('_item_form_method').value = 'delete';
 
             // The item exists in database and has to be deleted.
             if (element.dataset.itemId !== undefined) {
@@ -130,7 +131,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (route.startsWith('delete')) {
             // Set back the Laravel method field to "post".
-            document.getElementsByName('_method')[0].value = 'post';
+            //document.getElementsByName('_method')[0].value = 'post';
+            document.getElementById('_item_form_method').value = 'post';
         }
 
         ajax.run(getAjaxResult);

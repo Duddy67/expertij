@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('membership_attestations', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('licence_id')->nullable();
-            $table->timestamp('expiry_date')->nullable();
+            $table->date('expiry_date')->nullable();
             $table->timestamps();
         });
     }

@@ -4,9 +4,10 @@
 
 <div class="position-relative">
     @include('themes.expertij.partials.flash-message')
-    <form action="#" method="post" enctype="multipart/form-data" id="registration" role="form" class="php-email-form">
+    <form action="#" method="post" enctype="multipart/form-data" id="updateMembership" role="form" class="php-email-form">
         @csrf
-        <input type="hidden" id="store" value="{{ route('memberships.store') }}">
+        <input type="hidden" id="update" value="{{ route('memberships.update') }}">
+        @method('put', ['id' => 'foo'])
 
         <nav class="nav nav-tabs">
             <a class="nav-item nav-link active" id="membership-tab" href="#membership" data-bs-toggle="tab">{{ __('labels.title.membership') }}</a>
@@ -25,7 +26,9 @@
             <div class="tab-pane" id="licences">
                 <!-- Licences etc... -->
                 <div class="form-group" id="licence-container">
-                    @include('themes.expertij.partials.membership.edit.licence')
+                    @foreach ($membership->licences as $i => $licence)
+                        @include('themes.expertij.partials.membership.edit.licence', ['licence' => $licence, 'i' => $i])
+                    @endforeach
                 </div> <!-- licence container -->
                 <div class="text-end mt-3">
                     <button class="btn btn-success form-action-btn" data-form="items" data-type="licence" data-route="createItem" type="button">
@@ -98,12 +101,20 @@
                 </div>
             </div>
         </div>
+
+        <div class="row mt-5 d-flex align-items-center justify-content-center">
+            <div class="col-md-6 offset-md-4">
+                <button class="btn btn-success form-action-btn" data-form="updateMembership" data-route="update" type="button">
+                    {{ __('labels.button.update') }}
+                </button>
+            </div>
+        </div>
     </form>
 </div>
 
 <form action="#" method="post" id="items" role="form">
     @csrf
-    @method('post')
+    <input type="hidden" name="_method" id="_item_form_method" value="post">
 </form>
 
 @push ('scripts')
