@@ -42,7 +42,7 @@
         </div>
     </div>
 
-    <div class="form-group" id="attestation-container-{{ $i }}">
+    <div class="form-group" id="attestation-container-{{ $i }}" data-latest-index="{{ $j }}">
         @include('themes.expertij.partials.membership.registration.attestation')
     </div> <!-- attestation container -->
     <div class="text-end pe-4">

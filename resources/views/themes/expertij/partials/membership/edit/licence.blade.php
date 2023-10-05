@@ -46,7 +46,7 @@
         </div>
     </div>
 
-    <div class="form-group" id="attestation-container-{{ $i }}">
+    <div class="form-group" id="attestation-container-{{ $i }}" data-latest-index="{{ $licence->attestations->count() - 1 }}">
         @foreach ($licence->attestations as $j => $attestation)
             @include('themes.expertij.partials.membership.edit.attestation', ['attestation' => $attestation, 'i' => $i, 'j' => $j])
         @endforeach

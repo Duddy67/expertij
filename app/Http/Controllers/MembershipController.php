@@ -208,7 +208,7 @@ class MembershipController extends Controller
      */
     public function update(UpdateRequest $request)
     {
-//file_put_contents('debog_file.txt', print_r($request->all(), true));
+file_put_contents('debog_file.txt', print_r($request->all(), true));
         // Get the user's membership.
         $membership = Auth::user()->membership;
 

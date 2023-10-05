@@ -13,7 +13,7 @@
         </div>
     </div>
 
-    <div class="form-group" id="skill-container-{{ $i }}-{{ $j }}">
+    <div class="form-group" id="skill-container-{{ $i }}-{{ $j }}" data-latest-index="{{ $k }}">
         @include('themes.expertij.partials.membership.registration.skill')
     </div> <!-- skill container -->
     <div class="text-end pe-4">

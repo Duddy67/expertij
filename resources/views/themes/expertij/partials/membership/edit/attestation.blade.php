@@ -19,7 +19,7 @@
         </div>
     </div>
 
-    <div class="form-group" id="skill-container-{{ $i }}-{{ $j }}">
+    <div class="form-group" id="skill-container-{{ $i }}-{{ $j }}" data-latest-index="{{ $attestation->skills->count() - 1 }}">
         @foreach ($attestation->skills as $k => $skill)
             @include('themes.expertij.partials.membership.edit.skill', ['skill' => $skill, 'i' => $i, 'j' => $j, 'k' => $k])
         @endforeach

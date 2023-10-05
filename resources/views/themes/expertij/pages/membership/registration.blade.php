@@ -162,7 +162,7 @@
 
             <div class="tab-pane" id="licences">
                 <!-- Licences etc... -->
-                <div class="form-group" id="licence-container">
+                <div class="form-group" id="licence-container" data-latest-index="{{ $i }}">
                     @include('themes.expertij.partials.membership.registration.licence')
                 </div> <!-- licence container -->
                 <div class="text-end mt-3">

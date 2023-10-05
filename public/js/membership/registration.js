@@ -95,8 +95,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 containerIndex = containerIndex+'-'+element.dataset.attestationIndex;
             }
 
-            // Count the number of (first) children into a item container to set the new item index.
-            let newIndex = document.getElementById(element.dataset.type+'-container'+containerIndex).children.length;
+            // Compute the new item index.
+
+            // Get the latest index then increment it by 1.
+            let newIndex = Number(document.getElementById(element.dataset.type+'-container'+containerIndex).dataset.latestIndex) + 1;
+            // Update the latest index value for this item type.
+            document.getElementById(element.dataset.type+'-container'+containerIndex).dataset.latestIndex = newIndex;
             url = url+'&_new_index='+newIndex;
         }
 

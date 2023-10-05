@@ -25,7 +25,7 @@
 
             <div class="tab-pane" id="licences">
                 <!-- Licences etc... -->
-                <div class="form-group" id="licence-container">
+                <div class="form-group" id="licence-container" data-latest-index="{{ $membership->licences->count() - 1 }}">
                     @foreach ($membership->licences as $i => $licence)
                         @include('themes.expertij.partials.membership.edit.licence', ['licence' => $licence, 'i' => $i])
                     @endforeach
