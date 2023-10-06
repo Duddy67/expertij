@@ -140,12 +140,13 @@ class MembershipController extends Controller
                 $licence = new Licence([
                     'type' => $licenceItem['type'],
                     'since' => $licenceItem['since'],
+                    'jurisdiction_id' => $licenceItem[$licenceItem['type']],
                 ]);
 
                 // Set the jurisdiction type according to the licence type.
-                $jurisdictionType = ($licence->type == 'expert') ? 'appeal_court' : 'court';
-                $jurisdiction = Jurisdiction::where('id', $licenceItem[$jurisdictionType])->first();
-                $jurisdiction->licences()->save($licence);
+                //$jurisdictionType = ($licence->type == 'expert') ? 'appeal_court' : 'court';
+                //$jurisdiction = Jurisdiction::where('id', $licenceItem[$jurisdictionType])->first();
+                //$jurisdiction->licences()->save($licence);
 
                 $membership->licences()->save($licence);
 
@@ -218,6 +219,34 @@ file_put_contents('debog_file.txt', print_r($request->all(), true));
         $membership->siret_number = $request->input('siret_number');
         $membership->naf_code = $request->input('naf_code');
         $membership->save();
+
+        /*foreach ($request->input('licences') as $i => $licenceItem) {
+            // Update the licence.
+            if (isset($licenceItem['_id'])) {
+                $licence = $membership->licences->where('id', $licenceItem['_id'])->first();
+
+                $licence->type = $licenceItem['type'];
+                $licence->since = $licenceItem['since'];
+                $licence->jurisdiction_id = $licenceItem[$licenceItem['type']];
+                $licence->save();
+            }
+            // Create a new licence.
+            else {
+                $licence = new Licence([
+                    'type' => $licenceItem['type'],
+                    'since' => $licenceItem['since'],
+                    'jurisdiction_id' => $licenceItem[$licenceItem['type']],
+                ]);
+
+                $membership->licences()->save($licence);
+            }
+
+            foreach ($licenceItem['attestations'] as $j => $attestationItem) {
+                foreach ($attestationItem['skills'] as $skillItem) {
+
+                }
+            }
+        }*/
 
         return response()->json(['success' => __('messages.membership.update_success')]);
     }

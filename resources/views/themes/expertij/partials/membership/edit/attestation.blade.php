@@ -19,6 +19,8 @@
         </div>
     </div>
 
+    <input type="hidden" name="licences[{{ $i }}][attestations][{{ $j }}][_id]" value="{{ $attestation->id }}">
+
     <div class="form-group" id="skill-container-{{ $i }}-{{ $j }}" data-latest-index="{{ $attestation->skills->count() - 1 }}">
         @foreach ($attestation->skills as $k => $skill)
             @include('themes.expertij.partials.membership.edit.skill', ['skill' => $skill, 'i' => $i, 'j' => $j, 'k' => $k])
@@ -31,7 +33,7 @@
 
     @if ($j > 0)
         <div class="text-end pe-4 mt-3">
-            <button class="btn btn-danger form-action-btn" data-form="items" data-type="attestation" data-index="{{ $i }}-{{ $j }}" data-route="deleteItem" type="button">
+            <button class="btn btn-danger form-action-btn" data-form="items" data-type="attestation" data-item-id="{{ $attestation->id }}" data-index="{{ $i }}-{{ $j }}" data-route="deleteItem" type="button">
             {{ __('labels.membership.delete_attestation') }}</button>
         </div>
     @endif

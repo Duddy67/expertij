@@ -7,7 +7,7 @@
     <form action="#" method="post" enctype="multipart/form-data" id="updateMembership" role="form" class="php-email-form">
         @csrf
         <input type="hidden" id="update" value="{{ route('memberships.update') }}">
-        @method('put', ['id' => 'foo'])
+        @method('put')
 
         <nav class="nav nav-tabs">
             <a class="nav-item nav-link active" id="membership-tab" href="#membership" data-bs-toggle="tab">{{ __('labels.title.membership') }}</a>
@@ -39,7 +39,7 @@
                 <input type="hidden" id="createItem" value="{{ route('memberships.items.create') }}">
                 <input type="hidden" id="deleteItem" value="{{ route('memberships.items.delete', 0) }}">
             </div>
-
+            </form>
             <div class="tab-pane" id="professional_information">
                 <!-- Professional information -->
                 <div class="row">

@@ -43,9 +43,11 @@
         </div>
     </div>
 
+    <input type="hidden" name="licences[{{ $i }}][attestations][{{ $j }}][skills][{{ $k }}][_id]" value="{{ $skill->id }}">
+
     @if ($k > 0)
         <div class="text-end pe-4 mt-3">
-            <button class="btn btn-danger form-action-btn" data-form="items" data-type="skill" data-index="{{ $i }}-{{ $j }}-{{ $k }}" data-route="deleteItem" type="button">
+            <button class="btn btn-danger form-action-btn" data-form="items" data-type="skill" data-item-id="{{ $skill->id }}" data-index="{{ $i }}-{{ $j }}-{{ $k }}" data-route="deleteItem" type="button">
             {{ __('labels.membership.delete_skill') }}</button>
         </div>
     @endif

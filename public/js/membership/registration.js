@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let url = document.getElementById(route).value;
 
         // Check for items to add to the DOM.
-        if (route.startsWith('create')) {
+        if (route == 'createItem') {
             let containerIndex = '';
             url = url+'?_type='+element.dataset.type;
 
@@ -104,8 +104,8 @@ document.addEventListener('DOMContentLoaded', () => {
             url = url+'&_new_index='+newIndex;
         }
 
-        // Check for items to delete.
-        if (route.startsWith('delete')) {
+        // Check for items to remove from the DOM.
+        if (route == 'deleteItem') {
             // Set the Laravel method field to "delete".
             //document.getElementsByName('_method')[0].value = 'delete';
             document.getElementById('_item_form_method').value = 'delete';
