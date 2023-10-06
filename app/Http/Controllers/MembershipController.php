@@ -137,10 +137,13 @@ class MembershipController extends Controller
 
 
             foreach ($request->input('licences') as $i => $licenceItem) {
+                // First, get the jurisdiction type according to the licence type in order to get the jurisdiction id. 
+                $jurisdictionType = ($licenceItem['type'] == 'expert') ? 'appeal_court' : 'court';
+
                 $licence = new Licence([
                     'type' => $licenceItem['type'],
                     'since' => $licenceItem['since'],
-                    'jurisdiction_id' => $licenceItem[$licenceItem['type']],
+                    'jurisdiction_id' => $licenceItem[$jurisdictionType],
                 ]);
 
                 // Set the jurisdiction type according to the licence type.
@@ -155,20 +158,22 @@ class MembershipController extends Controller
                         'expiry_date' => $attestationItem['_expiry_date'],
                     ]);
 
-                    $document = $this->uploadDocument($request, 'attestation_'.$i.'_'.$j, 'licence_attestation'); 
+                    //$document = $this->uploadDocument($request, 'attestation_'.$i.'_'.$j, 'licence_attestation'); 
+                    $document = $this->uploadDocument($request, $request->input('_attestation_file_id'), 'licence_attestation'); 
                     $attestation->document()->save($document);
 
                     $licence->attestations()->save($attestation);
 
                     foreach ($attestationItem['skills'] as $skillItem) {
                         $skill = new Skill([
+                            'language_id' => $skillItem['alpha_3'],
                             'interpreter' => (isset($skillItem['interpreter'])) ? true : false,
                             'interpreter_cassation' => (isset($skillItem['interpreter_cassation'])) ? true : false,
                             'translator' => (isset($skillItem['translator'])) ? true : false,
                             'translator_cassation' => (isset($skillItem['translator_cassation'])) ? true : false,
                         ]);
 
-                        $language = Language::where('alpha_3', $skillItem['alpha_3'])->first();
+                        //$language = Language::where('alpha_3', $skillItem['alpha_3'])->first();
                         $language->skills()->save($skill);
 
                         $attestation->skills()->save($skill);
@@ -202,14 +207,13 @@ class MembershipController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the user's membership in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateRequest $request)
     {
-file_put_contents('debog_file.txt', print_r($request->all(), true));
         // Get the user's membership.
         $membership = Auth::user()->membership;
 
@@ -220,14 +224,34 @@ file_put_contents('debog_file.txt', print_r($request->all(), true));
         $membership->naf_code = $request->input('naf_code');
         $membership->save();
 
-        /*foreach ($request->input('licences') as $i => $licenceItem) {
+
+        return response()->json(['success' => __('messages.membership.update_success')]);
+    }
+
+    /**
+     * Update the user's membership licences in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateLicences(UpdateRequest $request)
+    {
+file_put_contents('debog_file.txt', print_r($request->all(), true));
+        // Get the user's membership.
+        $membership = Auth::user()->membership;
+
+        foreach ($request->input('licences') as $i => $licenceItem) {
+            // First, get the jurisdiction type (set as dropdownlist name in the form) according to
+            // the licence type in order to get the jurisdiction id. 
+            $jurisdictionType = ($licenceItem['type'] == 'expert') ? 'appeal_court' : 'court';
+
             // Update the licence.
             if (isset($licenceItem['_id'])) {
                 $licence = $membership->licences->where('id', $licenceItem['_id'])->first();
 
                 $licence->type = $licenceItem['type'];
                 $licence->since = $licenceItem['since'];
-                $licence->jurisdiction_id = $licenceItem[$licenceItem['type']];
+                $licence->jurisdiction_id = $licenceItem[$jurisdictionType];
                 $licence->save();
             }
             // Create a new licence.
@@ -235,20 +259,64 @@ file_put_contents('debog_file.txt', print_r($request->all(), true));
                 $licence = new Licence([
                     'type' => $licenceItem['type'],
                     'since' => $licenceItem['since'],
-                    'jurisdiction_id' => $licenceItem[$licenceItem['type']],
+                    'jurisdiction_id' => $licenceItem[$jurisdictionType],
                 ]);
 
                 $membership->licences()->save($licence);
             }
 
             foreach ($licenceItem['attestations'] as $j => $attestationItem) {
-                foreach ($attestationItem['skills'] as $skillItem) {
+                // Update the attestation.
+                if (isset($attestationItem['_id'])) {
+                    $attestation = $membership->licences->attestations->where('id', $attestationItem['_id'])->first();
 
+                    $attestation->expiry_date = $attestationItem['_expiry_date'];
+                    $attestation->save();
+                }
+                // Create a new attestation.
+                else {
+                    $attestation = new Attestation([
+                        'expiry_date' => $attestationItem['_expiry_date'],
+                    ]);
+
+                    $licence->attestations()->save($attestation);
+                }
+
+                // Check for possible new attestation file.
+                if ($request->input($request->input('_attestation_file_id'), null)) {
+                    $document = $this->uploadDocument($request, $request->input('_attestation_file_id'), 'licence_attestation'); 
+                    $attestation->document()->save($document);
+                }
+
+                foreach ($attestationItem['skills'] as $skillItem) {
+                    // Update the skill.
+                    if (isset($skillItem['_id'])) {
+                        $skill = $membership->licences->attestations->skills->where('id', $skillItem['_id'])->first();
+
+                        $skill->language_id = $skillItem['alpha_3'];
+                        $skill->interpreter = (isset($skillItem['interpreter'])) ? true : false;
+                        $skill->interpreter_cassation = (isset($skillItem['interpreter_cassation'])) ? true : false;
+                        $skill->translator = (isset($skillItem['translator'])) ? true : false;
+                        $skill->translator_cassation = (isset($skillItem['translator_cassation'])) ? true : false;
+                        $skill->save();
+                    }
+                    // Create a new skill.
+                    else {
+                        $skill = new Skill([
+                            'alpha_3' => $skillItem['alpha_3'],
+                            'interpreter' => (isset($skillItem['interpreter'])) ? true : false,
+                            'interpreter_cassation' => (isset($skillItem['interpreter_cassation'])) ? true : false,
+                            'translator' => (isset($skillItem['translator'])) ? true : false,
+                            'translator_cassation' => (isset($skillItem['translator_cassation'])) ? true : false,
+                        ]);
+
+                        $attestation->skills()->save($skill);
+                    }
                 }
             }
-        }*/
+        }
 
-        return response()->json(['success' => __('messages.membership.update_success')]);
+        return response()->json(['success' => __('messages.membership.licences_update_success')]);
     }
 
     /**

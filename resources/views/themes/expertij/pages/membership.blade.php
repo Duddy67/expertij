@@ -4,27 +4,27 @@
 
 <div class="position-relative">
     @include('themes.expertij.partials.flash-message')
-    <form action="#" method="post" enctype="multipart/form-data" id="updateMembership" role="form" class="php-email-form">
-        @csrf
-        <input type="hidden" id="update" value="{{ route('memberships.update') }}">
-        @method('put')
+    <nav class="nav nav-tabs">
+        <a class="nav-item nav-link active" id="membership-tab" href="#membership" data-bs-toggle="tab">{{ __('labels.title.membership') }}</a>
+        <a class="nav-item nav-link" id="licences-tab" href="#licences" data-bs-toggle="tab">{{ __('labels.membership.licences') }}</a>
+        <a class="nav-item nav-link" id="professional_information-tab" href="#professional_information" data-bs-toggle="tab">{{ __('labels.membership.professional_status') }}</a>
+    </nav>
 
-        <nav class="nav nav-tabs">
-            <a class="nav-item nav-link active" id="membership-tab" href="#membership" data-bs-toggle="tab">{{ __('labels.title.membership') }}</a>
-            <a class="nav-item nav-link" id="licences-tab" href="#licences" data-bs-toggle="tab">{{ __('labels.membership.licences') }}</a>
-            <a class="nav-item nav-link" id="professional_information-tab" href="#professional_information" data-bs-toggle="tab">{{ __('labels.membership.professional_status') }}</a>
-        </nav>
-
-        <div class="tab-content">
-            <div class="tab-pane active" id="membership">
-                <div class="col-md-6 form-group">
-                    <label for="status">{{ __('labels.generic.status') }}</label>
-                    <input type="text" name="_status" class="form-control" id="status" value="{{ $membership->status }}" disabled>
-                </div>
+    <div class="tab-content">
+        <div class="tab-pane active" id="membership">
+            <div class="col-md-6 form-group">
+                <label for="status">{{ __('labels.generic.status') }}</label>
+                <input type="text" name="_status" class="form-control" id="status" value="{{ $membership->status }}" disabled>
             </div>
+        </div>
 
-            <div class="tab-pane" id="licences">
-                <!-- Licences etc... -->
+        <div class="tab-pane" id="licences">
+            <!-- Licences etc... -->
+            <form action="{{ route('memberships.licences.update') }}" method="post" enctype="multipart/form-data" id="licenceForm" role="form" class="php-email-form">
+                @csrf
+                <input type="hidden" id="updateLicences" value="{{ route('memberships.licences.update') }}">
+                @method('put')
+
                 <div class="form-group" id="licence-container" data-latest-index="{{ $membership->licences->count() - 1 }}">
                     @foreach ($membership->licences as $i => $licence)
                         @include('themes.expertij.partials.membership.edit.licence', ['licence' => $licence, 'i' => $i])
@@ -38,10 +38,23 @@
 
                 <input type="hidden" id="createItem" value="{{ route('memberships.items.create') }}">
                 <input type="hidden" id="deleteItem" value="{{ route('memberships.items.delete', 0) }}">
-            </div>
             </form>
-            <div class="tab-pane" id="professional_information">
-                <!-- Professional information -->
+            <div class="row mt-5 d-flex align-items-center justify-content-center">
+                <div class="col-md-6 offset-md-4">
+                    <button class="btn btn-success form-action-btn" data-form="licenceForm" data-route="updateLicences" type="button">
+                        {{ __('labels.button.update') }}
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-pane" id="professional_information">
+            <!-- Professional information -->
+            <form action="#" method="post" id="membershipForm" role="form" class="php-email-form">
+                @csrf
+                <input type="hidden" id="update" value="{{ route('memberships.update') }}">
+                @method('put')
+
                 <div class="row">
                     <div class="col-md-6 form-group">
                         <label for="professional_status">{{ __('labels.membership.professional_status') }}</label>
@@ -99,17 +112,16 @@
                         </div>
                     </div>
                 </div>
+            </form>
+            <div class="row mt-5 d-flex align-items-center justify-content-center">
+                <div class="col-md-6 offset-md-4">
+                    <button class="btn btn-success form-action-btn" data-form="membershipForm" data-route="update" type="button">
+                        {{ __('labels.button.update') }}
+                    </button>
+                </div>
             </div>
         </div>
-
-        <div class="row mt-5 d-flex align-items-center justify-content-center">
-            <div class="col-md-6 offset-md-4">
-                <button class="btn btn-success form-action-btn" data-form="updateMembership" data-route="update" type="button">
-                    {{ __('labels.button.update') }}
-                </button>
-            </div>
-        </div>
-    </form>
+    </div>
 </div>
 
 <form action="#" method="post" id="items" role="form">

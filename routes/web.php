@@ -37,6 +37,7 @@ Route::put('/'.$segments['posts'].'/comments/{comment}', [PostController::class,
 Route::delete('/'.$segments['posts'].'/comments/{comment}', [PostController::class, 'deleteComment'])->name('posts.comments.delete')->middleware('auth');
 Route::get('/'.$segments['posts'].'/'.$segments['categories'].'/{id}/{slug}', [PostCategoryController::class, 'index'])->name('posts.categories');
 
+Route::put('/memberships/licences', [MembershipController::class, 'updateLicences'])->name('memberships.licences.update');
 Route::get('/memberships/create', [MembershipController::class, 'create'])->name('memberships.create');
 Route::get('/memberships/edit', [MembershipController::class, 'edit'])->name('memberships.edit');
 Route::put('/memberships', [MembershipController::class, 'update'])->name('memberships.update');

@@ -4,6 +4,7 @@
             <label for="attestation_{{ $i }}_{{ $j }}">{{ __('labels.generic.attestation') }}</label>
             <input type="file" name="attestation_{{ $i }}_{{ $j }}" class="form-control" id="attestation_{{ $i }}_{{ $j }}">
             <div class="text-danger" id="attestation_{{ $i }}_{{ $j }}Error"></div>
+            <input type="hidden" name="_attestation_file_id" value="attestation_{{ $i }}_{{ $j }}">
         </div>
         <div class="col-md-6 form-group">
             <label>{{ __('labels.generic.attestation') }}</label>

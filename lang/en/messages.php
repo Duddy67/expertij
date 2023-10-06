@@ -55,6 +55,7 @@ return [
     ],
     'membership' => [
         'update_success' => 'Membership successfully updated.',
+        'licences_update_success' => 'Licence(s) successfully updated.',
         'professional_status_info_required' => 'The :attribute field is required.',
         'appeal_court_required' => 'The :attribute field is required.',
         'court_required' => 'The :attribute field is required.',

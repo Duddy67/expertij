@@ -55,6 +55,7 @@ return [
     ],
     'membership' => [
         'update_success' => 'Adhésion mise à jour avec succès.',
+        'licences_update_success' => 'Certificat(s) mis à jour avec succès.',
         'professional_status_info_required' => 'Le champ :attribute est obligatoire.',
         'appeal_court_required' => 'Le champ :attribute est obligatoire.',
         'court_required' => 'Le champ :attribute est obligatoire.',
