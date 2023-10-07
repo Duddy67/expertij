@@ -143,6 +143,7 @@ return [
         'mass_unpublish_not_auth' => 'You are not authorised to unpublish some of the selected items.',
         'must_not_be_descendant' => 'Node must not be a descendant.',
         'item_is_private' => ':name item is private.',
+        'item_deleted' => 'Item successfully deleted.',
         'image_deleted' => 'image successfully deleted.',
         'no_item_found' => 'No item has been found.',
         'no_document_to_delete' => 'No document to delete.',

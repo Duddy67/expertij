@@ -30,14 +30,23 @@ class UpdateRequest extends FormRequest
             return $rules;
         }
 
-        // licences, attestations, skills
 
+        // Process the licence form.
         if (isset($this->request->all()['licences'])) {
             $licences = $this->request->all()['licences'];
             // Loop through attestations in each licence and set a rule accordingly.
             foreach ($licences as $i => $licence) {
                 foreach ($licence['attestations'] as $j => $attestation) {
-                    $rules['attestation_'.$i.'_'.$j] = 'nullable|mimes:pdf,doc,docx,png,jpg,jpeg|max:10000';
+                    // The attestation already exists.
+                    if (isset($attestation['_id'])) {
+                        // Check for a possible new document.
+                        $rules['attestation_'.$i.'_'.$j] = 'nullable|mimes:pdf,doc,docx,png,jpg,jpeg|max:10000';
+                    }
+                    // Brand new attestation
+                    else {
+                        // An document is mandatory. 
+                        $rules['attestation_'.$i.'_'.$j] = 'required|mimes:pdf,doc,docx,png,jpg,jpeg|max:10000';
+                    }
                 }
             }
 
@@ -49,8 +58,8 @@ class UpdateRequest extends FormRequest
             $rules['licences.*.attestations.*.skills.*.interpreter'] = 'required_without:licences.*.attestations.*.skills.*.translator';
             $rules['licences.*.attestations.*.skills.*.translator'] = 'required_without:licences.*.attestations.*.skills.*.interpreter';
         }
+        // Process the professional status form
         else {
-            // professional status
             $rules['professional_status'] = 'required';
             $rules['professional_status_info'] = 'required_if:professional_status,other|max:50';
             $rules['since'] = 'required';

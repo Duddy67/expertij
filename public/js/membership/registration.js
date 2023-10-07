@@ -20,6 +20,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }, false);
 
+    // Initialise the jurisdiction types.
+    const licenceTypes = document.getElementsByClassName('licence-type');
+    for (let licenceType of licenceTypes) {
+        switchJurisdiction(licenceType);
+    }
+
     // Show or hide the professional_status_info field according to the professional_status field value.
     if (document.getElementById('professional_status')) { 
         // The field is hidden by default.
@@ -35,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Set the jurisdiction type (appeal_court / court) for each licence type (expert / ceseda).
     function switchJurisdiction(element) {
         if (element.dataset.type == 'expert') {
             document.getElementById('licences.'+element.dataset.licenceIndex+'.court').disabled = true;
@@ -107,7 +114,6 @@ document.addEventListener('DOMContentLoaded', () => {
         // Check for items to remove from the DOM.
         if (route == 'deleteItem') {
             // Set the Laravel method field to "delete".
-            //document.getElementsByName('_method')[0].value = 'delete';
             document.getElementById('_item_form_method').value = 'delete';
 
             // The item exists in database and has to be deleted.
@@ -188,6 +194,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         else {
             displayMessage('danger', 'Error '+status+': '+result.message);
+        }
+    }
+
+    function refreshFieldValues(values) {
+        for (const [index, value] of Object.entries(values)) {
+            if (document.getElementById(index).tagName == 'IMG') {
+                document.getElementById(index).setAttribute('src', value);
+            }
+            else {
+                document.getElementById(index).value = value;
+            }
+        }
+    }
+
+    function replaceElements(containers) {
+        for (const [id, element] of Object.entries(containers)) {
+            // Remove the container children.
+            document.getElementById(id).remove();
+            // Insert the new element in the container.
+            document.getElementById(id).insertAdjacentHTML('beforeend', element);
         }
     }
 

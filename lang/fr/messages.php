@@ -143,6 +143,7 @@ return [
         'mass_unpublish_not_auth' => 'Vous n\'êtes pas autorisé(e) à dépublier certains des éléments sélectionnés.',
         'must_not_be_descendant' => 'Le noeud ne doit pas être un descendant.',
         'item_is_private' => 'L\'élément :name est privé.',
+        'item_deleted' => 'Elément supprimée avec succès.',
         'image_deleted' => 'Image supprimée avec succès.',
         'no_item_found' => 'Aucun élément n\'a été trouvé',
         'no_document_to_delete' => 'Aucun document à supprimer.',

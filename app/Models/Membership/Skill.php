@@ -32,6 +32,7 @@ class Skill extends Model
      * @var array
      */
     protected $fillable = [
+        'language_id',
         'interpreter',
         'interpreter_cassation',
         'translator',

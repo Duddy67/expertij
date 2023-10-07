@@ -158,8 +158,7 @@ class MembershipController extends Controller
                         'expiry_date' => $attestationItem['_expiry_date'],
                     ]);
 
-                    //$document = $this->uploadDocument($request, 'attestation_'.$i.'_'.$j, 'licence_attestation'); 
-                    $document = $this->uploadDocument($request, $request->input('_attestation_file_id'), 'licence_attestation'); 
+                    $document = $this->uploadDocument($request, $attestationItem['_attestation_file_id'], 'licence_attestation'); 
                     $attestation->document()->save($document);
 
                     $licence->attestations()->save($attestation);
@@ -236,7 +235,6 @@ class MembershipController extends Controller
      */
     public function updateLicences(UpdateRequest $request)
     {
-file_put_contents('debog_file.txt', print_r($request->all(), true));
         // Get the user's membership.
         $membership = Auth::user()->membership;
 
@@ -268,7 +266,7 @@ file_put_contents('debog_file.txt', print_r($request->all(), true));
             foreach ($licenceItem['attestations'] as $j => $attestationItem) {
                 // Update the attestation.
                 if (isset($attestationItem['_id'])) {
-                    $attestation = $membership->licences->attestations->where('id', $attestationItem['_id'])->first();
+                    $attestation = $licence->attestations->where('id', $attestationItem['_id'])->first();
 
                     $attestation->expiry_date = $attestationItem['_expiry_date'];
                     $attestation->save();
@@ -283,15 +281,22 @@ file_put_contents('debog_file.txt', print_r($request->all(), true));
                 }
 
                 // Check for possible new attestation file.
-                if ($request->input($request->input('_attestation_file_id'), null)) {
-                    $document = $this->uploadDocument($request, $request->input('_attestation_file_id'), 'licence_attestation'); 
+                if ($request->has($attestationItem['_attestation_file_id'])) {
+                    // Delete the previous attestation document if any.
+                    if ($attestation->document) {
+                        $attestation->document->delete();
+                    }
+file_put_contents('debog_file.txt', print_r($request->all(), true));
+                    preg_match('#(_[0-9]+_[0-9]+)$#', $attestationItem['_attestation_file_id'], $matches);
+
+                    $document = $this->uploadDocument($request, $attestationItem['_attestation_file_id'], 'licence_attestation'); 
                     $attestation->document()->save($document);
                 }
 
                 foreach ($attestationItem['skills'] as $skillItem) {
                     // Update the skill.
                     if (isset($skillItem['_id'])) {
-                        $skill = $membership->licences->attestations->skills->where('id', $skillItem['_id'])->first();
+                        $skill = $attestation->skills->where('id', $skillItem['_id'])->first();
 
                         $skill->language_id = $skillItem['alpha_3'];
                         $skill->interpreter = (isset($skillItem['interpreter'])) ? true : false;
@@ -303,7 +308,7 @@ file_put_contents('debog_file.txt', print_r($request->all(), true));
                     // Create a new skill.
                     else {
                         $skill = new Skill([
-                            'alpha_3' => $skillItem['alpha_3'],
+                            'language_id' => $skillItem['alpha_3'],
                             'interpreter' => (isset($skillItem['interpreter'])) ? true : false,
                             'interpreter_cassation' => (isset($skillItem['interpreter_cassation'])) ? true : false,
                             'translator' => (isset($skillItem['translator'])) ? true : false,
@@ -354,6 +359,7 @@ file_put_contents('debog_file.txt', print_r($request->all(), true));
         $page = Setting::getPage('membership.registration');
         $options = $this->getOptions();
 
+        // Use the registration partial for new items.
         $html = view('themes.'.$page['theme'].'.partials.membership.registration.'.$request->input('_type'), compact('page', 'options', 'i', 'j', 'k'))->render();
 
         // licence, (no index is needed).
@@ -383,9 +389,16 @@ file_put_contents('debog_file.txt', print_r($request->all(), true));
 
         // The item exists in database.
         if ($id > 0) {
+            $items = [
+                'licence' => '\App\Models\Membership\Licence', 
+                'attestation' => '\App\Models\Membership\Attestation', 
+                'skill' => '\App\Models\Membership\Skill'
+            ];
+
+            $items[$type]::where('id', $id)->delete();
         }
 
-        return response()->json(['target' => $type.'-'.$request->input('_index')]);
+        return response()->json(['target' => $type.'-'.$request->input('_index'), 'success' => __('messages.generic.item_deleted')]);
     }
 
     /*
