@@ -13,7 +13,7 @@
             <div class="text-danger" id="licences.{{ $i }}.attestations.{{ $j }}.expiry_dateError"></div>
         </div>
     </div>
-    <div class="row" id="attestation-file-button-{{ $i }}_{{ $j }}">
+    <div class="row" id="attestation-file-button-{{ $i }}-{{ $j }}">
         @include('themes.expertij.partials.membership.edit.attestation-file-button', ['fileUrl' => $attestation->document->getUrl(), 'fileName' => $attestation->document->file_name])
     </div>
 

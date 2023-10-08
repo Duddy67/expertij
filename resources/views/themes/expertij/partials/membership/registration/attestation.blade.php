@@ -13,6 +13,8 @@
             <div class="text-danger" id="licences.{{ $i }}.attestations.{{ $j }}.expiry_dateError"></div>
         </div>
     </div>
+    <div class="row" id="attestation-file-button-{{ $i }}-{{ $j }}">
+    </div>
 
     <div class="form-group" id="skill-container-{{ $i }}-{{ $j }}" data-latest-index="{{ $k }}">
         @include('themes.expertij.partials.membership.registration.skill')

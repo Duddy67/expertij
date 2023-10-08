@@ -215,6 +215,7 @@ class MembershipController extends Controller
     {
         // Get the user's membership.
         $membership = Auth::user()->membership;
+        $replacements = $refresh = [];
 
         $membership->professional_status = $request->input('professional_status');
         $membership->professional_status_info = $request->input('professional_status_info');
@@ -223,8 +224,27 @@ class MembershipController extends Controller
         $membership->naf_code = $request->input('naf_code');
         $membership->save();
 
+        // Check for possible attestation file replacement.
+        if ($request->has('professional_attestation')) {
+            // Delete the previous attestation.
+            if ($membership->professionalAttestation) {
+                $membership->professionalAttestation->delete();
+            }
 
-        return response()->json(['success' => __('messages.membership.update_success')]);
+            $document = $this->uploadDocument($request, 'professional_attestation'); 
+            $membership->professionalAttestation()->save($document);
+            $replacements[] = $this->getReplacementData($document, 'attestation-file-button');
+            $refresh['professional_attestation'] = '';
+        }
+
+        $result = ['success' => __('messages.membership.update_success')];
+
+        if (!empty($replacements)) {
+            $result['replacements'] = $replacements;
+            $result['refresh'] = $refresh;
+        }
+
+        return response()->json($result);
     }
 
     /**
@@ -237,6 +257,7 @@ class MembershipController extends Controller
     {
         // Get the user's membership.
         $membership = Auth::user()->membership;
+        $replacements = $refresh = [];
 
         foreach ($request->input('licences') as $i => $licenceItem) {
             // First, get the jurisdiction type (set as dropdownlist name in the form) according to
@@ -280,17 +301,21 @@ class MembershipController extends Controller
                     $licence->attestations()->save($attestation);
                 }
 
-                // Check for possible new attestation file.
+                // Check for possible attestation file replacement or new attestation.
                 if ($request->has($attestationItem['_attestation_file_id'])) {
                     // Delete the previous attestation document if any.
                     if ($attestation->document) {
                         $attestation->document->delete();
                     }
-file_put_contents('debog_file.txt', print_r($request->all(), true));
-                    preg_match('#(_[0-9]+_[0-9]+)$#', $attestationItem['_attestation_file_id'], $matches);
+//file_put_contents('debog_file.txt', print_r($request->all(), true));
 
                     $document = $this->uploadDocument($request, $attestationItem['_attestation_file_id'], 'licence_attestation'); 
                     $attestation->document()->save($document);
+
+                    preg_match('#(_[0-9]+_[0-9]+)$#', $attestationItem['_attestation_file_id'], $matches);
+                    $containerId = 'attestation-file-button'.str_replace('_', '-', $matches[1]);
+                    $replacements[] = $this->getReplacementData($document, $containerId);
+                    $refresh['attestation'.$matches[1]] = '';
                 }
 
                 foreach ($attestationItem['skills'] as $skillItem) {
@@ -321,7 +346,13 @@ file_put_contents('debog_file.txt', print_r($request->all(), true));
             }
         }
 
-        return response()->json(['success' => __('messages.membership.licences_update_success')]);
+        $result = ['success' => __('messages.membership.licences_update_success')];
+
+        if (!empty($replacements)) {
+            $result['replacements'] = $replacements;
+        }
+
+        return response()->json($result);
     }
 
     /**
@@ -434,5 +465,15 @@ file_put_contents('debog_file.txt', print_r($request->all(), true));
         $options['jurisdictions'] = $membership->getJurisdictionOptions();
 
         return $options;
+    }
+
+    private function getReplacementData(Document $document, string $containerId)
+    {
+        $page = Setting::getPage('membership');
+        $fileUrl = $document->getUrl();
+        $fileName = $document->file_name;
+        $html = view('themes.'.$page['theme'].'.partials.membership.edit.attestation-file-button', compact('fileUrl', 'fileName'))->render();
+
+        return ['containerId' => $containerId, 'html' => $html];
     }
 }

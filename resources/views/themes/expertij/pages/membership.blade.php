@@ -104,13 +104,9 @@
                         <input type="file" name="professional_attestation" class="form-control" id="professional_attestation">
                         <div class="text-danger" id="professional_attestationError"></div>
                     </div>
-                    <div class="col-md-6 form-group">
-                        <label>{{ __('labels.generic.attestation') }}</label>
-                        <div id="professional_attestation_document">
-                            <a class="btn btn-success" href="{{ url('/').$membership->professionalAttestation->getUrl() }}" target="_blank">
-                            {{ $membership->professionalAttestation->file_name }}</a>
-                        </div>
-                    </div>
+                </div>
+                <div class="row" id="attestation-file-button">
+                    @include('themes.expertij.partials.membership.edit.attestation-file-button', ['fileUrl' => $membership->professionalAttestation->getUrl(), 'fileName' => $membership->professionalAttestation->file_name])
                 </div>
             </form>
             <div class="row mt-5 d-flex align-items-center justify-content-center">

@@ -161,6 +161,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 else if (key == 'refresh') {
                     refreshFieldValues(result.refresh);
                 }
+                // Replace the html code inside the given containers.
+                else if (key == 'replacements') {
+                    for (const [key, replacement] of Object.entries(result.replacements)) {
+                        document.getElementById(replacement.containerId).innerHTML = replacement.html;
+                    }
+                }
                 // messages
                 else if (['success', 'warning', 'info'].includes(key)) {
                     displayMessage(key, value);
@@ -205,15 +211,6 @@ document.addEventListener('DOMContentLoaded', () => {
             else {
                 document.getElementById(index).value = value;
             }
-        }
-    }
-
-    function replaceElements(containers) {
-        for (const [id, element] of Object.entries(containers)) {
-            // Remove the container children.
-            document.getElementById(id).remove();
-            // Insert the new element in the container.
-            document.getElementById(id).insertAdjacentHTML('beforeend', element);
         }
     }
 
