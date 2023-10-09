@@ -215,7 +215,7 @@ class MembershipController extends Controller
     {
         // Get the user's membership.
         $membership = Auth::user()->membership;
-        $replacements = $refresh = [];
+        $replacements = $updates = [];
 
         $membership->professional_status = $request->input('professional_status');
         $membership->professional_status_info = $request->input('professional_status_info');
@@ -234,14 +234,14 @@ class MembershipController extends Controller
             $document = $this->uploadDocument($request, 'professional_attestation'); 
             $membership->professionalAttestation()->save($document);
             $replacements[] = $this->getReplacementData($document, 'attestation-file-button');
-            $refresh['professional_attestation'] = '';
+            $updates['professional_attestation'] = '';
         }
 
         $result = ['success' => __('messages.membership.update_success')];
 
         if (!empty($replacements)) {
             $result['replacements'] = $replacements;
-            $result['refresh'] = $refresh;
+            $result['updates'] = $updates;
         }
 
         return response()->json($result);
@@ -257,7 +257,7 @@ class MembershipController extends Controller
     {
         // Get the user's membership.
         $membership = Auth::user()->membership;
-        $replacements = $refresh = [];
+        $replacements = $updates = [];
 
         foreach ($request->input('licences') as $i => $licenceItem) {
             // First, get the jurisdiction type (set as dropdownlist name in the form) according to
@@ -307,15 +307,16 @@ class MembershipController extends Controller
                     if ($attestation->document) {
                         $attestation->document->delete();
                     }
-//file_put_contents('debog_file.txt', print_r($request->all(), true));
 
                     $document = $this->uploadDocument($request, $attestationItem['_attestation_file_id'], 'licence_attestation'); 
                     $attestation->document()->save($document);
 
+                    // Get the field index from the attestation file id.
                     preg_match('#(_[0-9]+_[0-9]+)$#', $attestationItem['_attestation_file_id'], $matches);
                     $containerId = 'attestation-file-button'.str_replace('_', '-', $matches[1]);
+
                     $replacements[] = $this->getReplacementData($document, $containerId);
-                    $refresh['attestation'.$matches[1]] = '';
+                    $updates['attestation'.$matches[1]] = '';
                 }
 
                 foreach ($attestationItem['skills'] as $skillItem) {
@@ -350,6 +351,7 @@ class MembershipController extends Controller
 
         if (!empty($replacements)) {
             $result['replacements'] = $replacements;
+            $result['updates'] = $updates;
         }
 
         return response()->json($result);
@@ -367,7 +369,7 @@ class MembershipController extends Controller
     }
 
     /**
-     * Create a new item to the membership. (AJAX)
+     * Create a new item for the membership. (AJAX)
      *
      * @param  \Illuminate\Http\Request  $request
      * @return JSON
@@ -404,7 +406,7 @@ class MembershipController extends Controller
             $index = '-'.$i.'-'.$j;
         }
 
-        return response()->json(['html' => $html, 'destination' => $type.'-container'.$index]);
+        return response()->json(['additions' => [['html' => $html, 'containerId' => $type.'-container'.$index, 'position' => 'beforeend']]]);
     }
 
     /**
@@ -429,7 +431,8 @@ class MembershipController extends Controller
             $items[$type]::where('id', $id)->delete();
         }
 
-        return response()->json(['target' => $type.'-'.$request->input('_index'), 'success' => __('messages.generic.item_deleted')]);
+        return response()->json(['deletions' => [['targetId' => $type.'-'.$request->input('_index')]], 'success' => __('messages.generic.item_deleted')]);
+
     }
 
     /*

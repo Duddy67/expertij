@@ -113,19 +113,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Check for items to remove from the DOM.
         if (route == 'deleteItem') {
-            // Set the Laravel method field to "delete".
-            document.getElementById('_item_form_method').value = 'delete';
+            if (confirm('You are about to delete an item. Are you sure ?')) {
+                // Set the Laravel method field to "delete".
+                document.getElementById('_item_form_method').value = 'delete';
 
-            // The item exists in database and has to be deleted.
-            if (element.dataset.itemId !== undefined) {
-                // Remove the default zero id at the end of the url.
-                url = url.slice(0, -1);
-                // Add the id of the item to delete.
-                url = url+element.dataset.itemId;
+                // The item exists in database and has to be deleted.
+                if (element.dataset.itemId !== undefined) {
+                    // Remove the default zero id at the end of the url.
+                    url = url.slice(0, -1);
+                    // Add the id of the item to delete.
+                    url = url+element.dataset.itemId;
+                }
+
+                // Add the item type and the element index to the route url.
+                url = url+'?_type='+element.dataset.type+'&_index='+element.dataset.index;
             }
+            else {
+                // Hide the progress bar.
+                document.getElementById('progress-container').classList.add('d-none');
 
-            // Add the item type and the element index to the route url.
-            url = url+'?_type='+element.dataset.type+'&_index='+element.dataset.index;
+                return;
+            }
         }
 
         let formData = new FormData(document.getElementById(element.dataset.form));
@@ -139,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
             headers: {'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'), 'Accept': 'application/json'}
         });
 
-        if (route.startsWith('delete')) {
+        if (route == 'deleteItem') {
             // Set back the Laravel method field to "post".
             //document.getElementsByName('_method')[0].value = 'post';
             document.getElementById('_item_form_method').value = 'post';
@@ -158,10 +166,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (key == 'redirect') {
                     window.location.href = result.redirect;
                 }
-                else if (key == 'refresh') {
-                    refreshFieldValues(result.refresh);
+                // Update the value of the given elements.
+                else if (key == 'updates') {
+                    updateFieldValues(result.updates);
                 }
-                // Replace the html code inside the given containers.
+                // Replace html code inside the given containers.
                 else if (key == 'replacements') {
                     for (const [key, replacement] of Object.entries(result.replacements)) {
                         document.getElementById(replacement.containerId).innerHTML = replacement.html;
@@ -171,15 +180,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 else if (['success', 'warning', 'info'].includes(key)) {
                     displayMessage(key, value);
                 }
-                // An item has to be added.
-                else if (key == 'html') {
-                    document.getElementById(result.destination).insertAdjacentHTML('beforeend', result.html);
+                // Add html code inside the given containers.
+                else if (key == 'additions') {
+                    for (const [key, addition] of Object.entries(result.additions)) {
+                        document.getElementById(addition.containerId).insertAdjacentHTML(addition.position, addition.html);
+                    }
+
                     // Refresh the date inputs.
                     $.fn.initDatePickers();
                 }
-                // An item has to be removed.
-                else if (key == 'target') {
-                    document.getElementById(result.target).remove();
+                // Delete the given html elements. 
+                else if (key == 'deletions') {
+                    for (const [key, deletion] of Object.entries(result.deletions)) {
+                        document.getElementById(deletion.targetId).remove();
+                    }
                 }
             }
         }
@@ -203,13 +217,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function refreshFieldValues(values) {
-        for (const [index, value] of Object.entries(values)) {
-            if (document.getElementById(index).tagName == 'IMG') {
-                document.getElementById(index).setAttribute('src', value);
+    function updateFieldValues(updates) {
+        for (const [elementId, value] of Object.entries(updates)) {
+            if (document.getElementById(elementId).tagName == 'IMG') {
+                document.getElementById(elementId).setAttribute('src', value);
             }
             else {
-                document.getElementById(index).value = value;
+                document.getElementById(elementId).value = value;
             }
         }
     }
