@@ -129,7 +129,7 @@
     <script type="text/javascript" src="{{ asset('/vendor/adminlte/plugins/moment/moment.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/vendor/adminlte/plugins/daterangepicker/daterangepicker.js') }}"></script>
     <script src="{{ asset('/vendor/codalia/c.ajax.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('/js/admin/daterangepicker.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/js/daterangepicker.js') }}"></script>
     <script src="{{ asset('/js/membership.js') }}"></script>
 @endpush
 
