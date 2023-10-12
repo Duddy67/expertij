@@ -43,14 +43,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Set the jurisdiction type (appeal_court / court) for each licence type (expert / ceseda).
     function switchJurisdiction(element) {
-        if (element.dataset.type == 'expert') {
-            document.getElementById('licences.'+element.dataset.licenceIndex+'.court').disabled = true;
-            document.getElementById('licences.'+element.dataset.licenceIndex+'.appeal_court').disabled = false;
-        }
-        // ceseda
-        else {
-            document.getElementById('licences.'+element.dataset.licenceIndex+'.appeal_court').disabled = true;
-            document.getElementById('licences.'+element.dataset.licenceIndex+'.court').disabled = false;
+        if (element.checked) {
+            if (element.dataset.type == 'expert') {
+                document.getElementById('licences.'+element.dataset.licenceIndex+'.court').disabled = true;
+                document.getElementById('licences.'+element.dataset.licenceIndex+'.appeal_court').disabled = false;
+            }
+            // ceseda
+            else {
+                document.getElementById('licences.'+element.dataset.licenceIndex+'.appeal_court').disabled = true;
+                document.getElementById('licences.'+element.dataset.licenceIndex+'.court').disabled = false;
+            }
         }
     }
 

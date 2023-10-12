@@ -2,7 +2,8 @@
     <div class="row">
         <div class="col-md-6 form-group">
             @foreach ($options['licence_type'] as $option)
-                <input class="form-check-input licence-type" type="radio" data-type="{{ $option['value'] }}" data-licence-index="{{ $i }}" name="licences[{{ $i }}][type]" {{ ($option['value'] == 'expert') ? 'checked="checked"' : '' }} id="licences.{{ $i }}.{{ $option['value'] }}" value="{{ $option['value'] }}">
+                @php $checked = ($option['value'] == 'expert') ? 'checked="checked"' : ''; @endphp
+                <input class="form-check-input licence-type" type="radio" data-type="{{ $option['value'] }}" data-licence-index="{{ $i }}" name="licences[{{ $i }}][type]" {!! $checked !!} id="licences.{{ $i }}.{{ $option['value'] }}" value="{{ $option['value'] }}">
                 <label class="form-check-label" for="licences.{{ $i }}.{{ $option['value'] }}">
                   {{ $option['text'] }}
                 </label>

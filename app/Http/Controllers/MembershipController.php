@@ -86,11 +86,6 @@ class MembershipController extends Controller
                 'name' => $request->input('first_name').' '.$request->input('last_name'),
                 'email' => $request->input('email'),
                 'password' => Hash::make($request->input('password')),
-                //'civility' => $request->input('civility'),
-                //'birth_name' => $request->input('birth_name'),
-                //'birth_location' => $request->input('birth_location'),
-                //'birth_date' => $request->input('_birth_date'),
-                //'citizenship_id' => $request->input('citizenship'),
             ]);
 
             $user->assignRole('registered');
@@ -131,9 +126,12 @@ class MembershipController extends Controller
                 'owned_by' => $user->id,
             ]);
 
+            // First set the relationship with the parent model.
+            $user->membership()->save($membership);
+
+            // Then upload the given professional attestation file.  
             $professionalAttestation = $this->uploadDocument($request, 'professional_attestation'); 
             $membership->professionalAttestation()->save($professionalAttestation);
-            $user->membership()->save($membership);
 
 
             foreach ($request->input('licences') as $i => $licenceItem) {
@@ -146,11 +144,7 @@ class MembershipController extends Controller
                     'jurisdiction_id' => $licenceItem[$jurisdictionType],
                 ]);
 
-                // Set the jurisdiction type according to the licence type.
-                //$jurisdictionType = ($licence->type == 'expert') ? 'appeal_court' : 'court';
-                //$jurisdiction = Jurisdiction::where('id', $licenceItem[$jurisdictionType])->first();
-                //$jurisdiction->licences()->save($licence);
-
+                // Set the relationship with the parent model.
                 $membership->licences()->save($licence);
 
                 foreach ($licenceItem['attestations'] as $j => $attestationItem) {
@@ -158,10 +152,12 @@ class MembershipController extends Controller
                         'expiry_date' => $attestationItem['_expiry_date'],
                     ]);
 
+                    // First set the relationship with the parent model.
+                    $licence->attestations()->save($attestation);
+
+                    // Then upload the given licence attestation file.  
                     $document = $this->uploadDocument($request, $attestationItem['_attestation_file_id'], 'licence_attestation'); 
                     $attestation->document()->save($document);
-
-                    $licence->attestations()->save($attestation);
 
                     foreach ($attestationItem['skills'] as $skillItem) {
                         $skill = new Skill([
@@ -172,9 +168,7 @@ class MembershipController extends Controller
                             'translator_cassation' => (isset($skillItem['translator_cassation'])) ? true : false,
                         ]);
 
-                        //$language = Language::where('alpha_3', $skillItem['alpha_3'])->first();
-                        $language->skills()->save($skill);
-
+                        // Set the relationship with the parent model.
                         $attestation->skills()->save($skill);
                     }
                 }

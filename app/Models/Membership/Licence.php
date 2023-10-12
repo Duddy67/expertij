@@ -29,6 +29,7 @@ class Licence extends Model
     protected $fillable = [
         'type',
         'since',
+        'jurisdiction_id',
     ];
 
     /**
