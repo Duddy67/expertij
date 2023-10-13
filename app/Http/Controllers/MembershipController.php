@@ -179,9 +179,12 @@ class MembershipController extends Controller
             $user->photo()->save($photo);
         }
 
-        $lastId = $user->id;
+        $request->session()->flash('success', __('messages.post.create_success'));
 
-        return response()->json();
+        // Authenticate the new user.
+        Auth::login($user);
+
+        return response()->json(['redirect' => route('profile.edit')]);
     }
 
     /**
