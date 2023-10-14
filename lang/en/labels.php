@@ -107,6 +107,8 @@ return [
 	'observations' => 'Observations',
 	'why_expertij' => 'Why subscribed to Expertij ?',
 	'submit_application' => 'Submit application',
+	'update_licences' => 'Update licence(s)',
+	'update_professional_status' => 'Update professional status',
     ],
     'category' => [
 	'create_category' => 'Create a category',

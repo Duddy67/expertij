@@ -107,6 +107,8 @@ return [
 	'observations' => 'Observations',
 	'why_expertij' => 'Pourquoi voulez vous adhérer à Expertij ?',
 	'submit_application' => 'Soumettre votre candidature',
+	'update_licences' => 'Mettre à jour le(s) certificat(s)',
+	'update_professional_status' => 'Mettre à jour le statut professionnel',
     ],
     'category' => [
 	'create_category' => 'Créer une catégorie',

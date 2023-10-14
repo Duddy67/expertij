@@ -42,7 +42,7 @@
             <div class="row mt-5 d-flex align-items-center justify-content-center">
                 <div class="col-md-6 offset-md-4">
                     <button class="btn btn-success form-action-btn" data-form="licenceForm" data-route="updateLicences" type="button">
-                        {{ __('labels.button.update') }}
+                        {{ __('labels.membership.update_licences') }}
                     </button>
                 </div>
             </div>
@@ -112,7 +112,7 @@
             <div class="row mt-5 d-flex align-items-center justify-content-center">
                 <div class="col-md-6 offset-md-4">
                     <button class="btn btn-success form-action-btn" data-form="membershipForm" data-route="update" type="button">
-                        {{ __('labels.button.update') }}
+                        {{ __('labels.membership.update_professional_status') }}
                     </button>
                 </div>
             </div>
