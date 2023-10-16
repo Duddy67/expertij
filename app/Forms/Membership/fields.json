@@ -1,0 +1,179 @@
+[
+  {
+    "label": "labels.user.name",
+    "type": "text",
+    "name": "name",
+    "id": "name",
+    "extra": ["disabled"]
+  },
+  {
+    "label": "labels.generic.status",
+    "type": "select",
+    "name": "status",
+    "id": "status",
+    "blank": "labels.generic.select_option",
+    "tab": "membership",
+    "options": [] 
+  },
+  {
+    "label": "labels.generic.access_level",
+    "type": "select",
+    "name": "access_level",
+    "id": "access_level",
+    "blank": "labels.generic.select_option",
+    "options": [] 
+  },
+  {
+    "label": "labels.generic.owned_by",
+    "type": "select",
+    "name": "owned_by",
+    "id": "owned_by",
+    "blank": "labels.generic.select_option",
+    "options": [] 
+  },
+  {
+    "label": "labels.user.groups",
+    "type": "select",
+    "name": "groups",
+    "function": "group",
+    "extra": ["multiple","title_as_id"],
+    "id": "groups",
+    "class": "_locked",
+    "blank": "labels.generic.select_option",
+    "options": [] 
+  },
+  {
+    "label": "labels.generic.created_at",
+    "type": "date",
+    "name": "created_at",
+    "dataset": {"date":"0", "time":"0", "format":"D MMMM YYYY HH:mm"},
+    "id": "created_at",
+    "format": "d M Y H:i",
+    "extra": ["disabled"]
+  },
+  {
+    "label": "labels.generic.updated_by",
+    "type": "text",
+    "name": "updated_by",
+    "id": "updated_by",
+    "extra": ["disabled"],
+    "placeholder": "labels.generic.no_update"
+  },
+  {
+    "label": "labels.generic.updated_at",
+    "type": "date",
+    "name": "updated_at",
+    "dataset": {"date":"0", "time":"0", "format":"D MMMM YYYY HH:mm"},
+    "id": "updated_at",
+    "format": "d M Y H:i",
+    "extra": ["disabled"]
+  },
+  {
+    "label": "labels.post.content",
+    "type": "textarea",
+    "name": "content",
+    "class": "tinymce-texteditor",
+    "id": "content"
+  },
+  {
+    "label": "labels.post.excerpt",
+    "type": "textarea",
+    "name": "excerpt",
+    "class": "tinymce-texteditor",
+    "tab": "extra",
+    "id": "excerpt"
+  },
+  {
+    "label": "labels.generic.image",
+    "type": "file",
+    "name": "image",
+    "id": "image"
+  },
+  {
+    "label": "labels.generic.alt_img",
+    "type": "text",
+    "name": "alt_img",
+    "id": "alt_img",
+    "placeholder": "labels.generic.alt_img"
+  },
+  {
+    "label": "labels.generic.page",
+    "type": "select",
+    "name": "page",
+    "id": "page",
+    "tab": "layout_items",
+    "blank": "labels.generic.none",
+    "options": [] 
+  },
+  {
+    "label": "labels.generic.show_owner",
+    "type": "select",
+    "name": "show_owner",
+    "function": "yes_no",
+    "id": "show_owner",
+    "extra": ["global_setting"],
+    "tab": "settings",
+    "group": "settings",
+    "options": [] 
+  },
+  {
+    "label": "labels.generic.show_created_at",
+    "type": "select",
+    "name": "show_created_at",
+    "function": "yes_no",
+    "id": "show_created_at",
+    "extra": ["global_setting"],
+    "group": "settings",
+    "options": [] 
+  },
+  {
+    "label": "labels.post.show_excerpt",
+    "type": "select",
+    "name": "show_excerpt",
+    "function": "yes_no",
+    "id": "show_excerpt",
+    "extra": ["global_setting"],
+    "group": "settings",
+    "options": [] 
+  },
+  {
+    "label": "labels.generic.show_image",
+    "type": "select",
+    "name": "show_image",
+    "function": "yes_no",
+    "id": "show_image",
+    "extra": ["global_setting"],
+    "group": "settings",
+    "options": [] 
+  },
+  {
+    "label": "labels.generic.show_categories",
+    "type": "select",
+    "name": "show_categories",
+    "function": "yes_no",
+    "id": "show_categories",
+    "extra": ["global_setting"],
+    "group": "settings",
+    "options": [] 
+  },
+  {
+    "label": "labels.generic.allow_comments",
+    "type": "select",
+    "name": "allow_comments",
+    "function": "yes_no",
+    "id": "allow_comments",
+    "extra": ["global_setting"],
+    "group": "settings",
+    "options": [] 
+  },
+  {
+    "label": "labels.generic.comment_alert",
+    "type": "select",
+    "name": "comment_alert",
+    "function": "yes_no",
+    "id": "comment_alert",
+    "extra": ["global_setting"],
+    "group": "settings",
+    "options": [] 
+  }
+]

@@ -139,6 +139,29 @@ scratch. This page gets rid of all links and provides the needed markup only.
               </li>
           @endallowto
 
+          @allowto('create-memberships')
+              @php $open = (request()->is('admin/memberships*')) ? 'menu-open' : '' @endphp
+              <li class="nav-item {{ $open }}">
+                  @php $active = (request()->is('admin/memberships*')) ? 'active' : '' @endphp
+                  <a href="#" class="nav-link {{ $active }}">
+                    <i class="nav-icon fas fa-address-card"></i>
+                    <p>@lang ('labels.title.memberships')<i class="right fas fa-angle-left"></i></p>
+                  </a>
+                  <ul class="nav nav-treeview">
+                          @php $active = ($routeName == 'admin.memberships.index' || $routeName == 'admin.memberships.create' || $routeName == 'admin.memberships.edit') ? true : false @endphp
+                          <x-menu-item href="{{ route('admin.memberships.index') }}" :sub=true :active="$active">
+                            @lang ('labels.membership.members')
+                          </x-menu-item>
+                      @allowto('memberships-settings')
+                          @php $active = (request()->is('admin/memberships/settings*')) ? true : false @endphp
+                          <x-menu-item href="{{ route('admin.memberships.settings.index') }}" :sub=true :active="$active">
+                            @lang ('labels.title.settings')
+                          </x-menu-item>
+                      @endallowto
+                  </ul>
+              </li>
+          @endallowto
+
           @allowto('create-posts')
               @php $open = (request()->is('admin/posts*')) ? 'menu-open' : '' @endphp
               <li class="nav-item {{ $open }}">

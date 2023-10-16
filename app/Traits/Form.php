@@ -136,7 +136,8 @@ trait Form
                     $row->access_level = __('labels.generic.'.$item->access_level);
                 }
                 elseif ($column->name == 'status') {
-                    $row->status = __('labels.generic.'.$item->status);
+                    $type = (isset($column->status_type)) ? $column->status_type : 'generic';
+                    $row->status = __('labels.'.$type.'.'.$item->status);
                 }
                 elseif (in_array($column->name, ['name', 'title']) && !empty($prefix)) {
                     $attributeName = ($column->name == 'name') ? 'name' : 'title';

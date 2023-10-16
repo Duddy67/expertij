@@ -1,0 +1,43 @@
+[
+  {
+    "label": "labels.generic.id",
+    "name": "id",
+    "extra": ["sortable"],
+    "type": "string"
+  },
+  {
+    "label": "labels.user.last_name",
+    "name": "last_name",
+    "extra": ["sortable", "linkable"],
+    "type": "string"
+  },
+  {
+    "label": "labels.user.first_name",
+    "name": "first_name",
+    "extra": ["sortable"],
+    "type": "string"
+  },
+  {
+    "label": "labels.user.email",
+    "name": "email",
+    "extra": ["sortable"],
+    "type": "string"
+  },
+  {
+    "label": "labels.generic.status",
+    "name": "status",
+    "extra": ["sortable"],
+    "status_type": "membership",
+    "type": "string"
+  },
+  {
+    "label": "labels.generic.created_at",
+    "name": "created_at",
+    "type": "date"
+  },
+  {
+    "label": "labels.generic.updated_at",
+    "name": "updated_at",
+    "type": "date"
+  }
+]

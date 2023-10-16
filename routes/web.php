@@ -82,6 +82,7 @@ Route::prefix('admin')->group(function () {
         Route::put('/files/batch', [FileController::class, 'massUpdate'])->name('admin.files.massUpdate');
 
         Route::group([], __DIR__.'/admin/users.php');
+        Route::group([], __DIR__.'/admin/memberships.php');
         Route::group([], __DIR__.'/admin/posts.php');
         Route::group([], __DIR__.'/admin/menus.php');
         Route::group([], __DIR__.'/admin/cms.php');
