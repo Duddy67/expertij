@@ -9,7 +9,7 @@
         @csrf
         @method('put')
 
-         @php $value = (isset($membership)) ? old('name', $fields[0]->value) : old('name'); @endphp
+         @php $value = (isset($membership)) ? old('name', $membership->user->name) : old('name'); @endphp
          <x-input :field="$fields[0]" :value="$value" />
          @php array_shift($fields); // Remove the very first field (ie: name) from the array. @endphp
 
@@ -17,8 +17,8 @@
             <a class="nav-item nav-link active" href="#membership" data-toggle="tab">@php echo __('labels.title.membership'); @endphp</a>
             <a class="nav-item nav-link" href="#professional_status" data-toggle="tab">@php echo __('labels.membership.professional_status'); @endphp</a>
             <a class="nav-item nav-link" href="#licences" data-toggle="tab">@php echo __('labels.membership.licences'); @endphp</a>
-            <a class="nav-item nav-link" href="#profile" data-toggle="tab">@php echo __('labels.user.profile'); @endphp</a>
-            <a class="nav-item nav-link" href="#payment" data-toggle="tab">@php echo __('labels.title.payment'); @endphp</a>
+            <a class="nav-item nav-link" href="#profile" data-toggle="tab">@php echo __('labels.generic.profile'); @endphp</a>
+            <a class="nav-item nav-link" href="#payments" data-toggle="tab">@php echo __('labels.generic.payments'); @endphp</a>
             <a class="nav-item nav-link" href="#insurance" data-toggle="tab">@php echo __('labels.membership.insurance'); @endphp</a>
         </nav>
 
@@ -52,11 +52,6 @@
                     </div>
                 @endif
 
-                @if ($field->name == 'page')
-                    <div class="layout-items" id="layout-items">
-                    </div>
-                @endif
-
                 @if ($field->type == 'date' && isset($field->format))
                      @php $dateFormats[$field->name] = $field->format; @endphp
                 @endif
@@ -65,6 +60,27 @@
                     </div>
                 @endif
             @endforeach
+
+            <div class="tab-pane" id="licences">
+                <div class="form-group" id="licence-container" data-latest-index="{{ $membership->licences->count() - 1 }}">
+                    @foreach ($membership->licences as $i => $licence)
+                        @include('themes.expertij.partials.membership.edit.licence', ['licence' => $licence, 'i' => $i])
+                    @endforeach
+                </div> <!-- licence container -->
+                LICENCES
+            </div>
+
+            <div class="tab-pane" id="profile">
+                PROFILE
+            </div>
+
+            <div class="tab-pane" id="payments">
+                PAYMENTS
+            </div>
+
+            <div class="tab-pane" id="insurance">
+                INSURANCE
+            </div>
         </div>
 
         <input type="hidden" id="cancelEdit" value="{{ route('admin.memberships.cancel', $query) }}">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Traits\Form;
+use App\Traits\CheckInCheckOut;
 use App\Models\Membership;
 use App\Models\Membership\Licence;
 use App\Models\Membership\Attestation;
@@ -57,46 +58,55 @@ class MembershipController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        //
+        $membership = $this->item = Membership::find($id);
+
+        if (!$membership->canAccess()) {
+            return redirect()->route('admin.memberships.index')->with('error',  __('messages.generic.access_not_auth'));
+        }
+
+        if ($membership->checked_out && $membership->checked_out != auth()->user()->id && !$membership->isUserSessionTimedOut()) {
+            return redirect()->route('admin.memberships.index')->with('error',  __('messages.generic.checked_out'));
+        }
+
+        $membership->checkOut();
+
+        $fields = $this->getFields();
+        //$this->setFieldValues($fields, $membership);
+        $except = (!$membership->canEdit()) ? ['destroy', 'save', 'saveClose'] : [];
+        $actions = $this->getActions('form', $except);
+        $dateFormat = Setting::getValue('app', 'date_format');
+        // Add the id parameter to the query.
+        $query = array_merge($request->query(), ['membership' => $id]);
+
+        $options['licence_type'] = $membership->getLicenceTypeOptions();
+        $options['since'] = $membership->getSinceOptions();
+        $options['language'] = $membership->getLanguageOptions();
+        $options['jurisdictions'] = $membership->getJurisdictionOptions();
+
+        return view('admin.membership.form', compact('membership', 'options', 'fields', 'actions', 'dateFormat', 'query'));
+    }
+
+    /**
+     * Checks the record back in.
+     *
+     * @param  Request  $request
+     * @param  \App\Models\Membership $membership (optional)
+     * @return Response
+     */
+    public function cancel(Request $request, Membership $membership = null)
+    {
+        if ($membership) {
+            $membership->safeCheckIn();
+        }
+
+        return redirect()->route('admin.memberships.index', $request->query());
     }
 
     /**
@@ -120,5 +130,18 @@ class MembershipController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Checks in one or more memberships.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return Response
+     */
+    public function massCheckIn(Request $request)
+    {
+        $messages = CheckInCheckOut::checkInMultiple($request->input('ids'), '\\App\\Models\\Membership');
+
+        return redirect()->route('admin.memberships.index', $request->query())->with($messages);
     }
 }

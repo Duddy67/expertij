@@ -119,6 +119,7 @@ return [
         'revoked' => 'Revoked',
         'cancellation' => 'Cancellation',
 	'member_type' => 'Member type',
+	'insurance' => 'Insurance',
     ],
     'category' => [
 	'create_category' => 'Create a category',
@@ -174,6 +175,7 @@ return [
 	'code' => 'Code',
 	'alias' => 'Alias',
 	'page' => 'Page',
+	'profile' => 'Profile',
 	'id' => 'ID',
 	'description' => 'Description',
 	'created_at' => 'Created at',
@@ -278,6 +280,7 @@ return [
 	'statuses' => 'Statuses',
 	'internal_rules' => 'Internal rules',
 	'normal' => 'Normal',
+	'payments' => 'Payments',
     ],
     'filter' => [
 	'search' => 'Search',

@@ -27,13 +27,12 @@
 
     <x-pagination :items=$items />
 
-    <input type="hidden" id="createItem" value="{{ route('admin.posts.create', $query) }}">
-    <input type="hidden" id="destroyItems" value="{{ route('admin.posts.index', $query) }}">
-    <input type="hidden" id="checkinItems" value="{{ route('admin.posts.massCheckIn', $query) }}">
-    <input type="hidden" id="publishItems" value="{{ route('admin.posts.massPublish', $query) }}">
-    <input type="hidden" id="unpublishItems" value="{{ route('admin.posts.massUnpublish', $query) }}">
+    <input type="hidden" id="destroyItems" value="{{ route('admin.memberships.index', $query) }}">
+    <input type="hidden" id="checkinItems" value="{{ route('admin.memberships.massCheckIn', $query) }}">
+    <input type="hidden" id="publishItems" value="{{ route('admin.memberships.massPublish', $query) }}">
+    <input type="hidden" id="unpublishItems" value="{{ route('admin.memberships.massUnpublish', $query) }}">
 
-    <form id="selectedItems" action="{{ route('admin.posts.index', $query) }}" method="post">
+    <form id="selectedItems" action="{{ route('admin.memberships.index', $query) }}" method="post">
         @method('delete')
         @csrf
     </form>

@@ -16,33 +16,6 @@
     "options": [] 
   },
   {
-    "label": "labels.generic.access_level",
-    "type": "select",
-    "name": "access_level",
-    "id": "access_level",
-    "blank": "labels.generic.select_option",
-    "options": [] 
-  },
-  {
-    "label": "labels.generic.owned_by",
-    "type": "select",
-    "name": "owned_by",
-    "id": "owned_by",
-    "blank": "labels.generic.select_option",
-    "options": [] 
-  },
-  {
-    "label": "labels.user.groups",
-    "type": "select",
-    "name": "groups",
-    "function": "group",
-    "extra": ["multiple","title_as_id"],
-    "id": "groups",
-    "class": "_locked",
-    "blank": "labels.generic.select_option",
-    "options": [] 
-  },
-  {
     "label": "labels.generic.created_at",
     "type": "date",
     "name": "created_at",
@@ -69,111 +42,76 @@
     "extra": ["disabled"]
   },
   {
-    "label": "labels.post.content",
-    "type": "textarea",
-    "name": "content",
-    "class": "tinymce-texteditor",
-    "id": "content"
+    "label": "labels.generic.status",
+    "type": "select",
+    "name": "professional_status",
+    "id": "professional_status",
+    "blank": "labels.generic.select_option",
+    "tab": "professional_status",
+    "extra": ["disabled"],
+    "options": [] 
   },
   {
-    "label": "labels.post.excerpt",
-    "type": "textarea",
-    "name": "excerpt",
-    "class": "tinymce-texteditor",
-    "tab": "extra",
-    "id": "excerpt"
-  },
-  {
-    "label": "labels.generic.image",
-    "type": "file",
-    "name": "image",
-    "id": "image"
-  },
-  {
-    "label": "labels.generic.alt_img",
+    "label": "labels.membership.professional_status_info",
     "type": "text",
-    "name": "alt_img",
-    "id": "alt_img",
-    "placeholder": "labels.generic.alt_img"
+    "name": "professional_status_info",
+    "id": "professional_status_info",
+    "extra": ["disabled"]
   },
   {
-    "label": "labels.generic.page",
-    "type": "select",
-    "name": "page",
-    "id": "page",
-    "tab": "layout_items",
-    "blank": "labels.generic.none",
-    "options": [] 
+    "label": "labels.generic.since",
+    "type": "text",
+    "name": "since",
+    "id": "since",
+    "extra": ["disabled"]
   },
   {
-    "label": "labels.generic.show_owner",
-    "type": "select",
-    "name": "show_owner",
-    "function": "yes_no",
-    "id": "show_owner",
-    "extra": ["global_setting"],
-    "tab": "settings",
-    "group": "settings",
-    "options": [] 
+    "label": "labels.membership.siret_number",
+    "type": "text",
+    "name": "siret_number",
+    "id": "siret_number",
+    "extra": ["disabled"]
   },
   {
-    "label": "labels.generic.show_created_at",
-    "type": "select",
-    "name": "show_created_at",
-    "function": "yes_no",
-    "id": "show_created_at",
-    "extra": ["global_setting"],
-    "group": "settings",
-    "options": [] 
+    "label": "labels.membership.naf_code",
+    "type": "text",
+    "name": "naf_code",
+    "id": "naf_code",
+    "extra": ["disabled"]
   },
   {
-    "label": "labels.post.show_excerpt",
-    "type": "select",
-    "name": "show_excerpt",
-    "function": "yes_no",
-    "id": "show_excerpt",
-    "extra": ["global_setting"],
-    "group": "settings",
-    "options": [] 
+    "label": "labels.membership.linguistic_training",
+    "type": "textarea",
+    "name": "linguistic_training",
+    "extra": ["disabled"],
+    "id": "linguistic_training"
   },
   {
-    "label": "labels.generic.show_image",
-    "type": "select",
-    "name": "show_image",
-    "function": "yes_no",
-    "id": "show_image",
-    "extra": ["global_setting"],
-    "group": "settings",
-    "options": [] 
+    "label": "labels.membership.extra_linguistic_training",
+    "type": "textarea",
+    "name": "extra_linguistic_training",
+    "extra": ["disabled"],
+    "id": "extra_linguistic_training"
   },
   {
-    "label": "labels.generic.show_categories",
-    "type": "select",
-    "name": "show_categories",
-    "function": "yes_no",
-    "id": "show_categories",
-    "extra": ["global_setting"],
-    "group": "settings",
-    "options": [] 
+    "label": "labels.membership.professional_experience",
+    "type": "textarea",
+    "name": "professional_experience",
+    "extra": ["disabled"],
+    "id": "professional_experience"
   },
   {
-    "label": "labels.generic.allow_comments",
-    "type": "select",
-    "name": "allow_comments",
-    "function": "yes_no",
-    "id": "allow_comments",
-    "extra": ["global_setting"],
-    "group": "settings",
-    "options": [] 
+    "label": "labels.membership.observations",
+    "type": "textarea",
+    "name": "observations",
+    "extra": ["disabled"],
+    "id": "observations"
   },
   {
-    "label": "labels.generic.comment_alert",
-    "type": "select",
-    "name": "comment_alert",
-    "function": "yes_no",
-    "id": "comment_alert",
-    "extra": ["global_setting"],
-    "group": "settings",
-    "options": [] 
+    "label": "labels.membership.why_expertij",
+    "type": "textarea",
+    "name": "why_expertij",
+    "extra": ["disabled"],
+    "id": "why_expertij"
   }
 ]

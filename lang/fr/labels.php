@@ -119,6 +119,7 @@ return [
         'revoked' => 'Revoqué',
         'cancellation' => 'Annulation',
 	'member_type' => 'Type d\'adhérent',
+	'insurance' => 'Assurance',
     ],
     'category' => [
 	'create_category' => 'Créer une catégorie',
@@ -176,6 +177,7 @@ return [
 	'locales' => 'Langues',
 	'alias' => 'Alias',
 	'page' => 'Page',
+	'profile' => 'Profil',
 	'id' => 'ID',
 	'description' => 'Description',
 	'created_at' => 'Créé le',
@@ -279,6 +281,7 @@ return [
 	'statuses' => 'Statuts',
 	'internal_rules' => 'Réglement interne',
 	'normal' => 'Normal',
+	'payments' => 'Paiements',
     ],
     'filter' => [
 	'search' => 'Recherche',

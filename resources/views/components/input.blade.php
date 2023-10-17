@@ -117,7 +117,7 @@
 	<label class="form-check-label" for="{{ $field->id }}">{{ $field->label }}</label>
     @endif
 @elseif ($field->type == 'textarea')
-    <textarea id="{{ $field->id }}" class="form-control {{ $class }}"
+    <textarea id="{{ $field->id }}" class="form-control {{ $class }}" {{ $disabled }} 
 
     @if ($name)
 	name="{{ $name }}"

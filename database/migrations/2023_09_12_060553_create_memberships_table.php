@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('insurance_id')->nullable();
             $table->string('status', 20);
+            $table->char('access_level', 10)->default('public_ro');
             $table->boolean('member_list')->default(0);
             $table->unsignedTinyInteger('email_sendings')->default(0);
             $table->timestamp('member_since')->nullable();
