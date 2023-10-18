@@ -1,6 +1,6 @@
 [
   {
-    "label": "labels.user.name",
+    "label": "labels.generic.name",
     "type": "text",
     "name": "name",
     "id": "name",
@@ -14,6 +14,22 @@
     "blank": "labels.generic.select_option",
     "tab": "membership",
     "options": [] 
+  },
+  {
+    "label": "labels.membership.member_number",
+    "type": "text",
+    "name": "member_number",
+    "id": "member_number",
+    "extra": ["disabled"]
+  },
+  {
+    "label": "labels.membership.member_since",
+    "type": "date",
+    "name": "member_since",
+    "dataset": {"date":"0", "time":"0", "format":"D MMMM YYYY HH:mm"},
+    "id": "member_since",
+    "format": "d M Y H:i",
+    "extra": ["disabled"]
   },
   {
     "label": "labels.generic.created_at",

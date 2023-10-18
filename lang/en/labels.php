@@ -115,6 +115,7 @@ return [
         'pending_subscription' => 'Pending subscription',
         'cancelled' => 'Cancelled',
         'member' => 'Member',
+        'member_number' => 'Member number',
         'pending_renewal' => 'Pending renewal',
         'revoked' => 'Revoked',
         'cancellation' => 'Cancellation',

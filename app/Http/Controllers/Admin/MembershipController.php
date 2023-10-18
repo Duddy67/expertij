@@ -77,7 +77,9 @@ class MembershipController extends Controller
 
         $membership->checkOut();
 
-        $fields = $this->getFields();
+        $except = ($membership->member_number) ? [] : ['member_number', 'member_since'];
+
+        $fields = $this->getFields($except);
         //$this->setFieldValues($fields, $membership);
         $except = (!$membership->canEdit()) ? ['destroy', 'save', 'saveClose'] : [];
         $actions = $this->getActions('form', $except);
@@ -89,6 +91,8 @@ class MembershipController extends Controller
         $options['since'] = $membership->getSinceOptions();
         $options['language'] = $membership->getLanguageOptions();
         $options['jurisdictions'] = $membership->getJurisdictionOptions();
+        $options['citizenship'] = $membership->getCitizenshipOptions();
+        $options['civility'] = $membership->getCivilityOptions();
 
         return view('admin.membership.form', compact('membership', 'options', 'fields', 'actions', 'dateFormat', 'query'));
     }

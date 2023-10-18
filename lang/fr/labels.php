@@ -110,6 +110,7 @@ return [
 	'update_licences' => 'Mettre à jour le(s) certificat(s)',
 	'update_professional_status' => 'Mettre à jour le statut professionnel',
 	'members' => 'Adhérents',
+        'member_number' => 'Numéro adhérent',
         'pending' => 'En attente',
         'refused' => 'Refusé',
         'pending_subscription' => 'En attente d\'adhésion',

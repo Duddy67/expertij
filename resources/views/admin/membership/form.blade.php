@@ -57,6 +57,10 @@
                 @endif
 
                 @if (!next($fields) || isset($fields[$key + 1]->tab))
+                    @if ($field->name == 'why_expertij')
+                        @include('themes.expertij.partials.membership.edit.attestation-file-button', ['fileUrl' => $membership->professionalAttestation->getUrl(), 'fileName' => $membership->professionalAttestation->file_name])
+                    @endif
+
                     </div>
                 @endif
             @endforeach
@@ -64,22 +68,21 @@
             <div class="tab-pane" id="licences">
                 <div class="form-group" id="licence-container" data-latest-index="{{ $membership->licences->count() - 1 }}">
                     @foreach ($membership->licences as $i => $licence)
-                        @include('themes.expertij.partials.membership.edit.licence', ['licence' => $licence, 'i' => $i])
+                        @include('admin.partials.membership.licence', ['licence' => $licence, 'i' => $i])
                     @endforeach
                 </div> <!-- licence container -->
-                LICENCES
             </div>
 
             <div class="tab-pane" id="profile">
-                PROFILE
+                @include('admin.partials.membership.profile', ['user' => $membership->user])
             </div>
 
             <div class="tab-pane" id="payments">
-                PAYMENTS
+                @include('admin.partials.membership.payments', ['payments' => $membership->payments])
             </div>
 
             <div class="tab-pane" id="insurance">
-                INSURANCE
+                @include('admin.partials.membership.insurance', ['insurance' => $membership->insurance])
             </div>
         </div>
 
