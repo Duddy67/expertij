@@ -283,6 +283,7 @@ return [
 	'internal_rules' => 'Réglement interne',
 	'normal' => 'Normal',
 	'payments' => 'Paiements',
+	'missing_document' => 'Document manquant',
     ],
     'filter' => [
 	'search' => 'Recherche',

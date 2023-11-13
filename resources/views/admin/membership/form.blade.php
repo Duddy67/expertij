@@ -58,7 +58,11 @@
 
                 @if (!next($fields) || isset($fields[$key + 1]->tab))
                     @if ($field->name == 'why_expertij')
-                        @include('themes.expertij.partials.membership.edit.attestation-file-button', ['fileUrl' => $membership->professionalAttestation->getUrl(), 'fileName' => $membership->professionalAttestation->file_name])
+                        @if ($membership->professionalAttestation)
+                            @include('themes.expertij.partials.membership.edit.attestation-file-button', ['fileUrl' => $membership->professionalAttestation->getUrl(), 'fileName' => $membership->professionalAttestation->file_name])
+                        @else
+                            @include('themes.expertij.partials.membership.edit.missing-document-button')
+                        @endif
                     @endif
 
                     </div>
@@ -113,5 +117,6 @@
     <script type="text/javascript" src="{{ asset('/vendor/codalia/lang/en.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/js/admin/form.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/js/admin/disable.toolbars.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/js/admin/membership.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/js/tinymce/filemanager.js') }}"></script>
 @endpush

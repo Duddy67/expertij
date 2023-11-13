@@ -75,6 +75,7 @@ class Kernel extends HttpKernel
         'admin.users.permissions' => \App\Http\Middleware\AdminUserPermissions::class,
         'admin.cms.settings' => \App\Http\Middleware\AdminSettings::class,
         'admin.cms.emails' => \App\Http\Middleware\AdminEmails::class,
+        'admin.memberships' => \App\Http\Middleware\AdminMemberships::class,
         'admin.posts' => \App\Http\Middleware\AdminPosts::class,
         'admin.posts.categories' => \App\Http\Middleware\AdminPostCategories::class,
         'admin.posts.settings' => \App\Http\Middleware\AdminPostSettings::class,

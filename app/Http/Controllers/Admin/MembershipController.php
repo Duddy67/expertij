@@ -35,7 +35,7 @@ class MembershipController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        //$this->middleware('admin.memberships');
+        $this->middleware('admin.memberships');
         $this->item = new Membership;
     }
 
@@ -122,7 +122,7 @@ class MembershipController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        file_put_contents('debog_file.txt', print_r($request->all(), true));
     }
 
     /**

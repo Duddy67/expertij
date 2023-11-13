@@ -8,7 +8,11 @@
         </div>
     </div>
     <div class="row" id="attestation-file-button-{{ $i }}-{{ $j }}">
-        @include('themes.expertij.partials.membership.edit.attestation-file-button', ['fileUrl' => $attestation->document->getUrl(), 'fileName' => $attestation->document->file_name])
+        @if ($attestation->document)
+            @include('themes.expertij.partials.membership.edit.attestation-file-button', ['fileUrl' => $attestation->document->getUrl(), 'fileName' => $attestation->document->file_name])
+        @else
+            @include('themes.expertij.partials.membership.edit.missing-document-button')
+        @endif
     </div>
 
     <input type="hidden" name="licences[{{ $i }}][attestations][{{ $j }}][_id]" value="{{ $attestation->id }}">
