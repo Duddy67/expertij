@@ -274,6 +274,7 @@ return [
         'canonical_link' => 'Lien canonique',
         'cookies_privacy' => 'Cookies & Confidentialité',
         'no_update' => 'Pas encore mis à jour',
+        'structured_data' => 'Données structurées',
         'since' => 'Depuis',
         'attestation' => 'Attestation',
 	'personal_information' => 'Informations personnelles',

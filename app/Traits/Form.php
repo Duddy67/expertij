@@ -228,15 +228,22 @@ trait Form
                     $fields[$key]->value = $item->getSelectedValue($field);
                 }
                 elseif ($field->type == 'date') {
-                    $datetime = $item->{$field->name}->tz(Setting::getValue('app', 'timezone'))->toDateTimeString();
-                    // Do not set any date value as it is handled by Daterangepicker after the page is loaded.
+                    // Do not set any date value as it is handled by the datepicker after the page is loaded.
                     $fields[$key]->value = null;
 
-		    // Set date and time values through datasets.
+		    // Set date and time values (if any) through datasets.
                     if (isset($fields[$key]->dataset)) {
-                        $data = explode(' ', $datetime);
-                        $fields[$key]->dataset->date = $data[0];
-                        $fields[$key]->dataset->time = $data[1];
+                        // Check for time value.
+                        if (isset($fields[$key]->dataset->time)) {
+                            $datetime = $item->{$field->name}->tz(Setting::getValue('app', 'timezone'))->toDateTimeString();
+                            $data = explode(' ', $datetime);
+                            $fields[$key]->dataset->date = $data[0];
+                            $fields[$key]->dataset->time = $data[1];
+                        }
+                        // date only
+                        else {
+                            $fields[$key]->dataset->date = $item->{$field->name}->tz(Setting::getValue('app', 'timezone'))->toDateString();
+                        }
                     }
                 }
                 elseif ($field->name == 'updated_by') {
