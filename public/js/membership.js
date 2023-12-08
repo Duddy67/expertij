@@ -188,8 +188,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         document.getElementById(addition.containerId).insertAdjacentHTML(addition.position, addition.html);
                     }
 
-                    // Refresh the date inputs.
-                    $.fn.initDatePickers();
+                    // Initialize possible new date fields.
+                    initDatepickers();
                 }
                 // Delete the given html elements. 
                 else if (key == 'deletions') {

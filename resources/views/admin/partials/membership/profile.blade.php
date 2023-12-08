@@ -34,7 +34,7 @@
     </div>
     <div class="col">
         <label for="birth_date">{{ __('labels.user.birth_date') }}</label>
-        <input type="text" name="birth_date" class="form-control date" id="birth_date" data-date="{{ $user->birth_date->toDateString() }}" data-format="D MMM YYYY" disabled>
+        <input type="text" name="birth_date" class="form-control date" id="birth_date" data-date="{{ $user->birth_date->toDateString() }}" data-format="d M Y" disabled>
         <input type="hidden" id="_birth_date" name="_birth_date" value="{{ old('birth_date', $user->birth_date->toDateString()) }}">
     </div>
 </div>

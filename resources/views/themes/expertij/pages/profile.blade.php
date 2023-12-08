@@ -1,5 +1,5 @@
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('/vendor/adminlte/plugins/daterangepicker/daterangepicker.css') }}">
+    <link rel="stylesheet" href="{{ asset('/vendor/codalia/css/c.datepicker.css') }}">
 @endpush
 
 <div class="position-relative">
@@ -66,7 +66,7 @@
                 </div>
                 <div class="col-md-6">
                     <label for="birth_date">{{ __('labels.user.birth_date') }}</label>
-                    <input type="text" name="birth_date" class="form-control date" id="birth_date" data-date="{{ $user->birth_date->toDateString() }}" data-format="D MMM YYYY">
+                    <input type="text" name="birth_date" class="form-control date" id="birth_date" data-date="{{ $user->birth_date->toDateString() }}" data-format="d M Y">
                     <input type="hidden" id="_birth_date" name="_birth_date" value="{{ old('birth_date', $user->birth_date->toDateString()) }}">
                     <div class="text-danger" id="birth_dateError"></div>
                 </div>
@@ -141,14 +141,18 @@
                 </button>
             </div>
         </div>
+        <input type="hidden" id="_locale" value="{{ config('app.locale') }}">
     </form>
 </div>
 
 @push ('scripts')
-    <script type="text/javascript" src="{{ asset('/vendor/adminlte/plugins/moment/moment.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('/vendor/adminlte/plugins/daterangepicker/daterangepicker.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/plugin/localeData.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/locale/{{ config('app.locale') }}.js"></script>
+    <script type="text/javascript" src="{{ asset('/vendor/codalia/lang/'.config('app.locale').'.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/vendor/codalia/c.datepicker.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/js/datepicker.js') }}"></script>
     <script src="{{ asset('/vendor/codalia/c.ajax.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('/js/daterangepicker.js') }}"></script>
     <script src="{{ asset('/js/membership.js') }}"></script>
 @endpush
 
