@@ -16,11 +16,14 @@ use App\Models\User\Citizenship;
 use App\Models\Cms\Setting;
 use App\Models\Cms\Address;
 use App\Models\Cms\Document;
+use App\Traits\Emails;
 use App\Http\Requests\Membership\StoreRequest;
 use App\Http\Requests\Membership\UpdateRequest;
 
 class MembershipController extends Controller
 {
+    use Emails;
+
     /*
      * Instance of the membership model.
      */
@@ -183,6 +186,9 @@ class MembershipController extends Controller
 
         // Authenticate the new user.
         Auth::login($user);
+
+        // Send notification emails.
+        $this->membershipRequest($user);
 
         return response()->json(['redirect' => route('profile.edit')]);
     }

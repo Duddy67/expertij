@@ -1,18 +1,17 @@
 @extends ('admin.layouts.default')
 
 @section ('main')
-    <h3>@php echo __('labels.post.blog_global_settings'); @endphp</h3>
+    <h3>@php echo __('labels.membership.membership_global_settings'); @endphp</h3>
 
     @include('admin.partials.x-toolbar')
 
-    <form method="post" action="{{ route('admin.posts.settings.update', $query ) }}" id="itemForm">
+    <form method="post" action="{{ route('admin.memberships.settings.update', $query ) }}" id="itemForm">
         @csrf
         @method('patch')
 
         <nav class="nav nav-tabs">
-            <a class="nav-item nav-link active" href="#posts" data-toggle="tab">@php echo __('labels.title.posts'); @endphp</a>
-            <a class="nav-item nav-link" href="#categories" data-toggle="tab">@php echo __('labels.title.categories'); @endphp</a>
-            <a class="nav-item nav-link" href="#extra_field_aliases" data-toggle="tab">@php echo __('labels.generic.extra_field_aliases'); @endphp</a>
+            <a class="nav-item nav-link active" href="#renewal" data-toggle="tab">@php echo __('labels.membership.renewal'); @endphp</a>
+            <a class="nav-item nav-link" href="#prices" data-toggle="tab">@php echo __('labels.membership.prices'); @endphp</a>
         </nav>
 
         <div class="tab-content">
@@ -27,7 +26,7 @@
 
                 @php $dataTab = null; @endphp
                 @if (isset($field->tab))
-                    @php $active = ($field->tab == 'posts') ? ' active' : '';
+                    @php $active = ($field->tab == 'renewal') ? ' active' : '';
                          $dataTab = $field->tab; @endphp
                     <div class="tab-pane{{ $active }}" id="{{ $field->tab }}">
                 @endif

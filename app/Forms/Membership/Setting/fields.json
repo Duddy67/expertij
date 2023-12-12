@@ -1,310 +1,120 @@
 [
   {
-    "label": "labels.generic.show_owner",
+    "label": "labels.membership.renewal_day",
     "type": "select",
-    "name": "show_owner",
-    "function": "yes_no",
-    "id": "show_owner",
-    "tab": "posts",
-    "group": "posts",
+    "name": "renewal_day",
+    "function": "days_in_month",
+    "id": "renewal_day",
+    "tab": "renewal",
+    "group": "renewal",
     "options": [] 
   },
   {
-    "label": "labels.generic.show_created_at",
+    "label": "labels.membership.renewal_month",
     "type": "select",
-    "name": "show_created_at",
-    "function": "yes_no",
-    "id": "show_created_at",
-    "group": "posts",
+    "name": "renewal_month",
+    "function": "months",
+    "id": "renewal_month",
+    "group": "renewal",
     "options": [] 
   },
   {
-    "label": "labels.post.show_excerpt",
-    "type": "select",
-    "name": "show_excerpt",
-    "function": "yes_no",
-    "id": "show_excerpt",
-    "group": "posts",
-    "options": [] 
-  },
-  {
-    "label": "labels.generic.show_image",
-    "type": "select",
-    "name": "show_image",
-    "function": "yes_no",
-    "id": "show_image",
-    "group": "posts",
-    "options": [] 
-  },
-  {
-    "label": "labels.generic.show_categories",
-    "type": "select",
-    "name": "show_categories",
-    "function": "yes_no",
-    "id": "show_categories",
-    "group": "posts",
-    "options": [] 
-  },
-  {
-    "label": "labels.generic.allow_comments",
-    "type": "select",
-    "name": "allow_comments",
-    "function": "yes_no",
-    "id": "allow_comments",
-    "group": "posts",
-    "options": [] 
-  },
-  {
-    "label": "labels.generic.comment_alert",
-    "type": "select",
-    "name": "comment_alert",
-    "function": "yes_no",
-    "id": "comment_alert",
-    "group": "posts",
-    "options": [] 
-  },
-  {
-    "label": "labels.generic.show_name",
-    "type": "select",
-    "name": "show_name",
-    "function": "yes_no",
-    "id": "show_name",
-    "tab": "categories",
-    "group": "categories",
-    "options": [] 
-  },
-  {
-    "label": "labels.generic.show_search",
-    "type": "select",
-    "name": "show_search",
-    "function": "yes_no",
-    "id": "show_search",
-    "group": "categories",
-    "options": [] 
-  },
-  {
-    "label": "labels.generic.show_description",
-    "type": "select",
-    "name": "show_description",
-    "function": "yes_no",
-    "id": "show_description",
-    "group": "categories",
-    "options": [] 
-  },
-  {
-    "label": "labels.generic.show_image",
-    "type": "select",
-    "name": "show_image",
-    "function": "yes_no",
-    "id": "show_image",
-    "group": "categories",
-    "options": [] 
-  },
-  {
-    "label": "labels.generic.show_subcategories",
-    "type": "select",
-    "name": "show_subcategories",
-    "function": "yes_no",
-    "id": "show_subcategories",
-    "group": "categories",
-    "options": [] 
-  },
-  {
-    "label": "labels.post.show_post_excerpt",
-    "type": "select",
-    "name": "show_post_excerpt",
-    "function": "yes_no",
-    "id": "show_post_excerpt",
-    "group": "categories",
-    "options": [] 
-  },
-  {
-    "label": "labels.post.show_post_image",
-    "type": "select",
-    "name": "show_post_image",
-    "function": "yes_no",
-    "id": "show_post_image",
-    "group": "categories",
-    "options": [] 
-  },
-  {
-    "label": "labels.post.show_post_categories",
-    "type": "select",
-    "name": "show_post_categories",
-    "function": "yes_no",
-    "id": "show_post_categories",
-    "group": "categories",
-    "options": [] 
-  },
-  {
-    "label": "labels.post.post_ordering",
-    "type": "select",
-    "name": "post_ordering",
-    "function": "item_ordering",
-    "id": "post_ordering",
-    "group": "categories",
-    "options": [] 
-  },
-  {
-    "label": "labels.generic.alias_extra_field_1",
+    "label": "labels.membership.renewal_period",
     "type": "text",
-    "name": "alias_extra_field_1",
-    "id": "alias_extra_field_1",
-    "tab": "extra_field_aliases",
-    "group": "posts",
-    "options": [] 
+    "name": "renewal_period",
+    "id": "renewal_period",
+    "group": "renewal"
   },
   {
-    "label": "labels.generic.alias_extra_field_2",
+    "label": "labels.membership.renewal_reminder",
     "type": "text",
-    "name": "alias_extra_field_2",
-    "id": "alias_extra_field_2",
-    "group": "posts",
-    "options": [] 
+    "name": "renewal_reminder",
+    "id": "renewal_reminder",
+    "group": "renewal"
   },
   {
-    "label": "labels.generic.alias_extra_field_3",
+    "label": "labels.membership.free_period",
     "type": "text",
-    "name": "alias_extra_field_3",
-    "id": "alias_extra_field_3",
-    "group": "posts",
-    "options": [] 
+    "name": "free_period",
+    "id": "free_period",
+    "group": "renewal"
   },
   {
-    "label": "labels.generic.alias_extra_field_4",
+    "label": "labels.membership.subscription_fee",
     "type": "text",
-    "name": "alias_extra_field_4",
-    "id": "alias_extra_field_4",
-    "group": "posts",
-    "options": [] 
+    "name": "subscription_fee",
+    "id": "subscription_fee",
+    "tab": "prices",
+    "group": "prices"
   },
   {
-    "label": "labels.generic.alias_extra_field_5",
+    "label": "labels.membership.associated_subscription_fee",
     "type": "text",
-    "name": "alias_extra_field_5",
-    "id": "alias_extra_field_5",
-    "group": "posts",
-    "options": [] 
+    "name": "associated_subscription_fee",
+    "id": "associated_subscription_fee",
+    "group": "prices"
   },
   {
-    "label": "labels.generic.alias_extra_field_6",
+    "label": "labels.membership.insurance_fee_f1",
     "type": "text",
-    "name": "alias_extra_field_6",
-    "id": "alias_extra_field_6",
-    "group": "posts",
-    "options": [] 
+    "name": "insurance_fee_f1",
+    "id": "insurance_fee_f1",
+    "group": "prices"
   },
   {
-    "label": "labels.generic.alias_extra_field_7",
+    "label": "labels.membership.insurance_fee_f2",
     "type": "text",
-    "name": "alias_extra_field_7",
-    "id": "alias_extra_field_7",
-    "group": "posts",
-    "options": [] 
+    "name": "insurance_fee_f2",
+    "id": "insurance_fee_f2",
+    "group": "prices"
   },
   {
-    "label": "labels.generic.alias_extra_field_8",
+    "label": "labels.membership.insurance_fee_f3",
     "type": "text",
-    "name": "alias_extra_field_8",
-    "id": "alias_extra_field_8",
-    "group": "posts",
-    "options": [] 
+    "name": "insurance_fee_f3",
+    "id": "insurance_fee_f3",
+    "group": "prices"
   },
   {
-    "label": "labels.generic.alias_extra_field_9",
+    "label": "labels.membership.insurance_fee_f4",
     "type": "text",
-    "name": "alias_extra_field_9",
-    "id": "alias_extra_field_9",
-    "group": "posts",
-    "options": [] 
+    "name": "insurance_fee_f4",
+    "id": "insurance_fee_f4",
+    "group": "prices"
   },
   {
-    "label": "labels.generic.alias_extra_field_10",
+    "label": "labels.membership.insurance_fee_f5",
     "type": "text",
-    "name": "alias_extra_field_10",
-    "id": "alias_extra_field_10",
-    "extra": ["divider"],
-    "group": "posts",
-    "options": [] 
+    "name": "insurance_fee_f5",
+    "id": "insurance_fee_f5",
+    "group": "prices"
   },
   {
-    "label": "labels.generic.alias_extra_field_1",
+    "label": "labels.membership.insurance_fee_f6",
     "type": "text",
-    "name": "alias_extra_field_1",
-    "id": "alias_extra_field_1",
-    "group": "categories",
-    "options": [] 
+    "name": "insurance_fee_f6",
+    "id": "insurance_fee_f6",
+    "group": "prices"
   },
   {
-    "label": "labels.generic.alias_extra_field_2",
+    "label": "labels.membership.insurance_fee_f7",
     "type": "text",
-    "name": "alias_extra_field_2",
-    "id": "alias_extra_field_2",
-    "group": "categories",
-    "options": [] 
+    "name": "insurance_fee_f7",
+    "id": "insurance_fee_f7",
+    "group": "prices"
   },
   {
-    "label": "labels.generic.alias_extra_field_3",
+    "label": "labels.membership.insurance_fee_f8",
     "type": "text",
-    "name": "alias_extra_field_3",
-    "id": "alias_extra_field_3",
-    "group": "categories",
-    "options": [] 
+    "name": "insurance_fee_f8",
+    "id": "insurance_fee_f8",
+    "group": "prices"
   },
   {
-    "label": "labels.generic.alias_extra_field_4",
+    "label": "labels.membership.insurance_fee_f9",
     "type": "text",
-    "name": "alias_extra_field_4",
-    "id": "alias_extra_field_4",
-    "group": "categories",
-    "options": [] 
-  },
-  {
-    "label": "labels.generic.alias_extra_field_5",
-    "type": "text",
-    "name": "alias_extra_field_5",
-    "id": "alias_extra_field_5",
-    "group": "categories",
-    "options": [] 
-  },
-  {
-    "label": "labels.generic.alias_extra_field_6",
-    "type": "text",
-    "name": "alias_extra_field_6",
-    "id": "alias_extra_field_6",
-    "group": "categories",
-    "options": [] 
-  },
-  {
-    "label": "labels.generic.alias_extra_field_7",
-    "type": "text",
-    "name": "alias_extra_field_7",
-    "id": "alias_extra_field_7",
-    "group": "categories",
-    "options": [] 
-  },
-  {
-    "label": "labels.generic.alias_extra_field_8",
-    "type": "text",
-    "name": "alias_extra_field_8",
-    "id": "alias_extra_field_8",
-    "group": "categories",
-    "options": [] 
-  },
-  {
-    "label": "labels.generic.alias_extra_field_9",
-    "type": "text",
-    "name": "alias_extra_field_9",
-    "id": "alias_extra_field_9",
-    "group": "categories",
-    "options": [] 
-  },
-  {
-    "label": "labels.generic.alias_extra_field_10",
-    "type": "text",
-    "name": "alias_extra_field_10",
-    "id": "alias_extra_field_10",
-    "group": "categories",
-    "options": [] 
+    "name": "insurance_fee_f9",
+    "id": "insurance_fee_f9",
+    "group": "prices"
   }
 ]

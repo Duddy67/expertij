@@ -1,17 +1,17 @@
 [
   {
-    "label": "labels.generic.last_name",
+    "label": "labels.user.last_name",
     "type": "text",
     "name": "last_name",
     "id": "last_name",
-    "placeholder": "labels.generic.last_name"
+    "placeholder": "labels.user.last_name"
   },
   {
-    "label": "labels.generic.first_name",
+    "label": "labels.user.first_name",
     "type": "text",
     "name": "first_name",
     "id": "first_name",
-    "placeholder": "labels.generic.first_name"
+    "placeholder": "labels.user.first_name"
   },
   {
     "label": "labels.user.email",

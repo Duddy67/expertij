@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Traits\Form;
 use App\Traits\CheckInCheckOut;
+use App\Traits\Emails;
 use App\Models\Membership;
 use App\Models\Membership\Licence;
 use App\Models\Membership\Attestation;
@@ -19,7 +20,7 @@ use App\Models\Cms\Address;
 
 class MembershipController extends Controller
 {
-    use Form;
+    use Form, Emails;
 
     /*
      * Instance of the Membership model, (used in the Form trait).
