@@ -4,7 +4,7 @@
 
     // Run a function when the page is fully loaded including graphics.
     document.addEventListener('DOMContentLoaded', () => {
-        let actions = ['save', 'saveClose', 'cancel', 'destroy'];
+        let actions = ['save', 'saveClose', 'cancel', 'destroy', 'sendEmails'];
 
         actions.forEach(function (action) {
             let button = document.getElementById(action);
@@ -44,11 +44,19 @@
         }
     }
 
+    function sendEmails() {
+        if (window.confirm('Send emails ?')) {
+            //document.getElementById('emails').submit();
+            runAjax('emails');
+        }
+    }
+
     // Store action functions.
     localNamespace['save'] = save;
     localNamespace['saveClose'] = saveClose;
     localNamespace['cancel'] = cancel;
     localNamespace['destroy'] = destroy;
+    localNamespace['sendEmails'] = sendEmails;
 
     function runAjax(formId) {
         let form = document.getElementById(formId);

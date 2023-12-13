@@ -103,6 +103,18 @@
             <input type="hidden" name="_date_formats[{{ $key }}]" value="{{ $value }}">
         @endforeach
     </form>
+
+    @if (isset($membership))
+        <form id="deleteItem" action="{{ route('admin.memberships.destroy', $query) }}" method="post">
+            @method('delete')
+            @csrf
+        </form>
+
+        <form id="emails" action="{{ route('admin.memberships.sendEmails', $query) }}" method="post">
+            @method('put')
+            @csrf
+        </form>
+    @endif
 @endsection
 
 @push ('style')

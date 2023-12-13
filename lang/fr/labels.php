@@ -149,6 +149,7 @@ return [
         'insurance_f7' => 'Judiciaire + Extrajudiciaire option 1',
         'insurance_f8' => 'Judiciaire + Extrajudiciaire option 2',
         'insurance_f9' => 'Judiciaire + Extrajudiciaire option 3',
+	'send_emails' => 'Envoyer emails',
     ],
     'category' => [
 	'create_category' => 'Créer une catégorie',

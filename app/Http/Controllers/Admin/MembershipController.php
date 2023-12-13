@@ -121,9 +121,9 @@ class MembershipController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Membership $membership)
     {
-        file_put_contents('debog_file.txt', print_r($request->all(), true));
+        file_put_contents('debog_file.txt', print_r($membership, true));
     }
 
     /**
@@ -148,5 +148,22 @@ class MembershipController extends Controller
         $messages = CheckInCheckOut::checkInMultiple($request->input('ids'), '\\App\\Models\\Membership');
 
         return redirect()->route('admin.memberships.index', $request->query())->with($messages);
+    }
+
+    /**
+     *  Sends notification emails to the decision makers.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function sendEmails(Request $request, Membership $membership)
+    {
+        //file_put_contents('debog_file.txt', print_r($membership->user, true));
+        if ($this->alertDecisionMakers($membership->user)) {
+            return response()->json(['success' => __('messages.membership.alert_decision_makers')]);
+        }
+        else {
+            return response()->json(['warning' => __('messages.generic.cannot_send_email')]);
+        }
     }
 }

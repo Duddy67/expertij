@@ -41,6 +41,13 @@
 	"id": "destroy",
 	"label": "labels.button.delete",
 	"type": "button"
+      },
+      {
+	"id": "sendEmails",
+	"label": "labels.membership.send_emails",
+        "class": "btn-info",
+        "icon": "fa fa-envelope",
+	"type": "button"
       }
   ],
   "batch": [

@@ -149,10 +149,10 @@ class Email extends Model
     /*
      * Send an email through a given email template.
      * @param  string  $code
-     * @param  mixed  data$
+     * @param  object  $data
      * @return boolean
      */
-    public static function sendEmail(string $code, mixed $data): bool
+    public static function sendEmail(string $code, object $data): bool
     {
 	if(!$email = Email::where('code', $code)->first()) {
             report('Warning: Email object with code: "'.$code.'" not found.');
