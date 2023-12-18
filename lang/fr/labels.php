@@ -74,6 +74,7 @@ return [
 	'posted_by' => 'Posté par :author',
     ],
     'membership' => [
+	'edit_membership' => 'Editer un adhérent',
 	'expert' => 'Expert',
 	'ceseda' => 'CESEDA',
 	'liberal_profession' => 'Profession libérale',
@@ -115,6 +116,7 @@ return [
         'refused' => 'Refusé',
         'pending_subscription' => 'En attente d\'adhésion',
         'cancelled' => 'Annulé',
+        'applicants' => 'Candidats',
         'member' => 'Membre',
         'pending_renewal' => 'En attente de renouvellement',
         'revoked' => 'Revoqué',

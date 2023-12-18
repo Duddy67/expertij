@@ -15,7 +15,7 @@
 
         <nav class="nav nav-tabs">
             <a class="nav-item nav-link active" href="#membership" data-toggle="tab">@php echo __('labels.title.membership'); @endphp</a>
-            <a class="nav-item nav-link" href="#professional_status" data-toggle="tab">@php echo __('labels.membership.professional_status'); @endphp</a>
+            <a class="nav-item nav-link" href="#professional_information" data-toggle="tab">@php echo __('labels.membership.professional_status'); @endphp</a>
             <a class="nav-item nav-link" href="#licences" data-toggle="tab">@php echo __('labels.membership.licences'); @endphp</a>
             <a class="nav-item nav-link" href="#profile" data-toggle="tab">@php echo __('labels.generic.profile'); @endphp</a>
             <a class="nav-item nav-link" href="#payments" data-toggle="tab">@php echo __('labels.generic.payments'); @endphp</a>
@@ -70,7 +70,7 @@
             @endforeach
 
             <div class="tab-pane" id="licences">
-                <div class="form-group" id="licence-container" data-latest-index="{{ $membership->licences->count() - 1 }}">
+                <div class="container" id="licence-container" data-latest-index="{{ $membership->licences->count() - 1 }}">
                     @foreach ($membership->licences as $i => $licence)
                         @include('admin.partials.membership.licence', ['licence' => $licence, 'i' => $i])
                     @endforeach
@@ -97,6 +97,7 @@
         @if (isset($membership))
             <input type="hidden" id="_dateFormat" value="{{ $dateFormat }}">
             <input type="hidden" id="_locale" value="{{ config('app.locale') }}">
+            <input type="hidden" id="_sendingEmails" value="{{ $membership->sending_emails }}">
         @endif
 
         @foreach ($dateFormats as $key => $value)

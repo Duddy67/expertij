@@ -5,6 +5,7 @@
     "name": "renewal_day",
     "function": "days_in_month",
     "id": "renewal_day",
+    "class": "mb-3",
     "tab": "renewal",
     "group": "renewal",
     "options": [] 
@@ -15,6 +16,7 @@
     "name": "renewal_month",
     "function": "months",
     "id": "renewal_month",
+    "class": "mb-3",
     "group": "renewal",
     "options": [] 
   },
@@ -23,6 +25,7 @@
     "type": "text",
     "name": "renewal_period",
     "id": "renewal_period",
+    "class": "mb-3",
     "group": "renewal"
   },
   {
@@ -30,6 +33,7 @@
     "type": "text",
     "name": "renewal_reminder",
     "id": "renewal_reminder",
+    "class": "mb-3",
     "group": "renewal"
   },
   {
@@ -37,6 +41,7 @@
     "type": "text",
     "name": "free_period",
     "id": "free_period",
+    "class": "mb-3",
     "group": "renewal"
   },
   {
@@ -44,6 +49,7 @@
     "type": "text",
     "name": "subscription_fee",
     "id": "subscription_fee",
+    "class": "mb-3",
     "tab": "prices",
     "group": "prices"
   },
@@ -52,6 +58,7 @@
     "type": "text",
     "name": "associated_subscription_fee",
     "id": "associated_subscription_fee",
+    "class": "mb-3",
     "group": "prices"
   },
   {
@@ -59,6 +66,7 @@
     "type": "text",
     "name": "insurance_fee_f1",
     "id": "insurance_fee_f1",
+    "class": "mb-3",
     "group": "prices"
   },
   {
@@ -66,6 +74,7 @@
     "type": "text",
     "name": "insurance_fee_f2",
     "id": "insurance_fee_f2",
+    "class": "mb-3",
     "group": "prices"
   },
   {
@@ -73,6 +82,7 @@
     "type": "text",
     "name": "insurance_fee_f3",
     "id": "insurance_fee_f3",
+    "class": "mb-3",
     "group": "prices"
   },
   {
@@ -80,6 +90,7 @@
     "type": "text",
     "name": "insurance_fee_f4",
     "id": "insurance_fee_f4",
+    "class": "mb-3",
     "group": "prices"
   },
   {
@@ -87,6 +98,7 @@
     "type": "text",
     "name": "insurance_fee_f5",
     "id": "insurance_fee_f5",
+    "class": "mb-3",
     "group": "prices"
   },
   {
@@ -94,6 +106,7 @@
     "type": "text",
     "name": "insurance_fee_f6",
     "id": "insurance_fee_f6",
+    "class": "mb-3",
     "group": "prices"
   },
   {
@@ -101,6 +114,7 @@
     "type": "text",
     "name": "insurance_fee_f7",
     "id": "insurance_fee_f7",
+    "class": "mb-3",
     "group": "prices"
   },
   {
@@ -108,6 +122,7 @@
     "type": "text",
     "name": "insurance_fee_f8",
     "id": "insurance_fee_f8",
+    "class": "mb-3",
     "group": "prices"
   },
   {
@@ -115,6 +130,7 @@
     "type": "text",
     "name": "insurance_fee_f9",
     "id": "insurance_fee_f9",
+    "class": "mb-3",
     "group": "prices"
   }
 ]

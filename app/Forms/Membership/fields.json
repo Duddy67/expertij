@@ -60,7 +60,7 @@
     "name": "professional_status",
     "id": "professional_status",
     "blank": "labels.generic.select_option",
-    "tab": "professional_status",
+    "tab": "professional_information",
     "extra": ["disabled"],
     "options": [] 
   },

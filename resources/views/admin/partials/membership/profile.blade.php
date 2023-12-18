@@ -1,6 +1,6 @@
 
 <div class="row">
-    <div class="col-6">
+    <div class="col-6 m-3">
         @php $path = ($user->photo) ?  url('/').$user->photo->getThumbnailUrl() : asset('/images/user.png'); @endphp
         <img src="{{ $path }}" id="user-photo" class="border border-dark" />
     </div>
@@ -41,7 +41,7 @@
 <div class="row">
     <div class="col">
         <label for="birth_location">{{ __('labels.user.birth_location') }}</label>
-        <input id="birth_name" disabled="" type="text" class="form-control " name="birth_location" value="{{ $user->birth_location}}" readonly="">
+        <input id="birth_location" disabled="" type="text" class="form-control " name="birth_location" value="{{ $user->birth_location}}" readonly="">
     </div>
     <div class="col">
         <label for="citizenship">{{ __('labels.user.citizenship') }}</label>
@@ -67,7 +67,7 @@
 <div class="row">
     <div class="col">
         <label for="postcode">{{ __('labels.address.postcode') }}</label>
-        <input id="street" disabled="" type="text" class="form-control " name="postcode" value="{{ $user->address->postcode }}" readonly="">
+        <input id="postcode" disabled="" type="text" class="form-control " name="postcode" value="{{ $user->address->postcode }}" readonly="">
     </div>
     <div class="col">
         <label for="city">{{ __('labels.address.city') }}</label>
@@ -81,6 +81,6 @@
     </div>
     <div class="col">
         <label for="email">{{ __('labels.user.email') }}</label>
-        <input id="city" disabled="" type="email" class="form-control " name="email" value="{{ $user->email }}" readonly="">
+        <input id="email" disabled="" type="email" class="form-control " name="email" value="{{ $user->email }}" readonly="">
     </div>
 </div>

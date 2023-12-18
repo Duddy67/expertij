@@ -46,7 +46,6 @@
 
     function sendEmails() {
         if (window.confirm('Send emails ?')) {
-            //document.getElementById('emails').submit();
             runAjax('emails');
         }
     }
@@ -126,6 +125,9 @@
             else if (document.getElementById(id).tagName == 'A') {
                 document.getElementById(id).setAttribute('href', value);
             }
+            else if (document.getElementById(id).tagName == 'BUTTON') {
+                document.getElementById(id).disabled = value;
+            }
             else {
                 document.getElementById(id).value = value;
             }
@@ -168,6 +170,9 @@
 
     // Fixes Select2 bug with Bootstrap tabs: https://github.com/select2/select2/issues/4220
     $('.select2-container--default').attr('style', 'width: 100%');
+
+    // Put space between select fields.
+    $('.select2-container').addClass('mb-3');
 
 })(jQuery);
 

@@ -40,6 +40,8 @@ Route::get('/'.$segments['posts'].'/'.$segments['categories'].'/{id}/{slug}', [P
 Route::put('/memberships/licences', [MembershipController::class, 'updateLicences'])->name('memberships.licences.update');
 Route::get('/memberships/create', [MembershipController::class, 'create'])->name('memberships.create');
 Route::get('/memberships/edit', [MembershipController::class, 'edit'])->name('memberships.edit');
+Route::get('/memberships/applicants', [MembershipController::class, 'applicants'])->name('memberships.applicants');
+Route::get('/memberships/applicants/{membership}/checkout', [MembershipController::class, 'checkoutApplicant'])->name('memberships.applicants.checkout');
 Route::put('/memberships', [MembershipController::class, 'update'])->name('memberships.update');
 Route::post('/memberships', [MembershipController::class, 'store'])->name('memberships.store');
 Route::post('/memberships/items', [MembershipController::class, 'createItem'])->name('memberships.items.create');

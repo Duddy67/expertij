@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use App\Traits\Form;
 use App\Models\Membership;
 use App\Models\Membership\Licence;
 use App\Models\Membership\Attestation;
@@ -22,7 +23,7 @@ use App\Http\Requests\Membership\UpdateRequest;
 
 class MembershipController extends Controller
 {
-    use Emails;
+    use Emails, Form;
 
     /*
      * Instance of the membership model.
@@ -436,6 +437,37 @@ class MembershipController extends Controller
 
         return response()->json(['deletions' => [['targetId' => $type.'-'.$request->input('_index')]], 'success' => __('messages.generic.item_deleted')]);
 
+    }
+
+    /**
+     * Display a listing of applicants.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function applicants(Request $request)
+    {
+        $page = Setting::getPage('membership.applicants');
+        $columns = $this->getColumns();
+        //
+        /*$applicants = User::whereHas('membership', function ($query) {
+            $query->where('status', 'pending');
+        })->get();*/
+        $request->merge(['statuses' => ['pending']]);
+        $items = Membership::getMemberships($request);
+
+        $rows = $this->getRows($columns, $items);
+        $url = ['route' => 'memberships.applicants', 'item_name' => 'membership', 'action' => 'checkout', 'query' => []];
+
+        return view('themes.'.$page['theme'].'.index', compact('page', 'columns', 'rows', 'items', 'url'));
+    }
+
+    public function checkoutApplicant(Request $request, Membership $membership)
+    {
+//file_put_contents('debog_file.txt', print_r($membership, true));
+        $page = Setting::getPage('membership.applicant');
+        $options = $this->getOptions();
+
+        return view('themes.'.$page['theme'].'.index', compact('page', 'membership', 'options'));
     }
 
     /*

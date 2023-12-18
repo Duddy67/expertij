@@ -45,6 +45,9 @@
                             <a class="nav-link" href="{{ route('admin') }}">{{ __('Admin') }}</a>
                         </li>
                     @endaccessadmin
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('memberships.applicants') }}">{{ __('labels.membership.applicants') }}</a>
+                        </li>
                 </ul>
             @else
                 <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Log in</a>

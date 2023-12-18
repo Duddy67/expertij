@@ -1,8 +1,11 @@
 <table id="item-list" class="table table-hover table-striped">
     <thead class="table-success">
-        <th scope="col">
-            <input type="checkbox" id="toggle-select">
-        </th>
+        @if ($checkable)
+            <th scope="col">
+                <input type="checkbox" id="toggle-select">
+            </th>
+        @endif
+
         @foreach ($columns as $key => $column)
             <th scope="col">
                 @lang ($column->label)
@@ -11,22 +14,24 @@
     </thead>
     <tbody>
         @foreach ($rows as $i => $row)
-             @php 
+            @php 
                  $query = $url['query'];
                  $query[$url['item_name']] = $row->item_id;
             @endphp
             <tr>
-                <td>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" data-item-id={{ $row->item_id }} data-index="{{ $i }}">
+                @if ($checkable)
+                    <td>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" data-item-id={{ $row->item_id }} data-index="{{ $i }}">
 
-                        @if (isset($row->checked_out))
-                            <div class="checked-out">
-                                <p class="mb-0"><small>{{ $row->checked_out }}&nbsp;&nbsp;<i class="fa fa-lock"></i><br>{{ $row->checked_out_time }}</small></p>
-                            </div>
-                        @endif
-                    </div>
-                </td>
+                            @if (isset($row->checked_out))
+                                <div class="checked-out">
+                                    <p class="mb-0"><small>{{ $row->checked_out }}&nbsp;&nbsp;<i class="fa fa-lock"></i><br>{{ $row->checked_out_time }}</small></p>
+                                </div>
+                            @endif
+                        </div>
+                    </td>
+                @endif
                 @foreach ($columns as $column)
                     @if ($column->name == 'ordering')
                         <td>
@@ -44,7 +49,8 @@
                         @php $indent = (in_array($column->name, ['name', 'title']) && preg_match('#^(-{1,}) #', $row->{$column->name}, $matches)) ? strlen($matches[1]) : 0; @endphp
                         <td>
                             @php $linkable = (isset($column->extra) && in_array('linkable', $column->extra)) ? true : false; @endphp
-                            @php echo ($linkable) ? '<a href="'.route($url['route'].'.edit', $query).'">' : ''; @endphp
+                            @php $action = (isset($url['action'])) ? $url['action'] : 'edit'; @endphp
+                            @php echo ($linkable) ? '<a href="'.route($url['route'].'.'.$action, $query).'">' : ''; @endphp
                             <span class="indent-{{ $indent }}"></span>
                             @if (isset($column->extra) && in_array('raw', $column->extra))
                                 {!! $row->{$column->name} !!}

@@ -8,10 +8,14 @@ use App\Models\User\Group;
 
 trait Emails
 {
-    public function membershipRequest(User $applicant): void
+    public function membershipRequest(User $applicant): bool
     {
+        $result = true;
+
         // Send a notification to the applicant.
-        Email::sendEmail('candidate-application', $applicant);
+        if (!Email::sendEmail('candidate-application', $applicant)) {
+            $result = false;
+        }
 
         // Inform the users from the office group about the request.
 
@@ -29,8 +33,12 @@ trait Emails
             $data->last_name = $applicant->last_name;
             $data->recipients = $recipients;
 
-            Email::sendEmail('membership-request', $data);
+            if (!Email::sendEmail('membership-request', $data)) {
+                $result = false;
+            }
         }
+
+        return $result;
     }
 
     /*

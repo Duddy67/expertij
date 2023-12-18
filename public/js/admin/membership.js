@@ -3,6 +3,15 @@
     // Run a function when the page is fully loaded including graphics.
     document.addEventListener('DOMContentLoaded', () => {
         setStatuses();
+
+        if (document.getElementById('_sendingEmails').value == 1) {
+           document.getElementById('sendEmails').disabled = true
+        }
+
+        if (document.getElementById('professional_status').value != 'other') {
+            document.getElementById('professional_status_info').style.display = 'none'; 
+            document.querySelector('label[for="professional_status_info"]').style.display = 'none'; 
+        }
     });
 
     /*
@@ -29,21 +38,6 @@
                 document.querySelector('#status option[value=cancelled]').disabled = true;
             }
         }
-
-        // Refreshes the dropdown list.
-        $('#status').select2().trigger('change');
     }
 
 })();
-
-/* Used for the Select2 jQuery plugin. */
-(function($) {
-
-    if (jQuery.fn.select2) {
-        $('.select2').select2();
-    }
-
-    // Fixes Select2 bug with Bootstrap tabs: https://github.com/select2/select2/issues/4220
-    $('.select2-container--default').attr('style', 'width: 100%');
-
-})(jQuery);

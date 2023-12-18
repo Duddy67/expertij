@@ -37,6 +37,10 @@ tr.clickable-row {
   height: 50%;
 }
 
+input.form-control, textarea.form-control {
+  margin-bottom: 15px !important;
+}
+
 #batchIframe {
   width: 100%;
   height: 100%;

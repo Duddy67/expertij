@@ -3,4 +3,6 @@
         {{ __('messages.generic.no_item_found') }}
     </div>
 @else
+    @foreach ($payments as $payment)
+    @endforeach
 @endif

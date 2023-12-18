@@ -42,10 +42,8 @@ class MembershipController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request): \Illuminate\View\View
     {
         $columns = $this->getColumns();
         $actions = $this->getActions('list');
@@ -60,11 +58,8 @@ class MembershipController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function edit(Request $request, $id)
+    public function edit(Request $request, int $id): \Illuminate\View\View
     {
         $membership = $this->item = Membership::find($id);
 
@@ -160,7 +155,10 @@ class MembershipController extends Controller
     {
         //file_put_contents('debog_file.txt', print_r($membership->user, true));
         if ($this->alertDecisionMakers($membership->user)) {
-            return response()->json(['success' => __('messages.membership.alert_decision_makers')]);
+            $membership->sending_emails = true;
+            $membership->save();
+
+            return response()->json(['success' => __('messages.membership.alert_decision_makers'), 'updates' => ['sendEmails' => true]]);
         }
         else {
             return response()->json(['warning' => __('messages.generic.cannot_send_email')]);

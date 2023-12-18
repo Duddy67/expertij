@@ -1,18 +1,17 @@
 <div class="row border border-success rounded p-3 m-3" id="attestation-{{ $i }}-{{ $j }}">
-    <div class="row">
+    <div class="row w-100">
         <div class="col-md-6 form-group">
             <label for="licences.{{ $i }}.attestations.{{ $j }}.expiry_date">{{ __('labels.membership.expiry_date') }}</label>
             <input type="text" name="licences[{{ $i }}][attestations][{{ $j }}][expiry_date]" class="form-control date" data-options="['startEmpty']" id="licences.{{ $i }}.attestations.{{ $j }}.expiry_date" data-date="{{ $attestation->expiry_date->toDateString() }}" data-format="d M Y" disabled>
             <input type="hidden" id="_licences.{{ $i }}.attestations.{{ $j }}.expiry_date" name="licences[{{ $i }}][attestations][{{ $j }}][_expiry_date]" value="{{ $attestation->expiry_date->toDateString() }}">
-            <div class="text-danger" id="licences.{{ $i }}.attestations.{{ $j }}.expiry_dateError"></div>
         </div>
-    </div>
-    <div class="row" id="attestation-file-button-{{ $i }}-{{ $j }}">
-        @if ($attestation->document)
-            @include('themes.expertij.partials.membership.edit.attestation-file-button', ['fileUrl' => $attestation->document->getUrl(), 'fileName' => $attestation->document->file_name])
-        @else
-            @include('themes.expertij.partials.membership.edit.missing-document-button')
-        @endif
+        <div class="col-md-6" id="attestation-file-button-{{ $i }}-{{ $j }}">
+            @if ($attestation->document)
+                @include('themes.expertij.partials.membership.edit.attestation-file-button', ['fileUrl' => $attestation->document->getUrl(), 'fileName' => $attestation->document->file_name])
+            @else
+                @include('themes.expertij.partials.membership.edit.missing-document-button')
+            @endif
+        </div>
     </div>
 
     <input type="hidden" name="licences[{{ $i }}][attestations][{{ $j }}][_id]" value="{{ $attestation->id }}">

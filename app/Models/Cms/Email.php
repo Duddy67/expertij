@@ -180,6 +180,9 @@ class Email extends Model
             return false;
         }
 
+        //foreach ($recipients as $recipient) {
+        //}
+
         try {
             Mail::to($recipients)->send(new AppMailer($data));
             return true;
