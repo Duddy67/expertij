@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use App\Models\User\Role;
@@ -17,6 +18,7 @@ use App\Models\Cms\Document;
 use App\Models\Cms\Setting;
 use App\Models\Cms\Address;
 use App\Models\Membership;
+use App\Models\Membership\Vote;
 use App\Traits\CheckInCheckOut;
 use App\Traits\OptionList;
 use Illuminate\Http\Request;
@@ -129,6 +131,14 @@ class User extends Authenticatable
     public function membership(): HasOne
     {
         return $this->hasOne(Membership::class);
+    }
+
+    /**
+     * The user's votes.
+     */
+    public function votes(): HasMany
+    {
+        return $this->hasMany(Vote::class);
     }
 
     /**

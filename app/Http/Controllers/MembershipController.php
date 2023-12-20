@@ -12,6 +12,7 @@ use App\Models\Membership\Attestation;
 use App\Models\Membership\Skill;
 use App\Models\Membership\Jurisdiction;
 use App\Models\Membership\Language;
+use App\Models\Membership\Vote;
 use App\Models\User;
 use App\Models\User\Citizenship;
 use App\Models\Cms\Setting;
@@ -449,9 +450,6 @@ class MembershipController extends Controller
         $page = Setting::getPage('membership.applicants');
         $columns = $this->getColumns();
         //
-        /*$applicants = User::whereHas('membership', function ($query) {
-            $query->where('status', 'pending');
-        })->get();*/
         $request->merge(['statuses' => ['pending']]);
         $items = Membership::getMemberships($request);
 
@@ -463,11 +461,31 @@ class MembershipController extends Controller
 
     public function checkoutApplicant(Request $request, Membership $membership)
     {
-//file_put_contents('debog_file.txt', print_r($membership, true));
+        $this->item = $membership;
         $page = Setting::getPage('membership.applicant');
         $options = $this->getOptions();
+        $except = ['name', 'status', 'created_at', 'updated_at', 'updated_by', 'member_number', 'member_since'];
+        $fields = $this->getFields($except);
+        //$query = $request->query();
+        $query = array_merge($request->query(), ['membership' => $membership->id]);
 
-        return view('themes.'.$page['theme'].'.index', compact('page', 'membership', 'options'));
+        return view('themes.'.$page['theme'].'.index', compact('page', 'membership', 'fields', 'options', 'query'));
+    }
+
+    public function vote(Request $request, Membership $membership)
+    {
+        //var_dump($request->all());
+        if ($request->has('vote')) {
+            $choice = ($request->input('vote')) ? 'yes' : 'no';
+            $vote = Vote::create(['choice' => $choice, 'note' => $request->input('note')]);
+            $membership->votes()->save($vote);
+            Auth::user()->votes()->save($vote);
+//file_put_contents('debog_file.txt', print_r($result, true));
+            $request->session()->flash('success', __('messages.post.update_success'));
+
+        }
+                
+        return redirect()->route('memberships.applicants', $request->query());
     }
 
     /*

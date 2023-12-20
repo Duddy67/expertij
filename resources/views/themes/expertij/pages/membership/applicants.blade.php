@@ -1,5 +1,6 @@
 APPLICANTS
 @php //var_dump($items) @endphp
+@include('themes.expertij.partials.flash-message')
 
     @if (!empty($rows)) 
         <x-item-list :columns="$columns" :rows="$rows" :url="$url" :checkable="false" />

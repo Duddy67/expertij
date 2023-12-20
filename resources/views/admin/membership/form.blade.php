@@ -18,6 +18,7 @@
             <a class="nav-item nav-link" href="#professional_information" data-toggle="tab">@php echo __('labels.membership.professional_status'); @endphp</a>
             <a class="nav-item nav-link" href="#licences" data-toggle="tab">@php echo __('labels.membership.licences'); @endphp</a>
             <a class="nav-item nav-link" href="#profile" data-toggle="tab">@php echo __('labels.generic.profile'); @endphp</a>
+            <a class="nav-item nav-link" href="#votes" data-toggle="tab">@php echo __('labels.membership.votes'); @endphp</a>
             <a class="nav-item nav-link" href="#payments" data-toggle="tab">@php echo __('labels.generic.payments'); @endphp</a>
             <a class="nav-item nav-link" href="#insurance" data-toggle="tab">@php echo __('labels.membership.insurance'); @endphp</a>
         </nav>
@@ -79,6 +80,10 @@
 
             <div class="tab-pane" id="profile">
                 @include('admin.partials.membership.profile', ['user' => $membership->user])
+            </div>
+
+            <div class="tab-pane" id="votes">
+                @include('admin.partials.membership.votes', ['user' => $membership->user])
             </div>
 
             <div class="tab-pane" id="payments">

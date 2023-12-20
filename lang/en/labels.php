@@ -152,6 +152,8 @@ return [
         'insurance_f8' => 'Judiciaire + Extrajudiciaire option 2',
         'insurance_f9' => 'Judiciaire + Extrajudiciaire option 3',
 	'send_emails' => 'Send emails',
+	'vote' => 'Vote',
+	'votes' => 'Votes',
     ],
     'category' => [
 	'create_category' => 'Create a category',
@@ -234,6 +236,7 @@ return [
 	'layout_items' => 'Layout items',
 	'format' => 'Format',
 	'submit' => 'Submit',
+	'back' => 'Back',
 	'preview' => 'Preview',
 	'none' => 'None',
 	'unknown' => 'Unknown',

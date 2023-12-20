@@ -42,6 +42,7 @@ Route::get('/memberships/create', [MembershipController::class, 'create'])->name
 Route::get('/memberships/edit', [MembershipController::class, 'edit'])->name('memberships.edit');
 Route::get('/memberships/applicants', [MembershipController::class, 'applicants'])->name('memberships.applicants');
 Route::get('/memberships/applicants/{membership}/checkout', [MembershipController::class, 'checkoutApplicant'])->name('memberships.applicants.checkout');
+Route::put('/memberships/applicants/{membership}', [MembershipController::class, 'vote'])->name('memberships.applicants.vote');
 Route::put('/memberships', [MembershipController::class, 'update'])->name('memberships.update');
 Route::post('/memberships', [MembershipController::class, 'store'])->name('memberships.store');
 Route::post('/memberships/items', [MembershipController::class, 'createItem'])->name('memberships.items.create');
