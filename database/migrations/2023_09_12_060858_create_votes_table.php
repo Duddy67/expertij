@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('membership_id')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->char('choice', 3);
-            $table->text('note')->nullable();
+            $table->text('comment')->nullable();
             $table->timestamps();
         });
     }

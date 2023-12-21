@@ -62,6 +62,9 @@ return [
         'interpreter_required' => 'Veuillez indiquer si vous êtes interprète ou traducteur.',
         'translator_required' => '',
         'alert_decision_makers' => 'Un email de notification a été envoyé aux décisionnaires.',
+        'no_choice' => 'Aucun choix n\'a été fait.',
+        'thanks_for_voting' => 'Merci d\'avoir voté. Votre vote a bien été pris en compte.',
+        'already_voted' => 'Vous avez déjà voté concernant cette demande d\'adhésion.',
     ],
     'post' => [
         'create_success' => 'Post créé avec succès.',

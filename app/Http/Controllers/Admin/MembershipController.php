@@ -154,7 +154,7 @@ class MembershipController extends Controller
     public function sendEmails(Request $request, Membership $membership)
     {
         //file_put_contents('debog_file.txt', print_r($membership->user, true));
-        if ($this->alertDecisionMakers($membership->user)) {
+        if ($this->decisionMakersAlert($membership->user)) {
             $membership->sending_emails = true;
             $membership->save();
 

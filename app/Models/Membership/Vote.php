@@ -26,7 +26,7 @@ class Vote extends Model
      */
     protected $fillable = [
         'choice',
-        'note',
+        'comment',
     ];
 
     /**

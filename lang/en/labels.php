@@ -272,6 +272,7 @@ return [
 	'show_image' => 'Show image',
 	'allow_comments' => 'Allow comments',
 	'comment_alert' => 'Comment alert',
+	'comment' => 'Comment',
 	'extra_fields' => 'Extra fields',
 	'extra_field_1' => 'Extra field 1',
 	'extra_field_2' => 'Extra field 2',

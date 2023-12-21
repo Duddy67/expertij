@@ -443,15 +443,23 @@ class MembershipController extends Controller
     /**
      * Display a listing of applicants.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
-    public function applicants(Request $request)
+    public function applicants(Request $request): \Illuminate\View\View
     {
         $page = Setting::getPage('membership.applicants');
         $columns = $this->getColumns();
-        //
-        $request->merge(['statuses' => ['pending']]);
+        // Fetch only the pending memberships.
+        // Since pagination is not used here, set the number of displayed pages to a high value. 
+        $request->merge(['statuses' => ['pending'], 'per_page' => 500]);
         $items = Membership::getMemberships($request);
+
+        // Remove the memberships for which the user has already voted.
+        foreach ($items as $key => $membership) {
+            if ($membership->hasUserVoted(Auth::user())) {
+                $items->forget($key);
+            }
+        }
 
         $rows = $this->getRows($columns, $items);
         $url = ['route' => 'memberships.applicants', 'item_name' => 'membership', 'action' => 'checkout', 'query' => []];
@@ -459,31 +467,49 @@ class MembershipController extends Controller
         return view('themes.'.$page['theme'].'.index', compact('page', 'columns', 'rows', 'items', 'url'));
     }
 
-    public function checkoutApplicant(Request $request, Membership $membership)
+    /**
+     * Shows the applicant's data and displays a forming vote. 
+     *
+     * @return \Illuminate\View\View
+     */
+    public function checkoutApplicant(Request $request, Membership $membership): \Illuminate\View\View
     {
         $this->item = $membership;
         $page = Setting::getPage('membership.applicant');
         $options = $this->getOptions();
         $except = ['name', 'status', 'created_at', 'updated_at', 'updated_by', 'member_number', 'member_since'];
         $fields = $this->getFields($except);
-        //$query = $request->query();
+        // Retrieve the user's comment (if any) in case an error occured while submiting the voting form. 
+        $comment = ($request->has('comment')) ? $request->input('comment') : '';
         $query = array_merge($request->query(), ['membership' => $membership->id]);
 
-        return view('themes.'.$page['theme'].'.index', compact('page', 'membership', 'fields', 'options', 'query'));
+        return view('themes.'.$page['theme'].'.index', compact('page', 'membership', 'fields', 'options', 'query', 'comment'));
     }
 
+    /**
+     * Store the decision maker's vote.
+     */
     public function vote(Request $request, Membership $membership)
     {
-        //var_dump($request->all());
-        if ($request->has('vote')) {
-            $choice = ($request->input('vote')) ? 'yes' : 'no';
-            $vote = Vote::create(['choice' => $choice, 'note' => $request->input('note')]);
-            $membership->votes()->save($vote);
-            Auth::user()->votes()->save($vote);
-//file_put_contents('debog_file.txt', print_r($result, true));
-            $request->session()->flash('success', __('messages.post.update_success'));
+        // No choice has been made.
+        if (!$request->has('choice')) {
+            $request->session()->flash('error', __('messages.membership.no_choice'));
+            // Add the comment input value to the query to prevent losing the user's comment (if any).
+            $query = array_merge($request->query(), ['membership' => $membership->id, 'comment' => $request->input('comment')]);
 
+            return redirect()->route('memberships.applicants.checkout', $query);
         }
+
+        // Store the decision maker's vote.
+        $choice = ($request->input('choice')) ? 'yes' : 'no';
+        $vote = Vote::create(['choice' => $choice, 'comment' => $request->input('comment')]);
+        $membership->votes()->save($vote);
+        Auth::user()->votes()->save($vote);
+
+        $request->session()->flash('success', __('messages.membership.thanks_for_voting'));
+
+        // Inform administrators about the vote.
+        //$this->voteAlert(Auth::user(), $membership->user);
                 
         return redirect()->route('memberships.applicants', $request->query());
     }

@@ -62,6 +62,9 @@ return [
         'interpreter_required' => 'Please indicate if you are a interpreter or a translator.',
         'translator_required' => '',
         'alert_decision_makers' => 'A notification email has been sent to the decision makers.',
+        'no_choice' => 'No choice has been made.',
+        'thanks_for_voting' => 'Thanks for voting. Your vote has been taken into account.',
+        'already_voted' => 'You have already voted regarding this membership request.',
     ],
     'post' => [
         'create_success' => 'Post successfully created.',

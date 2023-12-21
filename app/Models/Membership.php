@@ -261,4 +261,19 @@ class Membership extends Model
             ['value' => 'associated',  'text' => __('labels.membership.associated_member')],
         ];
     }
+
+    /*
+     * Checks if a given user has voted regarding a membership request.
+     */
+    public function hasUserVoted($user): bool
+    {
+        // Loop through the membership's votes.
+        foreach ($this->votes as $vote) {
+            if ($vote->user->id == $user->id) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

@@ -44,7 +44,7 @@ trait Emails
     /*
      * Informs the decision makers about the newest membership request.
      */
-    public function alertDecisionMakers(User $applicant): bool
+    public function decisionMakersAlert(User $applicant): bool
     {
         $recipients = [];
 
@@ -60,7 +60,36 @@ trait Emails
             $data->last_name = $applicant->last_name;
             $data->recipients = $recipients;
 
-            if (Email::sendEmail('alert-decision-makers', $data)) {
+            if (Email::sendEmail('decision-makers-alert', $data)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /*
+     * Informs some administrators about a new vote regarding a membership request.
+     */
+    public function voteAlert(User $decisionMaker, User $applicant): bool
+    {
+        $recipients = [];
+
+        if ($group = Group::where('name', 'office')->first()) {
+          foreach ($group->users as $user) {
+              $recipients[] = $user->email;
+          }
+        }
+
+        if (!empty($recipients)) {
+            $data = new \stdClass();
+            $data->first_name = $decisionMaker->first_name;
+            $data->last_name = $decisionMaker->last_name;
+            $data->applicant_first_name = $applicant->first_name;
+            $data->applicant_last_name = $applicant->last_name;
+            $data->recipients = $recipients;
+
+            if (Email::sendEmail('vote-alert', $data)) {
                 return true;
             }
         }

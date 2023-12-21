@@ -1,41 +1,48 @@
 
+@include('themes.expertij.partials.flash-message')
+
+@if ($membership->hasUserVoted(auth()->user()))
+    <div class="alert alert-info" role="alert">
+        {{ __('messages.membership.already_voted') }}
+    </div>
+@else
     <form method="post" action="{{ route('memberships.applicants.vote', $query) }}" id="votingForm" enctype="multipart/form-data">
         @csrf
         @method('put')
 
         <div class="row mb-3">
             <div class="col-md-3 form-group">
-                <input class="form-check-input" type="radio" name="vote" id="yes" value="1">
+                <input class="form-check-input" type="radio" name="choice" id="yes" value="1">
                 <label class="form-check-label" for="yes">{{ __('labels.generic.yes') }}</label>
             </div>
             <div class="col-md-3 form-group">
-                <input class="form-check-input" type="radio" name="vote" id="no" value="0">
+                <input class="form-check-input" type="radio" name="choice" id="no" value="0">
                 <label class="form-check-label" for="no">{{ __('labels.generic.no') }}</label>
             </div>
         </div>
 
         <div class="row mb-3">
             <div class="col-md-6 form-group">
-                <label for="note">{{ __('labels.generic.note') }}</label>
-                <textarea name="note" rows="5" cols="35" class="form-control" id="note"></textarea>
+                <label for="comment">{{ __('labels.generic.comment') }}</label>
+                <textarea name="comment" rows="5" cols="35" class="form-control" id="comment">{{ $comment }}</textarea>
             </div>
         </div>
 
         <div class="row mb-3">
             <div class="col-md-2 form-group">
-                <button class="btn btn-success form-action-btn" id="vote-btn" data-form="vote" data-route="vote" type="button">
+                <button class="btn btn-success form-action-btn" id="voting-btn" type="button">
                     {{ __('labels.membership.vote') }}
                 </button>
             </div>
             <div class="col-md-2 form-group">
-                <button class="btn btn-secondary form-action-btn" id="back-btn" data-form="return" data-route="return" type="button">
+                <button class="btn btn-secondary form-action-btn" id="back-btn" type="button">
                     {{ __('labels.generic.back') }}
                 </button>
             </div>
         </div>
-
-
+        <input type="hidden" id="backUrl" value="{{ route('memberships.applicants') }}">
     </form>
+@endif
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
