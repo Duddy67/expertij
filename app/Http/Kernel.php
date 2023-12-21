@@ -66,6 +66,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'membership.registration' => \App\Http\Middleware\CheckMembershipRegistration::class,
         'membership.edit' => \App\Http\Middleware\CheckMembershipEdit::class,
+        'membership.vote' => \App\Http\Middleware\CheckDecisionMaker::class,
 
         // Backend 
         'admin' => \App\Http\Middleware\Admin::class,

@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CheckMembershipEdit
+class CheckDecisionMaker
 {
     /**
      * Handle an incoming request.
@@ -17,11 +17,12 @@ class CheckMembershipEdit
      */
     public function handle(Request $request, Closure $next)
     {
-        // The user has no membership.
-        if (!Auth::user()->membership()->exists()) {
-            // The user cannot access the membership edit form.
+        // The user is not part of the decision maker group.
+        if (!Auth::user()->groups->where('name', 'decision-maker')->first()) {
+            // The user is not allowed to vote.
             return redirect()->route('site.index');
         }
+
         return $next($request);
     }
 }

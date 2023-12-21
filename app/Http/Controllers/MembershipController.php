@@ -41,6 +41,7 @@ class MembershipController extends Controller
         $this->middleware('auth', ['except' => ['create', 'store', 'createItem', 'deleteItem']]);
         $this->middleware('membership.registration', ['only' => ['create', 'store']]);
         $this->middleware('membership.edit', ['only' => ['edit', 'update']]);
+        $this->middleware('membership.vote', ['only' => ['applicants', 'checkoutApplicant', 'vote']]);
         $this->item = new Membership;
     }
 
@@ -453,7 +454,7 @@ class MembershipController extends Controller
         // Since pagination is not used here, set the number of displayed pages to a high value. 
         $request->merge(['statuses' => ['pending'], 'per_page' => 500]);
         $items = Membership::getMemberships($request);
-
+//var_dump(Auth::user()->groups->where('name', 'decision-maker')->first());
         // Remove the memberships for which the user has already voted.
         foreach ($items as $key => $membership) {
             if ($membership->hasUserVoted(Auth::user())) {
@@ -509,7 +510,7 @@ class MembershipController extends Controller
         $request->session()->flash('success', __('messages.membership.thanks_for_voting'));
 
         // Inform administrators about the vote.
-        //$this->voteAlert(Auth::user(), $membership->user);
+        $this->voteAlert(Auth::user(), $membership->user);
                 
         return redirect()->route('memberships.applicants', $request->query());
     }
