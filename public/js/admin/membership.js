@@ -12,13 +12,37 @@
             document.getElementById('professional_status_info').style.display = 'none'; 
             document.querySelector('label[for="professional_status_info"]').style.display = 'none'; 
         }
+
+        // Get the buttons related to saving. 
+        const buttons = document.querySelectorAll('[id^="save"]');
+
+        buttons.forEach(function(button) {
+            button.addEventListener('click', function(e) {
+                let currentStatus = document.getElementById('_currentStatus').value;
+
+                // The membership status has changed.
+                if (document.getElementById('status').value != currentStatus) {
+                    // Inform the user about the consequences.
+                    if (confirm('sure ?') == false) {
+                        // Abort saving.
+                        e.information = ['abort'];
+                    }
+                    // Save membership.
+                    else {
+                        // Update the current status value.
+                        document.getElementById('_currentStatus').value = document.getElementById('status').value;
+                    }
+                }
+            });
+        });
     });
 
     /*
      * Initializes the status dropdown list according to the current status.
+     * N.B: Make the function global as it is called through AJAX after saving. 
      */
-    function setStatuses() {
-        let currentStatus = document.getElementById('status').value;
+    window.setStatuses = function() {
+        const currentStatus = document.getElementById('status').value;
 
         // Disables the dropdown list.
         if (currentStatus == 'member' || currentStatus == 'refused' || currentStatus == 'cancelled' || currentStatus == 'revoked' || currentStatus == 'cancellation') {
@@ -26,18 +50,27 @@
         }
         // Disables some options according to the pending status.
         else {
-            let disabled = {pending: ['cancelled', 'pending_renewal', 'member', 'revoked', 'cancellation'],
+            const disabled = {pending: ['cancelled', 'pending_renewal', 'member', 'revoked', 'cancellation'],
                             pending_subscription: ['pending', 'refused', 'member', 'pending_renewal', 'revoked', 'cancellation'],
                             pending_renewal: ['pending', 'refused', 'member', 'pending_subscription', 'cancelled', 'cancellation']};
 
+            const enabled = {pending: ['refused', 'pending_subscription'],
+                            pending_subscription: ['cancelled'],
+                            pending_renewal: ['revoked']};
+
             disabled[currentStatus].forEach( function(stat) {
-                document.querySelector('#status option[value='+stat+']').disabled = true;
+                document.querySelector('#status option[value=' + stat + ']').disabled = true;
             });
 
-            if (currentStatus == 'pending_subscription') {
+            enabled[currentStatus].forEach( function(stat) {
+                document.querySelector('#status option[value=' + stat + ']').disabled = false;
+            });
+
+            /*if (currentStatus == 'pending_subscription') {
                 document.querySelector('#status option[value=cancelled]').disabled = true;
-            }
+            }*/
         }
-    }
+    };
 
 })();
+

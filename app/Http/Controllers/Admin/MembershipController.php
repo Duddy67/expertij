@@ -118,7 +118,31 @@ class MembershipController extends Controller
      */
     public function update(Request $request, Membership $membership)
     {
-        file_put_contents('debog_file.txt', print_r($membership, true));
+        if ($membership->checked_out != auth()->user()->id) {
+            $request->session()->flash('error', __('messages.generic.user_id_does_not_match'));
+            return response()->json(['redirect' => route('admin.memberships.index', $request->query())]);
+        }
+
+        if (!$membership->canEdit()) {
+            $request->session()->flash('error', __('messages.generic.edit_not_auth'));
+            return response()->json(['redirect' => route('admin.memberships.index', $request->query())]);
+        }
+
+        if ($request->has('status')) {
+            $membership->status = $request->input('status');
+        }
+
+        $membership->updated_by = auth()->user()->id;
+        $membership->save();
+
+        if ($request->input('_close', null)) {
+            $membership->safeCheckIn();
+            // Store the message to be displayed on the list view after the redirect.
+            $request->session()->flash('success', __('messages.membership.update_success'));
+            return response()->json(['redirect' => route('admin.memberships.index', $request->query())]);
+        }
+//file_put_contents('debog_file.txt', print_r($request->all(), true));
+        return response()->json(['success' => __('messages.post.update_success'), 'function' => 'setStatuses','updates' => $this->getFieldValuesToUpdate($request)]);
     }
 
     /**

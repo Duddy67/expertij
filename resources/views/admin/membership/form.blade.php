@@ -103,6 +103,7 @@
             <input type="hidden" id="_dateFormat" value="{{ $dateFormat }}">
             <input type="hidden" id="_locale" value="{{ config('app.locale') }}">
             <input type="hidden" id="_sendingEmails" value="{{ $membership->sending_emails }}">
+            <input type="hidden" id="_currentStatus" value="{{ $membership->status }}">
         @endif
 
         @foreach ($dateFormats as $key => $value)
@@ -136,8 +137,8 @@
     <script type="text/javascript" src="{{ asset('/js/datepicker.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/vendor/tinymce/tinymce.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/vendor/codalia/c.ajax.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/js/admin/membership.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/js/admin/form.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/js/admin/disable.toolbars.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('/js/admin/membership.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/js/tinymce/filemanager.js') }}"></script>
 @endpush

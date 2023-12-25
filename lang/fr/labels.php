@@ -154,6 +154,7 @@ return [
 	'send_emails' => 'Envoyer emails',
 	'vote' => 'Voter',
 	'votes' => 'Votes',
+	'voting' => 'Vote',
     ],
     'category' => [
 	'create_category' => 'Créer une catégorie',

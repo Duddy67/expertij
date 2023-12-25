@@ -10,9 +10,9 @@
             let button = document.getElementById(action);
 
             if (button) {
-                button.onclick = function(e) {
-                    localNamespace[action]();
-                }
+                button.addEventListener('click', function(e) {
+                    localNamespace[action](e);
+                });
             }
         });
 
@@ -25,26 +25,36 @@
         }
     });
 
-    function save() {
+    function save(e) {
+        // Check for possible information.
+        if (e.information !== undefined && e.information.includes('abort')) {
+            return false;
+        }
+
         runAjax('itemForm');
     }
 
-    function saveClose() {
+    function saveClose(e) {
+        // Check for possible information.
+        if (e.information !== undefined && e.information.includes('abort')) {
+            return false;
+        }
+
         document.querySelector('input[name="_close"]').value = 1;
         runAjax('itemForm');
     }
 
-    function cancel() {
+    function cancel(e) {
         window.location.replace(document.getElementById('cancelEdit').value);
     }
 
-    function destroy() {
+    function destroy(e) {
         if (window.confirm('Are you sure ?')) {
             document.getElementById('deleteItem').submit();
         }
     }
 
-    function sendEmails() {
+    function sendEmails(e) {
         if (window.confirm('Send emails ?')) {
             runAjax('emails');
         }
@@ -103,6 +113,10 @@
                 else if (['success', 'warning', 'info'].includes(key)) {
                     displayMessage(key, value);
                 }
+                else if (key == 'function') {
+                    window[value]();
+                    //console.log(value);
+                }
             }
         }
         else if (status === 422) {
@@ -157,7 +171,6 @@
 
         window.scrollTo(0, 0);
     }
-
 })();
 
 
