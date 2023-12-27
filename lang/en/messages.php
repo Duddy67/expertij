@@ -156,5 +156,9 @@ return [
         'cookie_info' => 'This website uses cookies to ensure you get the best experience on our website.',
         'checked_out' => 'A user is already checking out this record. This record will be available again once the user is done with it.',
         'cannot_send_email' => 'One or more emails could not be sent. Please contact the website administrator.',
+    ],
+    'js_messages' => [
+        'status_change_confirmation' => 'The member status is about to be changed. Are you sure ?',
+        'confirm_item_deletion' => 'An item is about to be deleted. Are you sure ?',
     ]
 ];

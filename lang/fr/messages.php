@@ -156,5 +156,9 @@ return [
         'cookie_info' => 'Ce site utilise des cookies pour offrir une meilleure expérience sur notre site web.',
         'checked_out' => 'Un utilisateur est déjà en train de consulter cet enregistrement. L\'enregistrement sera à nouveau consultable quand cet utilisateur aura terminé.',
         'cannot_send_email' => 'Un ou plusieurs emails n\'ont pas pu être envoyés. Veuillez contacter l\'administrateur du site.',
+    ],
+    'js_messages' => [
+        'status_change_confirmation' => 'Le statut de l\'adhérent(e) est sur le point d\'être changé. Etes vous sûr(e) ?',
+        'confirm_item_deletion' => 'Un élément est sur le point d\'être supprimé. Etes vous sûr(e) ?',
     ]
 ];

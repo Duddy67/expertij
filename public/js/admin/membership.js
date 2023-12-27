@@ -15,6 +15,7 @@
 
         // Get the buttons related to saving. 
         const buttons = document.querySelectorAll('[id^="save"]');
+        const messages = JSON.parse(document.getElementById('JsMessages').value);
 
         buttons.forEach(function(button) {
             button.addEventListener('click', function(e) {
@@ -23,7 +24,7 @@
                 // The membership status has changed.
                 if (document.getElementById('status').value != currentStatus) {
                     // Inform the user about the consequences.
-                    if (confirm('sure ?') == false) {
+                    if (confirm(messages.status_change_confirmation) == false) {
                         // Abort saving.
                         e.information = ['abort'];
                     }

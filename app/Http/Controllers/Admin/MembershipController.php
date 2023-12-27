@@ -90,6 +90,7 @@ class MembershipController extends Controller
         $options['citizenship'] = $membership->getCitizenshipOptions();
         $options['civility'] = $membership->getCivilityOptions();
 
+//file_put_contents('debog_file.txt', print_r($messages, true));
         return view('admin.membership.form', compact('membership', 'options', 'fields', 'actions', 'dateFormat', 'query'));
     }
 
@@ -128,12 +129,21 @@ class MembershipController extends Controller
             return response()->json(['redirect' => route('admin.memberships.index', $request->query())]);
         }
 
+        $oldStatus = null;
+
         if ($request->has('status')) {
+            $oldStatus = $membership->getOriginal('status');
             $membership->status = $request->input('status');
         }
 
         $membership->updated_by = auth()->user()->id;
         $membership->save();
+
+        // The status has changed.
+        if ($oldStatus && $oldStatus != $membership->status) {
+            // Informs the member/applicant about the status change.
+            $this->statusChange($membership);
+        }
 
         if ($request->input('_close', null)) {
             $membership->safeCheckIn();
@@ -141,8 +151,8 @@ class MembershipController extends Controller
             $request->session()->flash('success', __('messages.membership.update_success'));
             return response()->json(['redirect' => route('admin.memberships.index', $request->query())]);
         }
-//file_put_contents('debog_file.txt', print_r($request->all(), true));
-        return response()->json(['success' => __('messages.post.update_success'), 'function' => 'setStatuses','updates' => $this->getFieldValuesToUpdate($request)]);
+
+        return response()->json(['success' => __('messages.membership.update_success'), 'function' => 'setStatuses','updates' => $this->getFieldValuesToUpdate($request)]);
     }
 
     /**

@@ -5,6 +5,8 @@ namespace App\Traits;
 use App\Models\Cms\Email;
 use App\Models\User;
 use App\Models\User\Group;
+use App\Models\Membership;
+use App\Models\Cms\Setting;
 
 trait Emails
 {
@@ -92,6 +94,30 @@ trait Emails
             if (Email::sendEmail('vote-alert', $data)) {
                 return true;
             }
+        }
+
+        return false;
+    }
+
+    /*
+     * Sends the appropriate email to the member/applicant according to the given status change.
+     * Handled statuses: pending_subscription, refused, revoked, cancelled.
+     */
+    public function statusChange(Membership $membership): bool
+    {
+        // Get the status and replace underscore (if any) by hyphen.
+        $status = str_replace('_', '-', $membership->status);
+        // Get the member/applicant.
+        $member = $membership->user;
+
+        // The subscription fee amount is required.
+        if ($status == 'pending-subscription') {
+            $prices = Setting::getDataByGroup('prices', $membership);
+            $member->subscription_fee = ($membership->associated_member) ? $prices['associated_subscription_fee'] : $prices['subscription_fee'];
+        }
+
+        if (Email::sendEmail($status, $member)) {
+            return true;
         }
 
         return false;
