@@ -320,6 +320,8 @@ return [
 	'internal_rules' => 'Réglement interne',
 	'normal' => 'Normal',
 	'payments' => 'Paiements',
+	'payment' => 'Paiement',
+	'pay_now' => 'Payer',
 	'missing_document' => 'Document manquant',
         'january' => 'Janvier',
         'february' => 'Février',

@@ -47,6 +47,7 @@ Route::put('/memberships', [MembershipController::class, 'update'])->name('membe
 Route::post('/memberships', [MembershipController::class, 'store'])->name('memberships.store');
 Route::post('/memberships/items', [MembershipController::class, 'createItem'])->name('memberships.items.create');
 Route::delete('/memberships/items/{id}', [MembershipController::class, 'deleteItem'])->name('memberships.items.delete');
+Route::post('/memberships/payment', [MembershipController::class, 'payment'])->name('memberships.payment');
 
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');

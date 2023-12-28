@@ -8,13 +8,16 @@
         <a class="nav-item nav-link active" id="membership-tab" href="#membership" data-bs-toggle="tab">{{ __('labels.title.membership') }}</a>
         <a class="nav-item nav-link" id="licences-tab" href="#licences" data-bs-toggle="tab">{{ __('labels.membership.licences') }}</a>
         <a class="nav-item nav-link" id="professional_information-tab" href="#professional_information" data-bs-toggle="tab">{{ __('labels.membership.professional_status') }}</a>
+        @if (in_array($membership->status, ['pending_subscription', 'pending_renewal']))
+            <a class="nav-item nav-link" id="payment-tab" href="#payment" data-bs-toggle="tab">{{ __('labels.generic.payment') }}</a>
+        @endif
     </nav>
 
     <div class="tab-content">
         <div class="tab-pane active" id="membership">
             <div class="col-md-6 form-group">
                 <label for="status">{{ __('labels.generic.status') }}</label>
-                <input type="text" name="_status" class="form-control" id="status" value="{{ $membership->status }}" disabled>
+                <input type="text" name="_status" class="form-control" id="status" value="{{ __('labels.membership.'.$membership->status) }}" disabled>
             </div>
         </div>
 
@@ -118,6 +121,12 @@
                 </div>
             </div>
         </div>
+
+        @if (in_array($membership->status, ['pending_subscription', 'pending_renewal']))
+            <div class="tab-pane" id="payment">
+                @include('themes.expertij.partials.membership.edit.payment')
+            </div>
+        @endif
     </div>
 </div>
 

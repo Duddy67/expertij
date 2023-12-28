@@ -207,8 +207,9 @@ class MembershipController extends Controller
         $options = $this->getOptions();
         // Get the user's membership.
         $membership = Auth::user()->membership;
+        $prices = Setting::getDataByGroup('prices', $membership);
 
-        return view('themes.'.$page['theme'].'.index', compact('page', 'options', 'membership'));
+        return view('themes.'.$page['theme'].'.index', compact('page', 'options', 'membership', 'prices'));
     }
 
     /**
@@ -438,6 +439,11 @@ class MembershipController extends Controller
         }
 
         return response()->json(['deletions' => [['targetId' => $type.'-'.$request->input('_index')]], 'success' => __('messages.generic.item_deleted')]);
+
+    }
+
+    public function payment(Request $request): \Illuminate\View\View
+    {
 
     }
 

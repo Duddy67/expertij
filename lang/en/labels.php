@@ -319,6 +319,8 @@ return [
 	'internal_rules' => 'Internal rules',
 	'normal' => 'Normal',
 	'payments' => 'Payments',
+	'payment' => 'Payment',
+	'pay_now' => 'Pay now',
 	'missing_document' => 'Missing document',
         'january' => 'January',
         'february' => 'February',
