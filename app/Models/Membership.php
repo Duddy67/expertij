@@ -276,4 +276,112 @@ class Membership extends Model
 
         return false;
     }
+
+    /*
+     *  Checks whether the membership has an insurance.
+     */
+    public function hasInsurance(): bool
+    {
+        $payments = $this->payments->where('last', 1)->get();
+
+        foreach ($payments as $payment) {
+            if (str_starts_with($payment->item, 'insurance') || str_starts_with($payment->item, 'subscription-insurance')) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function getPayment(array $query)
+    {
+//file_put_contents('debog_file.txt', print_r($query, true));
+        $item = '';
+        $prices = Setting::getDataByGroup('prices', $this);
+        $amount = 0;
+        // Check the free period (if any).
+        $freePeriod = ($query['payment_mode'] == 'free_period' && $this->free_period) ? true : false;
+
+        // Set the amount value as well as the item type.
+        if ($this->status == 'pending_subscription' || $this->status == 'pending_renewal') {
+            $item = 'subscription';
+
+            if (!$freePeriod) {
+                $amount = ($this->associated_member) ? $prices['associated_subscription_fee'] : $prices['subscription_fee'];
+            }
+
+            // Check whether an insurance has been selected in addition to the subscription.
+            $item = (isset($query['insurance_code']) && $query['insurance_code'] != 'f0') ? 'subscription-insurance-'.$query['insurance_code'] : $item;
+
+            // Add the insurance price (if any).
+            $amount = (str_starts_with($item, 'subscription-insurance-')) ? $amount + $prices['insurance_fee_'.$query['insurance_code']] : $amount;
+
+            if ($this->status == 'pending_renewal') {
+                // update payments (last = 0)
+            }
+        }
+        elseif ($this->status == 'member' && isset($query['insurance_code']) && $query['insurance_code'] != 'f0') {
+            $item = 'insurance-'.$query['insurance_code'];
+            $amount = $prices['insurance_fee_'.$query['insurance_code']];
+        }
+
+        // Set the payment status according the payment mode and the free period value.
+        $status = (($query['payment_mode'] == 'cheque' || $query['payment_mode'] == 'bank_transfer') && !$freePeriod) ? 'pending' : 'completed';
+
+        $transactionId = ($query['payment_mode'] != 'cheque' && $query['payment_mode'] != 'bank_transfer' && !$freePeriod) ? $query['transaction_id'] : uniqid('OFFL');
+
+        $payment = Payment::create([
+            'item' => $item,
+            'status' => $status,
+            'amount' => $amount,
+            'mode' => $query['payment_mode'],
+            'last' => true,
+            'currency' => 'EUR',
+            'transaction_id' => $transactionId,
+            'message' => (isset($query['message'])) ? $query['message'] : '',
+            'data' => (isset($query['data'])) ? $query['data'] : '',
+        ]);
+
+        return $payment;
+    }
+
+    /*
+     * Compute a new member number.
+     */
+    public function getMemberNumber()
+    {
+        // Get the highest member number.
+        //$lastNumber = Db::table('codalia_membership_members')->max('member_number');
+        $lastNumber = Membership::max('member_number');
+        // Initialise final letter as ceseda.
+        $letter = 'C';
+
+        // Check for honorary member.
+        if ($this->associated_member) {
+            $letter = 'MA';
+        }
+        // then check for expert.
+        else {
+            foreach ($this->licences as $licence) {
+                if ($licence->type == 'expert') {
+                    $letter = 'E';
+                    break;
+                }
+            }
+        }
+
+        if ($lastNumber === null) {
+            return date('Y').'-1-'.$letter;
+        }
+
+        // Extract the highest member number.
+        preg_match('#^[0-9]{4}-([0-9]*)-#', $lastNumber, $matches);
+        // Increase the member number by one.
+        $lastNumber = $matches[1];
+        $newNumber = $lastNumber + 1;
+
+        //return date('Y').'-'.$newNumber.'-'.$letter;
+        $this->member_number = date('Y').'-'.$newNumber.'-'.$letter;
+        $this->save();
+    }
 }

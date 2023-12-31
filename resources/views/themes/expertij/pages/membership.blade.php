@@ -23,7 +23,7 @@
 
         <div class="tab-pane" id="licences">
             <!-- Licences etc... -->
-            <form action="{{ route('memberships.licences.update') }}" method="post" enctype="multipart/form-data" id="licenceForm" role="form" class="php-email-form">
+            <form action="#" method="post" enctype="multipart/form-data" id="licenceForm" role="form" class="php-email-form">
                 @csrf
                 <input type="hidden" id="updateLicences" value="{{ route('memberships.licences.update') }}">
                 @method('put')
@@ -122,7 +122,7 @@
             </div>
         </div>
 
-        @if (in_array($membership->status, ['pending_subscription', 'pending_renewal']))
+        @if (in_array($membership->status, ['pending_subscription', 'pending_renewal']) || ($membership->status == 'member' && !$membership->hasInsurance()))
             <div class="tab-pane" id="payment">
                 @include('themes.expertij.partials.membership.edit.payment')
             </div>

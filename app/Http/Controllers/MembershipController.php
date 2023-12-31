@@ -207,6 +207,7 @@ class MembershipController extends Controller
         $options = $this->getOptions();
         // Get the user's membership.
         $membership = Auth::user()->membership;
+        //$query = array_merge($request->query(), ['membership' => $membership->id]);
         $prices = Setting::getDataByGroup('prices', $membership);
 
         return view('themes.'.$page['theme'].'.index', compact('page', 'options', 'membership', 'prices'));
@@ -442,9 +443,27 @@ class MembershipController extends Controller
 
     }
 
-    public function payment(Request $request): \Illuminate\View\View
+    public function payment(Request $request)
     {
+        if ($request->input('payment_mode') == 'sherlock') {
+            // redirect to Sherlock controller.
+        }
 
+        // Handle the offline payments and possibly the free period.
+
+        $membership = Auth::user()->membership;
+        $payment = $membership->getPayment($request->all());
+
+        if ($request->input('payment_mode') == 'free_period' && $membership->free_period) {
+            $membership->free_period = false;
+            $membership->status = 'member';
+            $membership->save();
+            $membership->payments->save($payment);
+
+            return redirect()->route('memberships.edit', $request->query());
+        }
+
+        return redirect()->route('memberships.edit', $request->query());
     }
 
     /**
@@ -460,7 +479,7 @@ class MembershipController extends Controller
         // Since pagination is not used here, set the number of displayed pages to a high value. 
         $request->merge(['statuses' => ['pending'], 'per_page' => 500]);
         $items = Membership::getMemberships($request);
-//var_dump(Auth::user()->groups->where('name', 'decision-maker')->first());
+
         // Remove the memberships for which the user has already voted.
         foreach ($items as $key => $membership) {
             if ($membership->hasUserVoted(Auth::user())) {
