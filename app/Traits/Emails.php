@@ -105,7 +105,7 @@ trait Emails
      */
     public function statusChange(Membership $membership): bool
     {
-        // Get the status and replace underscore (if any) by hyphen.
+        // Get the status and replace underscore (if any) by hyphen as the status will be used as email code.
         $status = str_replace('_', '-', $membership->status);
         // Get the member/applicant.
         $member = $membership->user;

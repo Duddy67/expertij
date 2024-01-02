@@ -36,6 +36,12 @@
                 }
             });
         });
+
+        if (document.getElementById('payment-status') && document.getElementById('payment-status').value != 'pending') {
+            // Disable the elements of the payment row.
+            document.getElementById('payment-status').disabled = true;
+            document.getElementById('save-payment-status').disabled = true;
+        }
     });
 
     /*
@@ -66,12 +72,29 @@
             enabled[currentStatus].forEach( function(stat) {
                 document.querySelector('#status option[value=' + stat + ']').disabled = false;
             });
-
-            /*if (currentStatus == 'pending_subscription') {
-                document.querySelector('#status option[value=cancelled]').disabled = true;
-            }*/
         }
     };
 
+    /*
+     * Set some elements according to the payment status change. 
+     * N.B: Make the function global as it is called through AJAX after saving. 
+     */
+    window.afterPayment = function() {
+        if (document.getElementById('payment-status').value == 'completed') {
+            // Set the membership status to "member" then disable the select element.
+            document.getElementById('status').value = 'member';
+            document.getElementById('status').disabled = true;
+            // Refresh the select2 element through jQuery.
+            $('#status').select2();
+            $('.select2-container--default').attr('style', 'width: 100%');
+        }
+
+        // Set the current membership status to "member" to prevent the 
+        // warning javascript message regarding the status change. 
+        document.getElementById('_currentStatus').value = 'member';
+        // Disable the elements of the payment row.
+        document.getElementById('payment-status').disabled = true;
+        document.getElementById('save-payment-status').disabled = true;
+    };
 })();
 

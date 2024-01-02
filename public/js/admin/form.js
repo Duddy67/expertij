@@ -23,6 +23,23 @@
                 runAjax(button.dataset.formId);
             });
         }
+
+        if (document.getElementById('save-payment-status')) {
+            document.getElementById('save-payment-status').addEventListener('click', function(e) {
+                const paymentStatus = document.getElementById('payment-status').value;
+
+                if (paymentStatus == 'pending') {
+                
+                }
+                else {
+                    alert(paymentStatus);
+                    document.getElementById('paymentStatus').value = paymentStatus;
+
+                    runAjax('setPayment');
+                }
+            });
+
+        }
     });
 
     function save(e) {

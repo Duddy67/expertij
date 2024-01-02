@@ -30,6 +30,8 @@ class Payment extends Model
         'currency',
         'message',
         'data',
+        'transaction_id',
+        'last',
     ];
 
     /**

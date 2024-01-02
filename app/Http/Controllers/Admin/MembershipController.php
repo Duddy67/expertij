@@ -90,7 +90,6 @@ class MembershipController extends Controller
         $options['citizenship'] = $membership->getCitizenshipOptions();
         $options['civility'] = $membership->getCivilityOptions();
 
-//file_put_contents('debog_file.txt', print_r($messages, true));
         return view('admin.membership.form', compact('membership', 'options', 'fields', 'actions', 'dateFormat', 'query'));
     }
 
@@ -130,6 +129,7 @@ class MembershipController extends Controller
         }
 
         $oldStatus = null;
+        //file_put_contents('debog_file.txt', print_r($request->all(), true));
 
         if ($request->has('status')) {
             $oldStatus = $membership->getOriginal('status');
@@ -187,7 +187,6 @@ class MembershipController extends Controller
      */
     public function sendEmails(Request $request, Membership $membership)
     {
-        //file_put_contents('debog_file.txt', print_r($membership->user, true));
         if ($this->decisionMakersAlert($membership->user)) {
             $membership->sending_emails = true;
             $membership->save();
@@ -197,5 +196,25 @@ class MembershipController extends Controller
         else {
             return response()->json(['warning' => __('messages.generic.cannot_send_email')]);
         }
+    }
+
+    /*
+     * Set the payment status as well as the membership status according to the payment status change. 
+     */
+    public function setPayment(Request $request, Membership $membership)
+    {
+        $payment = $membership->getCurrentPayment();
+
+        // A payment for subscription is completed. The user is now member.
+        if ($request->input('payment_status') == 'completed' && str_starts_with($payment->item, 'subscription')) {
+            //$membership->status = 'member';
+            //$membership->save();
+        }
+
+        $payment->status = $request->input('payment_status');
+        $payment->save();
+//file_put_contents('debog_file.txt', print_r($payment, true));
+
+        return response()->json(['success' => __('messages.generic.cannot_send_email'), 'function' => 'afterPayment']);
     }
 }

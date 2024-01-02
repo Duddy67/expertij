@@ -122,6 +122,12 @@
             @method('put')
             @csrf
         </form>
+
+        <form id="setPayment" action="{{ route('admin.memberships.setPayment', $query) }}" method="post">
+            @method('put')
+            @csrf
+            <input type="hidden" name="payment_status" id="paymentStatus" value="">
+        </form>
     @endif
 @endsection
 

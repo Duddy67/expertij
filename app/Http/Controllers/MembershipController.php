@@ -453,15 +453,18 @@ class MembershipController extends Controller
 
         $membership = Auth::user()->membership;
         $payment = $membership->getPayment($request->all());
+        $membership->payments()->save($payment);
 
         if ($request->input('payment_mode') == 'free_period' && $membership->free_period) {
             $membership->free_period = false;
+            $membership->payment_mode = $request->input('payment_mode');
             $membership->status = 'member';
             $membership->save();
-            $membership->payments->save($payment);
 
             return redirect()->route('memberships.edit', $request->query());
         }
+
+        $request->session()->flash('success', __('messages.message.send_success'));
 
         return redirect()->route('memberships.edit', $request->query());
     }

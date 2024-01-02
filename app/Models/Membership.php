@@ -282,20 +282,33 @@ class Membership extends Model
      */
     public function hasInsurance(): bool
     {
-        $payments = $this->payments->where('last', 1)->get();
+        //$payments = $this->payments->where('last', 1)->get();
+        return ($this->payments->where('last', 1)->where('item', 'LIKE', '%insurance%')->first()) ? true : false;
 
-        foreach ($payments as $payment) {
+        /*foreach ($payments as $payment) {
             if (str_starts_with($payment->item, 'insurance') || str_starts_with($payment->item, 'subscription-insurance')) {
                 return true;
             }
         }
 
-        return false;
+        return false;*/
     }
 
-    public function getPayment(array $query)
+    /*
+     *  Checks whether the membership has a pending payment.
+     */
+    public function hasPendingPayment(): bool
     {
-//file_put_contents('debog_file.txt', print_r($query, true));
+        return ($this->payments->where('last', 1)->where('status', 'pending')->first()) ? true : false;
+    }
+
+    public function getCurrentPayment(): ?Payment
+    {
+        return $this->payments->where('last', 1)->first();
+    }
+
+    public function getPayment(array $query): Payment
+    {
         $item = '';
         $prices = Setting::getDataByGroup('prices', $this);
         $amount = 0;
@@ -303,6 +316,7 @@ class Membership extends Model
         $freePeriod = ($query['payment_mode'] == 'free_period' && $this->free_period) ? true : false;
 
         // Set the amount value as well as the item type.
+
         if ($this->status == 'pending_subscription' || $this->status == 'pending_renewal') {
             $item = 'subscription';
 
@@ -311,7 +325,7 @@ class Membership extends Model
             }
 
             // Check whether an insurance has been selected in addition to the subscription.
-            $item = (isset($query['insurance_code']) && $query['insurance_code'] != 'f0') ? 'subscription-insurance-'.$query['insurance_code'] : $item;
+            $item = (isset($query['insurance_code']) && $query['insurance_code'] != 'f0') ? 'subscription_insurance_'.$query['insurance_code'] : $item;
 
             // Add the insurance price (if any).
             $amount = (str_starts_with($item, 'subscription-insurance-')) ? $amount + $prices['insurance_fee_'.$query['insurance_code']] : $amount;
@@ -321,7 +335,7 @@ class Membership extends Model
             }
         }
         elseif ($this->status == 'member' && isset($query['insurance_code']) && $query['insurance_code'] != 'f0') {
-            $item = 'insurance-'.$query['insurance_code'];
+            $item = 'insurance_'.$query['insurance_code'];
             $amount = $prices['insurance_fee_'.$query['insurance_code']];
         }
 
@@ -338,9 +352,10 @@ class Membership extends Model
             'last' => true,
             'currency' => 'EUR',
             'transaction_id' => $transactionId,
-            'message' => (isset($query['message'])) ? $query['message'] : '',
-            'data' => (isset($query['data'])) ? $query['data'] : '',
+            'message' => (isset($query['message'])) ? $query['message'] : NULL,
+            'data' => (isset($query['data'])) ? $query['data'] : NULL,
         ]);
+//file_put_contents('debog_file.txt', print_r($query, true));
 
         return $payment;
     }
