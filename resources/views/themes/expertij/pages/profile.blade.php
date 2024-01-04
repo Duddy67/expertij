@@ -144,6 +144,7 @@
         <input type="hidden" id="_locale" value="{{ config('app.locale') }}">
     </form>
 </div>
+<x-js-messages />
 
 @push ('scripts')
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>

@@ -122,5 +122,10 @@ trait Emails
 
         return false;
     }
+
+    public function memberAlert(Membership $membership): bool
+    {
+
+    }
 }
 

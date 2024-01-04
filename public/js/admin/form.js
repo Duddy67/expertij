@@ -29,13 +29,13 @@
                 const paymentStatus = document.getElementById('payment-status').value;
 
                 if (paymentStatus == 'pending') {
-                
+                    alert(localNamespace['messages'].payment_already_pending); 
                 }
                 else {
-                    alert(paymentStatus);
-                    document.getElementById('paymentStatus').value = paymentStatus;
-
-                    runAjax('setPayment');
+                    if (window.confirm(localNamespace['messages'].payment_status_confirmation)) {
+                        document.getElementById('paymentStatus').value = paymentStatus;
+                        runAjax('setPayment');
+                    }
                 }
             });
 

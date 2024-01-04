@@ -443,13 +443,15 @@ class MembershipController extends Controller
 
     }
 
+    /*
+     * Handle the offline payments and possibly the free period.
+     */
     public function payment(Request $request)
     {
-        if ($request->input('payment_mode') == 'sherlock') {
-            // redirect to Sherlock controller.
+        if ($request->input('payment_mode') == 'sherlocks') {
+            // redirect to Sherlocks controller.
         }
 
-        // Handle the offline payments and possibly the free period.
 
         $membership = Auth::user()->membership;
         $payment = $membership->getPayment($request->all());
@@ -461,10 +463,12 @@ class MembershipController extends Controller
             $membership->status = 'member';
             $membership->save();
 
+            $request->session()->flash('success', __('messages.generic.free_period_privilege_success'));
+
             return redirect()->route('memberships.edit', $request->query());
         }
 
-        $request->session()->flash('success', __('messages.message.send_success'));
+        $request->session()->flash('success', __('messages.generic.'.$payment->mode.'_payment_success'));
 
         return redirect()->route('memberships.edit', $request->query());
     }

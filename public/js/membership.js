@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
+    const messages = JSON.parse(document.getElementById('JsMessages').value);
+
     // Use event delegation to ckeck whenever an element in the form is clicked.
     document.body.addEventListener('click', function (evt) {
         // Handle the add, delete and submit buttons
@@ -18,6 +20,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (evt.target.getAttribute('id') == 'associated-member') {
             setForm(evt.target);
         }
+
+        if (evt.target.getAttribute('id') == 'payment-btn') {
+            const paymentMode = document.querySelector( 'input[name="payment_mode"]:checked').value;
+            if (confirm(messages[paymentMode + '_payment_confirmation'])) {
+                document.getElementById('paymentForm').submit();
+            }
+        }
     }, false);
 
     // Initialise the jurisdiction types.
@@ -31,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // The field is hidden by default.
         document.getElementById('professional_status_info_row').style.display = 'none';
 
-        document.getElementById('professional_status').onchange= function() { 
+        document.getElementById('professional_status').onchange = function() { 
           if (this.value == 'other') {
               document.getElementById('professional_status_info_row').style.display = 'block';
           }

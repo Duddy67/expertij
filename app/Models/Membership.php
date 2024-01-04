@@ -282,16 +282,10 @@ class Membership extends Model
      */
     public function hasInsurance(): bool
     {
-        //$payments = $this->payments->where('last', 1)->get();
-        return ($this->payments->where('last', 1)->where('item', 'LIKE', '%insurance%')->first()) ? true : false;
+        // Get the last payment.
+        $payment = $this->payments->last();
 
-        /*foreach ($payments as $payment) {
-            if (str_starts_with($payment->item, 'insurance') || str_starts_with($payment->item, 'subscription-insurance')) {
-                return true;
-            }
-        }
-
-        return false;*/
+        return ($payment && str_contains($payment->item, 'insurance') && $payment->status != 'cancelled') ? true : false;
     }
 
     /*
@@ -299,14 +293,18 @@ class Membership extends Model
      */
     public function hasPendingPayment(): bool
     {
-        return ($this->payments->where('last', 1)->where('status', 'pending')->first()) ? true : false;
+        return ($this->payments->where('status', 'pending')->first()) ? true : false;
     }
 
-    public function getCurrentPayment(): ?Payment
+    public function getLastPayment(): ?Payment
     {
-        return $this->payments->where('last', 1)->first();
+        return $this->payments->last();
     }
 
+    /*
+     * Creates and returns a payment that is set according to
+     * the purchased item as well as the membership status.
+     */
     public function getPayment(array $query): Payment
     {
         $item = '';
@@ -329,10 +327,6 @@ class Membership extends Model
 
             // Add the insurance price (if any).
             $amount = (str_starts_with($item, 'subscription-insurance-')) ? $amount + $prices['insurance_fee_'.$query['insurance_code']] : $amount;
-
-            if ($this->status == 'pending_renewal') {
-                // update payments (last = 0)
-            }
         }
         elseif ($this->status == 'member' && isset($query['insurance_code']) && $query['insurance_code'] != 'f0') {
             $item = 'insurance_'.$query['insurance_code'];
@@ -349,13 +343,11 @@ class Membership extends Model
             'status' => $status,
             'amount' => $amount,
             'mode' => $query['payment_mode'],
-            'last' => true,
             'currency' => 'EUR',
             'transaction_id' => $transactionId,
             'message' => (isset($query['message'])) ? $query['message'] : NULL,
             'data' => (isset($query['data'])) ? $query['data'] : NULL,
         ]);
-//file_put_contents('debog_file.txt', print_r($query, true));
 
         return $payment;
     }

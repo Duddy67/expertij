@@ -18,14 +18,14 @@
         @foreach ($payments as $payment)
             <tr> 
                 <td>
-                    @if ($payment->status != 'pending')
-                        {{ __('labels.membership.'.$payment->status) }}
-                    @else
+                    @if ($payment->status == 'pending')
                         <select name="_payment_status" class="form-control" id="payment-status">
                             <option value="pending" {{ $payment->status == 'pending' ? 'selected' : '' }}>{{ __('labels.membership.pending') }}</option>
                             <option value="completed" {{ $payment->status == 'completed' ? 'selected' : '' }}>{{ __('labels.membership.completed') }}</option>
                             <option value="cancelled" {{ $payment->status == 'cancelled' ? 'selected' : '' }}>{{ __('labels.membership.cancelled') }}</option>
                         </select>
+                    @else
+                        {{ __('labels.membership.'.$payment->status) }}
                     @endif
                 </td>
                 <td>{{ __('labels.generic.'.$payment->mode) }}</td>
@@ -33,7 +33,10 @@
                 <td>@date ($payment->created_at)</td>
                 <td>{{ __('labels.membership.'.$payment->item) }}</td>
                 <td>
+                @if ($payment->status == 'pending')
                     <button type="button" id="save-payment-status" class="btn btn-space btn-success"><i class="fa fa-save"></i> Sauvegarder</button>
+                    <input type="hidden" id="_paymentItem" value="{{ $payment->item }}">
+                @endif
                 </td>
             </tr> 
         @endforeach

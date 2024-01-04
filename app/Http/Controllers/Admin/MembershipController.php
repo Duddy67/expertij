@@ -48,6 +48,14 @@ class MembershipController extends Controller
         $columns = $this->getColumns();
         $actions = $this->getActions('list');
         $filters = $this->getFilters($request);
+
+        foreach ($filters as $filter) {
+            // Add an extra status.
+            if ($filter->name == 'statuses') {
+                $filter->options[] = ['value' => 'pending_offline_payment', 'text' => __('labels.membership.pending_offline_payment')];
+            }
+        }
+
         $items = Membership::getMemberships($request);
         $rows = $this->getRows($columns, $items);
         $query = $request->query();
@@ -76,7 +84,6 @@ class MembershipController extends Controller
         $except = ($membership->member_number) ? [] : ['member_number', 'member_since'];
 
         $fields = $this->getFields($except);
-        //$this->setFieldValues($fields, $membership);
         $except = (!$membership->canEdit()) ? ['destroy', 'save', 'saveClose'] : [];
         $actions = $this->getActions('form', $except);
         $dateFormat = Setting::getValue('app', 'date_format');
@@ -129,7 +136,6 @@ class MembershipController extends Controller
         }
 
         $oldStatus = null;
-        //file_put_contents('debog_file.txt', print_r($request->all(), true));
 
         if ($request->has('status')) {
             $oldStatus = $membership->getOriginal('status');
@@ -199,22 +205,21 @@ class MembershipController extends Controller
     }
 
     /*
-     * Set the payment status as well as the membership status according to the payment status change. 
+     * Set the payment status as well as the membership status according to the new payment status. 
      */
     public function setPayment(Request $request, Membership $membership)
     {
-        $payment = $membership->getCurrentPayment();
+        $payment = $membership->getLastPayment();
 
         // A payment for subscription is completed. The user is now member.
         if ($request->input('payment_status') == 'completed' && str_starts_with($payment->item, 'subscription')) {
-            //$membership->status = 'member';
-            //$membership->save();
+            $membership->status = 'member';
+            $membership->save();
         }
 
         $payment->status = $request->input('payment_status');
         $payment->save();
-//file_put_contents('debog_file.txt', print_r($payment, true));
 
-        return response()->json(['success' => __('messages.generic.cannot_send_email'), 'function' => 'afterPayment']);
+        return response()->json(['success' => __('messages.generic.payment_update_success'), 'function' => 'afterPayment']);
     }
 }

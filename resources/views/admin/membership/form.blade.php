@@ -87,7 +87,7 @@
             </div>
 
             <div class="tab-pane" id="payments">
-                @include('admin.partials.membership.payments', ['payments' => $membership->payments])
+                @include('admin.partials.membership.payments', ['payments' => $membership->payments->sortDesc()])
             </div>
 
             <div class="tab-pane" id="insurance">
@@ -98,7 +98,7 @@
         <input type="hidden" id="cancelEdit" value="{{ route('admin.memberships.cancel', $query) }}">
         <input type="hidden" id="close" name="_close" value="0">
         <input type="hidden" id="siteUrl" value="{{ url('/') }}">
-         <x-js-messages />
+        <x-js-messages />
 
         @if (isset($membership))
             <input type="hidden" id="_dateFormat" value="{{ $dateFormat }}">

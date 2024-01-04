@@ -156,9 +156,20 @@ return [
         'cookie_info' => 'This website uses cookies to ensure you get the best experience on our website.',
         'checked_out' => 'A user is already checking out this record. This record will be available again once the user is done with it.',
         'cannot_send_email' => 'One or more emails could not be sent. Please contact the website administrator.',
+        'payment_update_success' => 'The payment status has been successfully updated.',
+        'cheque_payment_success' => 'Your cheque payment has been successfully taken into account.',
+        'bank_transfer_payment_success' => 'Your bank transfer payment has been successfully taken into account.',
+        'free_period_privilege_success' => 'Your free period privilege has been successfully taken into account.',
     ],
     'js_messages' => [
         'status_change_confirmation' => 'The member status is about to be changed. Are you sure ?',
+        'payment_status_confirmation' => 'The payment status is about to be changed. Are you sure ?',
+        'payment_already_pending' => 'The payment status is already pending.',
         'confirm_item_deletion' => 'An item is about to be deleted. Are you sure ?',
+        'cheque_payment_confirmation' => 'Vous avez choisi de payer par chèque. Vous allez recevoir un email avec toutes les informations nécessaires. Souhaitez vous continuer ?',
+        'bank_transfer_payment_confirmation' => 'Vous avez choisi de payer par virement bancaire. Vous allez recevoir un email avec toutes les informations nécessaires. Souhaitez vous continuer ?',
+        'paypal_payment_confirmation' => 'Vous avez choisi de payer via PayPal. Vous allez être redirigé(e) vers PayPal. Souhaitez vous continuer ?',
+        'sherlocks_payment_confirmation' => 'Vous avez choisi de payer via LCL. Une carte de credit va vous être proposée. Souhaitez vous continuer ?',
+        'free_period_payment_confirmation' => 'Compte tenu de votre adhésion tardive pour cette année, l\'adhésion pour l\'année suivante est gratuite. Souhaitez vous continuer ?',
     ]
 ];

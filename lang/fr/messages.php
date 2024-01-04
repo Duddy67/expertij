@@ -156,9 +156,20 @@ return [
         'cookie_info' => 'Ce site utilise des cookies pour offrir une meilleure expérience sur notre site web.',
         'checked_out' => 'Un utilisateur est déjà en train de consulter cet enregistrement. L\'enregistrement sera à nouveau consultable quand cet utilisateur aura terminé.',
         'cannot_send_email' => 'Un ou plusieurs emails n\'ont pas pu être envoyés. Veuillez contacter l\'administrateur du site.',
+        'payment_update_success' => 'Le paiement a été mis à jour avec succès.',
+        'cheque_payment_success' => 'Votre paiement par chèque a été pris en compte avec succès.',
+        'bank_transfer_payment_success' => 'Votre paiement par transfert banquaire a été pris en compte avec succès.',
+        'free_period_privilege_success' => 'Votre privilège de gratuité a été pris en compte avec succès.',
     ],
     'js_messages' => [
         'status_change_confirmation' => 'Le statut de l\'adhérent(e) est sur le point d\'être changé. Etes vous sûr(e) ?',
+        'payment_status_confirmation' => 'Le statut de paiement est sur le point d\'être pris en compte. Etes vous sûr(e) ?',
+        'payment_already_pending' => 'Le statut de paiement est déjà en attente.',
         'confirm_item_deletion' => 'Un élément est sur le point d\'être supprimé. Etes vous sûr(e) ?',
+        'cheque_payment_confirmation' => 'Vous avez choisi de payer par chèque. Vous allez recevoir un email avec toutes les informations nécessaires. Souhaitez vous continuer ?',
+        'bank_transfer_payment_confirmation' => 'Vous avez choisi de payer par virement bancaire. Vous allez recevoir un email avec toutes les informations nécessaires. Souhaitez vous continuer ?',
+        'paypal_payment_confirmation' => 'Vous avez choisi de payer via PayPal. Vous allez être redirigé(e) vers PayPal. Souhaitez vous continuer ?',
+        'sherlocks_payment_confirmation' => 'Vous avez choisi de payer via LCL. Une carte de credit va vous être proposée. Souhaitez vous continuer ?',
+        'free_period_payment_confirmation' => 'Compte tenu de votre adhésion tardive pour cette année, l\'adhésion pour l\'année suivante est gratuite. Souhaitez vous continuer ?',
     ]
 ];

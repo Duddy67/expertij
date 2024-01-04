@@ -25,7 +25,6 @@ return new class extends Migration
             $table->text('message')->nullable();
             $table->text('data')->nullable();
             $table->string('transaction_id')->nullable();
-            $table->boolean('last')->nullable();
             $table->timestamps();
         });
     }
