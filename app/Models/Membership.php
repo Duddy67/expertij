@@ -156,7 +156,28 @@ class Membership extends Model
 
         // Filter by statuses
         if (!empty($statuses)) {
-            $query->whereIn('status', $statuses);
+            $pendingOfflinePayment = false;
+
+            // Check for the extra pending_offline_payment status.
+            if (in_array('pending_offline_payment', $statuses)) {
+                $pendingOfflinePayment = true;
+                // Remove the extra status from the status filter array.
+                $key = array_search('pending_offline_payment', $statuses);
+                unset($statuses[$key]);
+            }
+
+            if (!empty($statuses)) {
+                $query->whereIn('status', $statuses);
+            }
+
+            // Check for a pending payment.
+            if ($pendingOfflinePayment) {
+                $query->orWhereHas('payments', function($query) {
+                    $query->where('status', 'pending')->where( function($query) {
+                        $query->where('mode', 'cheque')->orWhere('mode', 'bank_transfer');
+                    });
+                });
+            }
         }
 
         if ($memberType !== null) {
@@ -355,15 +376,14 @@ class Membership extends Model
     /*
      * Compute a new member number.
      */
-    public function getMemberNumber()
+    public function getMemberNumber(): string
     {
         // Get the highest member number.
-        //$lastNumber = Db::table('codalia_membership_members')->max('member_number');
         $lastNumber = Membership::max('member_number');
         // Initialise final letter as ceseda.
         $letter = 'C';
 
-        // Check for honorary member.
+        // Check for associated member.
         if ($this->associated_member) {
             $letter = 'MA';
         }
@@ -387,8 +407,6 @@ class Membership extends Model
         $lastNumber = $matches[1];
         $newNumber = $lastNumber + 1;
 
-        //return date('Y').'-'.$newNumber.'-'.$letter;
-        $this->member_number = date('Y').'-'.$newNumber.'-'.$letter;
-        $this->save();
+        return date('Y').'-'.$newNumber.'-'.$letter;
     }
 }

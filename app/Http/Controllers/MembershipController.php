@@ -452,7 +452,6 @@ class MembershipController extends Controller
             // redirect to Sherlocks controller.
         }
 
-
         $membership = Auth::user()->membership;
         $payment = $membership->getPayment($request->all());
         $membership->payments()->save($payment);

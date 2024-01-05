@@ -105,27 +105,38 @@ trait Emails
      */
     public function statusChange(Membership $membership): bool
     {
-        // Get the status and replace underscore (if any) by hyphen as the status will be used as email code.
-        $status = str_replace('_', '-', $membership->status);
-        // Get the member/applicant.
-        $member = $membership->user;
+        // Get the status and replace underscore (if any) by hyphen as the status is used as email code.
+        $code = str_replace('_', '-', $membership->status);
+        // Get the member or applicant.
+        $user = $membership->user;
 
         // The subscription fee amount is required.
-        if ($status == 'pending-subscription') {
+        if ($code == 'pending-subscription') {
             $prices = Setting::getDataByGroup('prices', $membership);
-            $member->subscription_fee = ($membership->associated_member) ? $prices['associated_subscription_fee'] : $prices['subscription_fee'];
+            $user->subscription_fee = ($membership->associated_member) ? $prices['associated_subscription_fee'] : $prices['subscription_fee'];
         }
 
-        if (Email::sendEmail($status, $member)) {
+        if (Email::sendEmail($code, $user)) {
             return true;
         }
 
         return false;
     }
 
-    public function memberAlert(Membership $membership): bool
+    public function member(Membership $membership, bool $isNew): bool
     {
+        // Get the new member.
+        $member = $membership->user;
 
+        $code = ($isNew) ? 'new-member' : 'subscription-renewal';
+        // Check if the new member registered during the free period and set the email code accordingly.
+        $code = ($membership->free_period) ? 'new-member-free-period' : $code;
+
+        if (Email::sendEmail($code, $member)) {
+            return true;
+        }
+
+        return false;
     }
 }
 

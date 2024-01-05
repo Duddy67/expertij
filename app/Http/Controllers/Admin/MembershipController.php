@@ -17,6 +17,7 @@ use App\Models\User;
 use App\Models\User\Citizenship;
 use App\Models\Cms\Setting;
 use App\Models\Cms\Address;
+use Carbon\Carbon;
 
 class MembershipController extends Controller
 {
@@ -140,6 +141,16 @@ class MembershipController extends Controller
         if ($request->has('status')) {
             $oldStatus = $membership->getOriginal('status');
             $membership->status = $request->input('status');
+
+            if ($request->input('status') == 'cancelled') {
+                // Cancel the possible payment for this membership.
+                $payment = $membership->getLastPayment();
+
+                if ($payment) {
+                    $payment->status = 'cancelled';
+                    $payment->save();
+                }
+            }
         }
 
         $membership->updated_by = auth()->user()->id;
@@ -147,7 +158,7 @@ class MembershipController extends Controller
 
         // The status has changed.
         if ($oldStatus && $oldStatus != $membership->status) {
-            // Informs the member/applicant about the status change.
+            // Informs the member or applicant about the status change.
             $this->statusChange($membership);
         }
 
@@ -213,6 +224,14 @@ class MembershipController extends Controller
 
         // A payment for subscription is completed. The user is now member.
         if ($request->input('payment_status') == 'completed' && str_starts_with($payment->item, 'subscription')) {
+            // Check if the user is a new member.
+            $isNew = ($membership->member_number) ? false : true;
+
+            if ($isNew) {
+                $membership->member_number = $membership->getMemberNumber();
+                $membership->member_since = Carbon::now();
+            }
+
             $membership->status = 'member';
             $membership->save();
         }

@@ -48,6 +48,13 @@
         // Disables the dropdown list.
         if (currentStatus == 'member' || currentStatus == 'refused' || currentStatus == 'cancelled' || currentStatus == 'revoked' || currentStatus == 'cancellation') {
             document.getElementById('status').disabled = true;
+
+            // Cancel the possible pending payment in case the membership is cancelled or revoked.
+            if ((currentStatus == 'cancelled' || currentStatus == 'revoked') && document.getElementById('payment-status')) {
+                document.getElementById('payment-status').value = 'cancelled';
+                document.getElementById('payment-status').disabled = true;
+                document.getElementById('save-payment-status').disabled = true;
+            }
         }
         // Disables some options according to the pending status.
         else {
