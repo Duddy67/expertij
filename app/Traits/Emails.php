@@ -21,13 +21,7 @@ trait Emails
 
         // Inform the users from the office group about the request.
 
-        $recipients = [];
-
-        if ($group = Group::where('name', 'office')->first()) {
-          foreach ($group->users as $user) {
-              $recipients[] = $user->email;
-          }
-        }
+        $recipients = $this->getRecipientsByGroup('office');
 
         if (!empty($recipients)) {
             $data = new \stdClass();
@@ -48,13 +42,7 @@ trait Emails
      */
     public function decisionMakersAlert(User $applicant): bool
     {
-        $recipients = [];
-
-        if ($group = Group::where('name', 'decision-maker')->first()) {
-          foreach ($group->users as $user) {
-              $recipients[] = $user->email;
-          }
-        }
+        $recipients = $this->getRecipientsByGroup('decision-maker');
 
         if (!empty($recipients)) {
             $data = new \stdClass();
@@ -75,13 +63,7 @@ trait Emails
      */
     public function voteAlert(User $decisionMaker, User $applicant): bool
     {
-        $recipients = [];
-
-        if ($group = Group::where('name', 'office')->first()) {
-          foreach ($group->users as $user) {
-              $recipients[] = $user->email;
-          }
-        }
+        $recipients = $this->getRecipientsByGroup('office');
 
         if (!empty($recipients)) {
             $data = new \stdClass();
@@ -137,6 +119,47 @@ trait Emails
         }
 
         return false;
+    }
+
+    public function payment(Membership $membership): bool
+    {
+        $user = $membership->user;
+        $payment = $membership->getLastPayment();
+        $user->amount = $payment->amount;
+        $user->item = __('labels.generic.'.$payment->item);
+        $user->payment_mode = __('labels.generic.'.$payment->mode);
+        $code = 'payment-'.$payment->status;
+
+        if (!Email::sendEmail($code, $user)) {
+            return false;
+        }
+
+        // Informs the administrators about the payment.
+        $code = $code.'-alert';
+        $recipients = $this->getRecipientsByGroup('office');
+
+        if (!empty($recipients)) {
+            $user->recipients = $recipients;
+
+            if (!Email::sendEmail($code, $user)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public function getRecipientsByGroup($groupName): array
+    {
+        $recipients = [];
+
+        if ($group = Group::where('name', $groupName)->first()) {
+            foreach ($group->users as $user) {
+                $recipients[] = $user->email;
+            }
+        }
+
+        return $recipients;
     }
 }
 

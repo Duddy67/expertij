@@ -142,7 +142,7 @@ class MembershipController extends Controller
             $oldStatus = $membership->getOriginal('status');
             $membership->status = $request->input('status');
 
-            if ($request->input('status') == 'cancelled') {
+            if ($request->input('status') == 'cancelled' || $request->input('status') == 'revoked') {
                 // Cancel the possible payment for this membership.
                 $payment = $membership->getLastPayment();
 
@@ -234,10 +234,16 @@ class MembershipController extends Controller
 
             $membership->status = 'member';
             $membership->save();
+
+            // Informs the user about their member status.
+            $this->member($membership, $isNew);
         }
 
         $payment->status = $request->input('payment_status');
         $payment->save();
+
+        // Informs the user about their payment.
+        $this->payment($membership);
 
         return response()->json(['success' => __('messages.generic.payment_update_success'), 'function' => 'afterPayment']);
     }
