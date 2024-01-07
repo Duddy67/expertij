@@ -21,6 +21,7 @@ use App\Models\Cms\Document;
 use App\Traits\Emails;
 use App\Http\Requests\Membership\StoreRequest;
 use App\Http\Requests\Membership\UpdateRequest;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class MembershipController extends Controller
 {
@@ -38,7 +39,7 @@ class MembershipController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['create', 'store', 'createItem', 'deleteItem']]);
+        $this->middleware('auth', ['except' => ['create', 'store', 'createItem', 'deleteItem', 'pdf']]);
         $this->middleware('membership.registration', ['only' => ['create', 'store']]);
         $this->middleware('membership.edit', ['only' => ['edit', 'update']]);
         $this->middleware('membership.vote', ['only' => ['applicants', 'checkoutApplicant', 'vote']]);
@@ -589,5 +590,12 @@ class MembershipController extends Controller
         $html = view('themes.'.$page['theme'].'.partials.membership.edit.attestation-file-button', compact('fileUrl', 'fileName'))->render();
 
         return ['containerId' => $containerId, 'html' => $html];
+    }
+
+    public function pdf()
+    {
+        $data = [];
+        $pdf = Pdf::loadView('pdf.membership.test', $data);
+        return $pdf->download('invoice.pdf');
     }
 }
