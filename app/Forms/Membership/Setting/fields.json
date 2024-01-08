@@ -2,9 +2,9 @@
   {
     "label": "labels.membership.renewal_day",
     "type": "select",
-    "name": "renewal_day",
+    "name": "day",
     "function": "days_in_month",
-    "id": "renewal_day",
+    "id": "day",
     "class": "mb-3",
     "tab": "renewal",
     "group": "renewal",
@@ -13,9 +13,9 @@
   {
     "label": "labels.membership.renewal_month",
     "type": "select",
-    "name": "renewal_month",
+    "name": "month",
     "function": "months",
-    "id": "renewal_month",
+    "id": "month",
     "class": "mb-3",
     "group": "renewal",
     "options": [] 
@@ -23,16 +23,16 @@
   {
     "label": "labels.membership.renewal_period",
     "type": "text",
-    "name": "renewal_period",
-    "id": "renewal_period",
+    "name": "period",
+    "id": "period",
     "class": "mb-3",
     "group": "renewal"
   },
   {
     "label": "labels.membership.renewal_reminder",
     "type": "text",
-    "name": "renewal_reminder",
-    "id": "renewal_reminder",
+    "name": "reminder",
+    "id": "reminder",
     "class": "mb-3",
     "group": "renewal"
   },

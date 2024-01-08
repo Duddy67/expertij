@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Traits\Form;
 use App\Traits\CheckInCheckOut;
 use App\Traits\Emails;
+use App\Traits\Renewal;
 use App\Models\Membership;
 use App\Models\Membership\Licence;
 use App\Models\Membership\Attestation;
@@ -21,7 +22,7 @@ use Carbon\Carbon;
 
 class MembershipController extends Controller
 {
-    use Form, Emails;
+    use Form, Emails, Renewal;
 
     /*
      * Instance of the Membership model, (used in the Form trait).
@@ -56,7 +57,7 @@ class MembershipController extends Controller
                 $filter->options[] = ['value' => 'pending_offline_payment', 'text' => __('labels.membership.pending_offline_payment')];
             }
         }
-
+var_dump($this->isFreePeriod());
         $items = Membership::getMemberships($request);
         $rows = $this->getRows($columns, $items);
         $query = $request->query();
