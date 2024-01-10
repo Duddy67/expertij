@@ -12,6 +12,7 @@ Route::get('/memberships/cancel/{membership?}', [AdminMembershipController::clas
 Route::put('/memberships/checkin', [AdminMembershipController::class, 'massCheckIn'])->name('admin.memberships.massCheckIn');
 Route::put('/memberships/publish', [AdminMembershipController::class, 'massPublish'])->name('admin.memberships.massPublish');
 Route::put('/memberships/unpublish', [AdminMembershipController::class, 'massUnpublish'])->name('admin.memberships.massUnpublish');
+Route::get('/memberships/check-renewal', [AdminMembershipController::class, 'checkRenewal'])->name('admin.memberships.checkRenewal');
 Route::put('/memberships/send-emails/{membership}', [AdminMembershipController::class, 'sendEmails'])->name('admin.memberships.sendEmails');
 Route::put('/memberships/payment/{membership}', [AdminMembershipController::class, 'setPayment'])->name('admin.memberships.setPayment');
 Route::resource('memberships', AdminMembershipController::class, ['as' => 'admin'])->except(['show']);

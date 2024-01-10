@@ -31,6 +31,7 @@
     <input type="hidden" id="checkinItems" value="{{ route('admin.memberships.massCheckIn', $query) }}">
     <input type="hidden" id="publishItems" value="{{ route('admin.memberships.massPublish', $query) }}">
     <input type="hidden" id="unpublishItems" value="{{ route('admin.memberships.massUnpublish', $query) }}">
+    <input type="hidden" id="_checkRenewal" value="{{ route('admin.memberships.checkRenewal', $query) }}">
 
     <form id="selectedItems" action="{{ route('admin.memberships.index', $query) }}" method="post">
         @method('delete')

@@ -57,7 +57,7 @@ class MembershipController extends Controller
                 $filter->options[] = ['value' => 'pending_offline_payment', 'text' => __('labels.membership.pending_offline_payment')];
             }
         }
-var_dump($this->isFreePeriod());
+
         $items = Membership::getMemberships($request);
         $rows = $this->getRows($columns, $items);
         $query = $request->query();
@@ -195,6 +195,11 @@ var_dump($this->isFreePeriod());
         $messages = CheckInCheckOut::checkInMultiple($request->input('ids'), '\\App\\Models\\Membership');
 
         return redirect()->route('admin.memberships.index', $request->query())->with($messages);
+    }
+
+    public function checkRenewal(Request $request)
+    {
+//file_put_contents('debog_file.txt', print_r($request->all(), true));
     }
 
     /**

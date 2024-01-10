@@ -1,7 +1,7 @@
 (function($) {
     // Run a function when the page is fully loaded including graphics.
     $(window).on('load', function() {
-	let actions = ['create', 'massDestroy', 'batch', 'checkin', 'publish', 'unpublish'];
+	let actions = ['create', 'massDestroy', 'batch', 'checkin', 'publish', 'unpublish', 'checkRenewal'];
 
 	actions.forEach(function (action) {
 	    $('#'+action).click( function() { $.fn[action](); });
@@ -165,6 +165,11 @@
 	    $('#selectedItems').attr('action', $('#unpublishItems').val());
 	    $('#selectedItems').submit();
 	}
+    }
+
+    $.fn.checkRenewal = function() {
+        alert($('#_checkRenewal').val());
+        window.location.href = $('#_checkRenewal').val();
     }
 
     $.fn.batch = function() {

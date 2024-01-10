@@ -19,6 +19,13 @@
 	"id": "checkin",
 	"label": "labels.button.checkin",
 	"type": "button"
+      },
+      {
+	"id": "checkRenewal",
+	"label": "labels.membership.renewal",
+        "class": "btn-success",
+        "icon": "fa fa-clock",
+	"type": "button"
       }
   ],
   "form": [

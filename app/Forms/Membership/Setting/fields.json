@@ -132,5 +132,17 @@
     "id": "insurance_fee_f9",
     "class": "mb-3",
     "group": "prices"
+  },
+  {
+    "type": "hidden",
+    "name": "renewal_reset",
+    "id": "renewal_reset",
+    "group": "flags"
+  },
+  {
+    "type": "hidden",
+    "name": "renewal_reminder",
+    "id": "renewal_reminder",
+    "group": "flags"
   }
 ]

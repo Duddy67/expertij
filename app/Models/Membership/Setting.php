@@ -71,4 +71,21 @@ class Setting extends Model
 
         return $options;
     }
+
+    /*
+     * Returns the current state (activated/deactivated) of a given flag.
+     */
+    public static function checkFlag($name): bool
+    {
+        return ((int)Setting::where('group', 'flags')->where('key', $name)->value('value')) ? true : false;
+    }
+
+    /*
+     * Toggles the current state (activated/deactivated) of a given flag.
+     */
+    public static function toggleFlag($name)
+    {
+        $value = (self::checkFlag($name)) ? 0 : 1;
+        Setting::where('group', 'flags')->where('key', $name)->update(['value' => $value]);
+    }
 }
