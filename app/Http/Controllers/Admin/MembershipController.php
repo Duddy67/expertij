@@ -199,7 +199,37 @@ class MembershipController extends Controller
 
     public function checkRenewal(Request $request)
     {
-//file_put_contents('debog_file.txt', print_r($request->all(), true));
+        $renewal = $this->setRenewal();
+        $message = ['info'];
+
+        // Send emails to members if needed.
+
+        if ($renewal == 'start_renewal') {
+            // send emails to members.
+        }
+
+        $reminder = $this->setReminder();
+
+        if ($reminder == 'reminder_time') {
+            // send reminder emails to members.
+        }
+
+        // Set the message according to the renewal and reminder states.
+
+        if ($renewal == 'all_clear' && $reminder == 'all_clear') {
+            $message['info'] = __('messages.membership.all_clear');
+        }
+        elseif ($renewal != 'all_clear' && $reminder != 'all_clear') {
+            $message['info'] = __('messages.membership.'.$renewal).' '.__('messages.membership.'.$reminder);
+        }
+        elseif ($renewal != 'all_clear') {
+            $message['info'] = __('messages.membership.'.$renewal);
+        }
+        elseif ($reminder != 'all_clear') {
+            $message['info'] = __('messages.membership.'.$reminder);
+        }
+
+        return redirect()->route('admin.memberships.index', $request->query())->with($message);
     }
 
     /**

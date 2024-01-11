@@ -106,7 +106,7 @@ trait Renewal
             // Deactivate the reminder flag.
             MembershipSetting::toggleFlag('renewal_reminder');
 
-            return 'no_reminder_time';
+            return 'stop_reminder_time';
         }
 
         return 'all_clear';
