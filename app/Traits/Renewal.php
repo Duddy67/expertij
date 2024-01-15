@@ -6,6 +6,7 @@ use App\Models\Cms\Email;
 use App\Models\User;
 use App\Models\Membership;
 use App\Models\Cms\Setting;
+use App\Models\Cms\Payment;
 use App\Models\Membership\Setting as MembershipSetting;
 use Carbon\Carbon;
 
@@ -42,21 +43,32 @@ trait Renewal
         return ($today->greaterThanOrEqualTo($renewalPeriodStart)) ? true : false;
     }
 
+    /*
+     * Checks if it's time to send a reminder to the members.
+     */
     public function isReminderTime(): bool
     {
         $today = Carbon::today();
         $days = Setting::getValue('renewal', 'reminder', '0', Membership::class);
 
-        // Subtract x days before the renewal date.
+        // The reminder time starts x days before the renewal date.
         if (str_starts_with($days, '-')) {
+            $days = ltrim($days, '-');
+            // Subtract x days before the renewal date.
             $reminderTime = $this->getLatestRenewalDate()->subDays($days);
+            // The renewal date is the end of the reminder time.
+            $endReminderTime = $this->getLatestRenewalDate();
         }
-        // Add x days after the renewal date.
+        // The reminder time starts x days after the renewal date.
         else {
+            // Add x days after the renewal date.
             $reminderTime = $this->getRenewalDate()->addDays($days);
+            // Add x more days to end the reminder time.
+            $days = $days * 2;
+            $endReminderTime = $this->getRenewalDate()->addDays($days);
         }
 
-        return ($today->greaterThanOrEqualTo($reminderTime)) ? true : false;
+        return ($today->greaterThanOrEqualTo($reminderTime) && $today->lessThan($endReminderTime)) ? true : false;
     }
 
     public function isFreePeriod(): bool
@@ -76,8 +88,11 @@ trait Renewal
     {
         // The renewal period has started.
         if (!MembershipSetting::checkFlag('renewal_reset') && $this->isRenewalPeriod()) {
-            // Resets all the member statuses to pending_renewal
+            // Reset all the member statuses to pending_renewal
             //Membership::where('status', 'member')->update(['status' => 'pending_renewal']);
+            /*Payment::where('status', 'pending')->whereHas('membership', function ($query) {
+                $query->where('status', 'pending_renewal');
+            })->update(['status' => 'cancelled']);*/
             // Activate the reset flag.
             MembershipSetting::toggleFlag('renewal_reset');
 
