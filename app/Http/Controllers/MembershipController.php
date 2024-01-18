@@ -595,7 +595,19 @@ class MembershipController extends Controller
     public function pdf()
     {
         $data = [];
-        $pdf = Pdf::loadView('pdf.membership.test', $data);
-        return $pdf->download('invoice.pdf');
+        $data['civility'] = 'Mr';
+        $data['first_name'] = 'Jean Pierre';
+        $data['last_name'] = 'Barjac';
+        $data['street'] = '47 rue du Groland';
+        $data['postcode'] = '789500';
+        $data['city'] = 'Bordeaux';
+        $data['member_number'] = 'E-SD789';
+        $data['subscription_year'] = '2024';
+        $data['current_date'] = '12/01/2024';
+        $data['subscription_fee'] = '70';
+        $pdf = Pdf::loadView('pdf.membership.subscription-invoice', $data);
+        //$pdf = Pdf::loadView('pdf.membership.test', $data);
+        return $pdf->stream();
+        //return $pdf->download('invoice.pdf');
     }
 }

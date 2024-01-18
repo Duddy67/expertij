@@ -90,9 +90,11 @@ trait Renewal
         if (!MembershipSetting::checkFlag('renewal_reset') && $this->isRenewalPeriod()) {
             // Reset all the member statuses to pending_renewal
             //Membership::where('status', 'member')->update(['status' => 'pending_renewal']);
+            // Cancel all the possible old pending payments.
             /*Payment::where('status', 'pending')->whereHas('membership', function ($query) {
                 $query->where('status', 'pending_renewal');
             })->update(['status' => 'cancelled']);*/
+
             // Activate the reset flag.
             MembershipSetting::toggleFlag('renewal_reset');
 

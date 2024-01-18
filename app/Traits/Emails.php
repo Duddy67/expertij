@@ -7,9 +7,12 @@ use App\Models\User;
 use App\Models\User\Group;
 use App\Models\Membership;
 use App\Models\Cms\Setting;
+use App\Traits\Renewal;
 
 trait Emails
 {
+    use Renewal;
+
     public function membershipRequest(User $applicant): bool
     {
         $result = true;
@@ -142,6 +145,30 @@ trait Emails
             $user->recipients = $recipients;
 
             if (!Email::sendEmail($code, $user)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /*
+     * Informs the members about the renewal membership.
+     */
+    public function renewalAlert(): bool
+    {
+        $recipients = User::whereHas('membership', function ($query) {
+            $query->where('status', 'pending_renewal');
+        })->pluck('email')->toArray();
+
+        $data = new \stdClass();
+        $data->subscription_fee = Setting::getValue('prices', 'subscription_fee', 0, Membership::class);
+        $data->renewal_date = $this->getRenewalDate()->format('d/m/Y');
+
+        if (!empty($recipients)) {
+            $data->recipients = $recipients;
+
+            if (!Email::sendEmail('pending-renewal', $data)) {
                 return false;
             }
         }
