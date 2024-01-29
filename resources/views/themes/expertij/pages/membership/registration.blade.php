@@ -292,6 +292,7 @@
     @csrf
     <input type="hidden" name="_method" id="_item_form_method" value="post">
 </form>
+<x-js-messages />
 
 @push ('scripts')
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>

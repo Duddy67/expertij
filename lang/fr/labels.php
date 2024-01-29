@@ -41,6 +41,7 @@ return [
 	'confirm_password' => 'Confirmation du mot de passe',
 	'create_user' => 'Créer un utilisateur',
 	'edit_user' => 'Editer un utilisateur',
+        'logout' => 'Déconnexion',
     ],
     'role' => [
 	'super-admin' => 'Super Administrator',
@@ -353,6 +354,8 @@ return [
         'item' => 'Item',
         'cheque' => 'Chèque',
         'bank_transfer' => 'Virement bancaire',
+        'website' => 'Site web',
+        'photo_deleted' => 'Photo supprimée',
     ],
     'filter' => [
 	'search' => 'Recherche',

@@ -9,12 +9,16 @@
         @csrf
         @method('patch')
 
-        <nav class="nav nav-tabs">
-            <a class="nav-item nav-link active" href="#renewal" data-toggle="tab">@php echo __('labels.membership.renewal'); @endphp</a>
-            <a class="nav-item nav-link" href="#prices" data-toggle="tab">@php echo __('labels.membership.prices'); @endphp</a>
-        </nav>
+        <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="renewal-tab" data-bs-toggle="tab" data-bs-target="#renewal-tab-pane" type="button" role="tab" aria-controls="renewal-tab-pane" aria-selected="true">@php echo __('labels.membership.renewal'); @endphp</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="prices-tab" data-bs-toggle="tab" data-bs-target="#prices-tab-pane" type="button" role="tab" aria-controls="prices-tab-pane" aria-selected="false">@php echo __('labels.membership.prices'); @endphp</button>
+            </li>
+        </ul>
 
-        <div class="tab-content">
+        <div class="tab-content" id="myTabContent">
             @foreach ($fields as $key => $field)
                 @php if (isset($data[$field->group][$field->name])) { 
                          $value = old($field->name, $data[$field->group][$field->name]);
@@ -26,9 +30,9 @@
 
                 @php $dataTab = null; @endphp
                 @if (isset($field->tab))
-                    @php $active = ($field->tab == 'renewal') ? ' active' : '';
+                    @php $active = ($field->tab == 'renewal') ? 'show active' : '';
                          $dataTab = $field->tab; @endphp
-                    <div class="tab-pane{{ $active }}" id="{{ $field->tab }}">
+                    <div class="tab-pane fade {{ $active }}" id="{{ $field->tab }}-tab-pane" role="tab-panel" aria-labelledby="{{ $field->tab }}-tab" tabindex="0">
                 @endif
 
                 @if (isset($field->dataset))
@@ -53,12 +57,7 @@
     </form>
 @endsection
 
-@push ('style')
-    <link rel="stylesheet" href="{{ asset('/vendor/adminlte/plugins/jquery-ui/jquery-ui.min.css') }}">
-@endpush
-
 @push ('scripts')
-    <script type="text/javascript" src="{{ asset('/vendor/adminlte/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/vendor/codalia/c.ajax.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/js/admin/form.js') }}"></script>
 @endpush

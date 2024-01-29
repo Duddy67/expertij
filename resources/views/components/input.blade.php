@@ -1,6 +1,6 @@
 
 @if (isset($field->label) && $field->type != 'checkbox')
-    <label for="{{ $field->id }}">@lang ($field->label)</label>
+    <label for="{{ $field->id }}" class="fw-bold mt-3 mb-2">@lang ($field->label)</label>
 @endif
 
 @php $disabled = (isset($field->extra) && in_array('disabled', $field->extra)) ? 'disabled' : '';
@@ -15,7 +15,7 @@
 @endphp
 
 @if ($field->type == 'text' || $field->type == 'password' || $field->type == 'date' || $field->type == 'file')
-    <input  id="{{ $field->id }}" 
+    <input  id="{{ $field->id }}"
 
     @if ($field->type == 'date')
 	type="text" class="form-control date {{ $class }}"

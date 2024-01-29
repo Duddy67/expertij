@@ -13,26 +13,41 @@
          <x-input :field="$fields[0]" :value="$value" />
          @php array_shift($fields); // Remove the very first field (ie: name) from the array. @endphp
 
-        <nav class="nav nav-tabs">
-            <a class="nav-item nav-link active" href="#membership" data-toggle="tab">@php echo __('labels.title.membership'); @endphp</a>
-            <a class="nav-item nav-link" href="#professional_information" data-toggle="tab">@php echo __('labels.membership.professional_status'); @endphp</a>
-            <a class="nav-item nav-link" href="#licences" data-toggle="tab">@php echo __('labels.membership.licences'); @endphp</a>
-            <a class="nav-item nav-link" href="#profile" data-toggle="tab">@php echo __('labels.generic.profile'); @endphp</a>
-            <a class="nav-item nav-link" href="#votes" data-toggle="tab">@php echo __('labels.membership.votes'); @endphp</a>
-            <a class="nav-item nav-link" href="#payments" data-toggle="tab">@php echo __('labels.generic.payments'); @endphp</a>
-            <a class="nav-item nav-link" href="#insurance" data-toggle="tab">@php echo __('labels.membership.insurance'); @endphp</a>
-        </nav>
+        <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="membership-tab" data-bs-toggle="tab" data-bs-target="#membership-tab-pane" type="button" role="tab" aria-controls="membership-tab-pane"
+                aria-selected="true">@php echo __('labels.title.membership'); @endphp</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="professional_information-tab" data-bs-toggle="tab" data-bs-target="#professional_information-tab-pane" type="button" role="tab" aria-controls="professional_information-tab-pane" aria-selected="false">@php echo __('labels.membership.professional_status'); @endphp</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="licences-tab" data-bs-toggle="tab" data-bs-target="#licences-tab-pane" type="button" role="tab" aria-controls="licences-tab-pane" aria-selected="false">@php echo __('labels.membership.licences'); @endphp</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">@php echo __('labels.generic.profile'); @endphp</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="votes-tab" data-bs-toggle="tab" data-bs-target="#votes-tab-pane" type="button" role="tab" aria-controls="votes-tab-pane" aria-selected="false">@php echo __('labels.membership.votes'); @endphp</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="payments-tab" data-bs-toggle="tab" data-bs-target="#payments-tab-pane" type="button" role="tab" aria-controls="payments-tab-pane" aria-selected="false">@php echo __('labels.generic.payments'); @endphp</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="insurance-tab" data-bs-toggle="tab" data-bs-target="#insurance-tab-pane" type="button" role="tab" aria-controls="insurance-tab-pane" aria-selected="false">@php echo __('labels.membership.insurance'); @endphp</button>
+            </li>
+        </ul>
 
-        <div class="tab-content">
+        <div class="tab-content" id="myTabContent">
             @php
                     $dataTab = null;
                     $dateFormats = [];
             @endphp
             @foreach ($fields as $key => $field)
                 @if (isset($field->tab))
-                    @php $active = ($field->tab == 'membership') ? ' active' : '';
+                    @php $active = ($field->tab == 'membership') ? 'show active' : '';
                          $dataTab = $field->tab; @endphp
-                    <div class="tab-pane{{ $active }}" id="{{ $field->tab }}">
+                    <div class="tab-pane fade {{ $active }}" id="{{ $field->tab }}-tab-pane" role="tab-panel" aria-labelledby="{{ $field->tab }}-tab" tabindex="0">
                 @endif
 
                 @if (isset($field->dataset))
@@ -70,7 +85,7 @@
                 @endif
             @endforeach
 
-            <div class="tab-pane" id="licences">
+            <div class="tab-pane fade {{ $active }}" id="licences-tab-pane" role="tab-panel" aria-labelledby="licences-tab" tabindex="0">
                 <div class="container" id="licence-container" data-latest-index="{{ $membership->licences->count() - 1 }}">
                     @foreach ($membership->licences as $i => $licence)
                         @include('admin.partials.membership.licence', ['licence' => $licence, 'i' => $i])
@@ -78,19 +93,19 @@
                 </div> <!-- licence container -->
             </div>
 
-            <div class="tab-pane" id="profile">
+            <div class="tab-pane fade {{ $active }}" id="profile-tab-pane" role="tab-panel" aria-labelledby="profile-tab" tabindex="0">
                 @include('admin.partials.membership.profile', ['user' => $membership->user])
             </div>
 
-            <div class="tab-pane" id="votes">
+            <div class="tab-pane fade {{ $active }}" id="votes-tab-pane" role="tab-panel" aria-labelledby="votes-tab" tabindex="0">
                 @include('admin.partials.membership.votes', ['user' => $membership->user])
             </div>
 
-            <div class="tab-pane" id="payments">
+            <div class="tab-pane fade {{ $active }}" id="payments-tab-pane" role="tab-panel" aria-labelledby="payments-tab" tabindex="0">
                 @include('admin.partials.membership.payments', ['payments' => $membership->payments->sortDesc()])
             </div>
 
-            <div class="tab-pane" id="insurance">
+            <div class="tab-pane fade {{ $active }}" id="insurance-tab-pane" role="tab-panel" aria-labelledby="insurance-tab" tabindex="0">
                 @include('admin.partials.membership.insurance', ['insurance' => $membership->insurance])
             </div>
         </div>

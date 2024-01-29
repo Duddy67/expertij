@@ -2,7 +2,7 @@
     <thead class="table-success">
         @if ($checkable)
             <th scope="col">
-                <input type="checkbox" id="toggle-select">
+                <input type="checkbox" id="toggle-select" class="form-check-input">
             </th>
         @endif
 
@@ -14,7 +14,7 @@
     </thead>
     <tbody>
         @foreach ($rows as $i => $row)
-            @php 
+             @php 
                  $query = $url['query'];
                  $query[$url['item_name']] = $row->item_id;
             @endphp
@@ -32,6 +32,7 @@
                         </div>
                     </td>
                 @endif
+
                 @foreach ($columns as $column)
                     @if ($column->name == 'ordering')
                         <td>
@@ -49,8 +50,7 @@
                         @php $indent = (in_array($column->name, ['name', 'title']) && preg_match('#^(-{1,}) #', $row->{$column->name}, $matches)) ? strlen($matches[1]) : 0; @endphp
                         <td>
                             @php $linkable = (isset($column->extra) && in_array('linkable', $column->extra)) ? true : false; @endphp
-                            @php $action = (isset($url['action'])) ? $url['action'] : 'edit'; @endphp
-                            @php echo ($linkable) ? '<a href="'.route($url['route'].'.'.$action, $query).'">' : ''; @endphp
+                            @php echo ($linkable) ? '<a href="'.route($url['route'].'.edit', $query).'">' : ''; @endphp
                             <span class="indent-{{ $indent }}"></span>
                             @if (isset($column->extra) && in_array('raw', $column->extra))
                                 {!! $row->{$column->name} !!}
