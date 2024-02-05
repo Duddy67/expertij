@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\User\Group;
 use App\Models\Membership;
 use App\Models\Cms\Setting;
+use App\Models\Cms\Payment;
 use App\Traits\Renewal;
 
 trait Emails
@@ -94,14 +95,18 @@ trait Emails
         $code = str_replace('_', '-', $membership->status);
         // Get the member or applicant.
         $user = $membership->user;
+        $data = new \stdClass();
+        $data->first_name = $user->first_name;
+        $data->last_name = $user->last_name;
+        $data->email = $user->email;
 
         // The subscription fee amount is required.
         if ($code == 'pending-subscription') {
             $prices = Setting::getDataByGroup('prices', $membership);
-            $user->subscription_fee = ($membership->associated_member) ? $prices['associated_subscription_fee'] : $prices['subscription_fee'];
+            $data->subscription_fee = ($membership->associated_member) ? $prices['associated_subscription_fee'] : $prices['subscription_fee'];
         }
 
-        if (Email::sendEmail($code, $user)) {
+        if (Email::sendEmail($code, $data)) {
             return true;
         }
 
@@ -124,35 +129,93 @@ trait Emails
         return false;
     }
 
-    public function offlinePayment(Membership $membership): bool
+    public function freePeriodValidation(Membership $membership, Payment $payment): bool
     {
         $user = $membership->user;
+        $data = new \stdClass();
+        $data->first_name = $user->first_name;
+        $data->last_name = $user->last_name;
+        $data->email = $user->email;
+        $data->payment_date = $payment->updated_at->format('d/m/Y');
 
+        $code = 'free-period-validation';
+
+        if (!Email::sendEmail($code, $data)) {
+            return false;
+        }
+
+        // Informs the administrators about the validation.
+        if (!$this->sendEmailToGroup($code.'-alert', $data, 'office')) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function offlinePayment(Membership $membership, Payment $payment): bool
+    {
+        $user = $membership->user;
+        $data = new \stdClass();
+        $data->first_name = $user->first_name;
+        $data->last_name = $user->last_name;
+        $data->email = $user->email;
+        $data->payment_mode = __('labels.generic.'.$payment->mode);
+        $prices = Setting::getDataByGroup('prices', $membership);
+
+        $code = 'offline-payment-';
+
+        if ($payment->item == 'subscription') {
+            $code .= 'subscription';
+            $data->subscription_fee = ($membership->associated_member) ? $prices['associated_subscription_fee'] : $prices['subscription_fee'];
+        }
+        elseif (str_starts_with($payment->item, 'subscription_insurance_') || str_starts_with($payment->item, 'insurance_')) {
+            $code .= 'insurance';
+            // Get the insurance formula (f1, f2...).
+            $formula = substr($payment->item, -2);
+            $data->insurance_formula = __('labels.membership.insurance_'.$formula);
+            $data->insurance_fee =$prices['insurance_fee_'.$formula];
+
+            // The member wants to pay for both the subscription and the insurance.
+            if (str_starts_with($payment->item, 'subscription_insurance_')) {
+                $data->subscription_fee = ($membership->associated_member) ? $prices['associated_subscription_fee'] : $prices['subscription_fee'];
+                $data->total_amount = $data->subscription_fee + $data->insurance_fee;
+                $code .= 'subscription-insurance';
+            }
+        }
+
+        if (!Email::sendEmail($code, $data)) {
+            return false;
+        }
+
+        // Informs the administrators about the payment.
+        if (!$this->sendEmailToGroup($code.'-alert', $data, 'office')) {
+            return false;
+        }
+
+        return true;
     }
 
     public function payment(Membership $membership): bool
     {
         $user = $membership->user;
         $payment = $membership->getLastPayment();
-        $user->amount = $payment->amount;
-        $user->item = __('labels.generic.'.$payment->item);
-        $user->payment_mode = __('labels.generic.'.$payment->mode);
+        $data = new \stdClass();
+        $data->first_name = $user->first_name;
+        $data->last_name = $user->last_name;
+        $data->email = $user->email;
+        $data->amount = $payment->amount;
+        $data->item = __('labels.generic.'.$payment->item);
+        $data->payment_mode = __('labels.generic.'.$payment->mode);
+
         $code = 'payment-'.$payment->status;
 
-        if (!Email::sendEmail($code, $user)) {
+        if (!Email::sendEmail($code, $data)) {
             return false;
         }
 
         // Informs the administrators about the payment.
-        $code = $code.'-alert';
-        $recipients = $this->getRecipientsByGroup('office');
-
-        if (!empty($recipients)) {
-            $user->recipients = $recipients;
-
-            if (!Email::sendEmail($code, $user)) {
-                return false;
-            }
+        if (!$this->sendEmailToGroup($code.'-alert', $data, 'office')) {
+            return false;
         }
 
         return true;
@@ -169,12 +232,28 @@ trait Emails
 
         $data = new \stdClass();
         $data->subscription_fee = Setting::getValue('prices', 'subscription_fee', 0, Membership::class);
+        $data->associated_subscription_fee = Setting::getValue('prices', 'associated_subscription_fee', 0, Membership::class);
         $data->renewal_date = $this->getRenewalDate()->format('d/m/Y');
 
         if (!empty($recipients)) {
             $data->recipients = $recipients;
 
             if (!Email::sendEmail('pending-renewal', $data)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public function sendEmailToGroup($code, $data, $group): bool
+    {
+        $recipients = $this->getRecipientsByGroup($group);
+
+        if (!empty($recipients)) {
+            $data->recipients = $recipients;
+
+            if (!Email::sendEmail($code, $data)) {
                 return false;
             }
         }

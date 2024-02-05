@@ -457,18 +457,22 @@ class MembershipController extends Controller
         $payment = $membership->getPayment($request->all());
         $membership->payments()->save($payment);
 
+        // Check for free payment validation.
         if ($request->input('payment_mode') == 'free_period' && $membership->free_period) {
             $membership->free_period = false;
-            $membership->payment_mode = $request->input('payment_mode');
             $membership->status = 'member';
             $membership->save();
-
             $request->session()->flash('success', __('messages.generic.free_period_privilege_success'));
 
-            return redirect()->route('memberships.edit', $request->query());
-        }
+            // Inform the member and the administrator about the free period validation.
+            $this->freePeriodValidation($membership, $payment);
 
-        $request->session()->flash('success', __('messages.generic.'.$payment->mode.'_payment_success'));
+        }
+        else {
+            $request->session()->flash('success', __('messages.generic.'.$payment->mode.'_payment_success'));
+            // Inform the member and the administrator about the payment.
+            $this->offlinePayment($membership, $payment);
+        }
 
         return redirect()->route('memberships.edit', $request->query());
     }
