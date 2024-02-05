@@ -124,6 +124,12 @@ trait Emails
         return false;
     }
 
+    public function offlinePayment(Membership $membership): bool
+    {
+        $user = $membership->user;
+
+    }
+
     public function payment(Membership $membership): bool
     {
         $user = $membership->user;

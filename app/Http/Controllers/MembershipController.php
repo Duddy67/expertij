@@ -603,11 +603,18 @@ class MembershipController extends Controller
         $data['city'] = 'Bordeaux';
         $data['member_number'] = 'E-SD789';
         $data['subscription_year'] = '2024';
+        $data['subscription_start_date'] = '01/01/2024';
+        $data['subscription_end_date'] = '01/01/2025';
         $data['current_date'] = '12/01/2024';
         $data['subscription_fee'] = '70';
-        $pdf = Pdf::loadView('pdf.membership.subscription-invoice', $data);
+        $data['insurance_fee'] = '120';
+        $data['item_reference'] = 'Standard';
+        $data['payment_mode'] = 'Chèque';
+        //$pdf = Pdf::loadView('pdf.membership.subscription-invoice', $data);
+        $pdf = Pdf::loadView('pdf.membership.insurance-invoice', $data);
         //$pdf = Pdf::loadView('pdf.membership.test', $data);
-        return $pdf->stream();
+        //return $pdf->stream();
+        $pdf->save(storage_path('app/public/insurance-invoice.pdf'));
         //return $pdf->download('invoice.pdf');
     }
 }

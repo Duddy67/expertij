@@ -56,58 +56,47 @@
                 <p>Pour l’association<br/>
         Le {{ $current_date }} <br/>
         La trésorière
-              </p>
-              <br/><br/><br/><br/><br/>
-      </td>
-    </tr>
-  </tbody>
-</table>
-    </td>
-    </tr>
-
-
-
-    <tr>
-      <td>
-
-
-		<table width="100%" border="0" cellpadding="0" cellspacing="0">
-  <tbody>
+                </p>
+                <br/><br/><br/><br/><br/>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+            </td>
+            </tr>
+            <tr>
+              <td>
+                <table width="100%" border="0" cellpadding="0" cellspacing="0">
+          <tbody>
     <tr>
       <td style="width:33%; text-align:center;">
 		  <img height="40px" width="100px" src="{{ public_path('images').'/expertij/pdf/logo-expertij-red.png' }}">
 		</td>
-
-<td style="width:33%; text-align:center;">
+      <td style="width:33%; text-align:center;">
 		  <img src="{{ public_path('images').'/expertij/pdf/qualiopi.png' }}">
 		</td>
-
-
 		<td style="width:33%; text-align:center;">
 		  <img src="{{ public_path('images').'/expertij/pdf/eulita.png' }}">
 		</td>
-    </tr>
-  </tbody>
-</table>
-</td>
-</tr>
-
-
-
-<tr>
+          </tr>
+        </tbody>
+      </table>
+      </td>
+      </tr>
+      <tr>
       <td>
-		<table width="100%" border="0" cellpadding="0" cellspacing="0">
-  <tbody>
-    <tr>
-      <td style="text-align:center;">
-		  <br /><br />
-<p style="text-align: center;">Siège social : c/o. CERTEX-CALITEX - 31 rue du Rocher – 75008 Paris <br /> contact@expertij.fr - www.expertij.fr</p>
-		</td>
-    </tr>
-</tbody>
-</table>
-</td>
-</tr>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+          <tbody>
+            <tr>
+              <td style="text-align:center;">
+                <br /><br />
+                <p style="text-align: center;">Siège social : c/o. CERTEX-CALITEX - 31 rue du Rocher – 75008 Paris <br /> contact@expertij.fr - www.expertij.fr</p>
+              </td>
+            </tr>
+        </tbody>
+      </table>
+    </td>
+  </tr>
   </tbody>
 </table>
 </body>
