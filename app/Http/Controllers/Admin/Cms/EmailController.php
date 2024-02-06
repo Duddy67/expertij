@@ -94,7 +94,7 @@ class EmailController extends Controller
 	$email->checkOut();
 
         // Gather the needed data to build the form.
-	
+
         $fields = $this->getFields();
 	$this->setFieldValues($fields, $email);
 	$except = (!auth()->user()->isSuperAdmin()) ? ['destroy'] : [];
