@@ -164,6 +164,8 @@ return [
         'subscription_insurance_f7' => 'Adhésion + Judiciaire + Extrajudiciaire option 1',
         'subscription_insurance_f8' => 'Adhésion + Judiciaire + Extrajudiciaire option 2',
         'subscription_insurance_f9' => 'Adhésion + Judiciaire + Extrajudiciaire option 3',
+        'subscription_invoice_filename' => 'facture-adhesion',
+        'insurance_invoice_filename' => 'facture-assurance',
 	'send_emails' => 'Envoyer emails',
 	'vote' => 'Voter',
 	'votes' => 'Votes',

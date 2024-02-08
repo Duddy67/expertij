@@ -454,7 +454,7 @@ class MembershipController extends Controller
         }
 
         $membership = Auth::user()->membership;
-        $payment = $membership->getPayment($request->all());
+        $payment = $membership->createPayment($request->all());
         $membership->payments()->save($payment);
 
         // Check for free payment validation.

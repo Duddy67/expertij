@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Http\UploadedFile;
 use App\Models\Cms\Document;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Storage;
 
 class Payment extends Model
 {
@@ -63,34 +64,18 @@ class Payment extends Model
         return $this->morphMany(Document::class, 'documentable')->where('field', 'invoice');
     }
 
-    public function createInvoice()
+    public function createInvoice(string $view, array $data, string $fileName)
     {
-        $data = [];
-        $data['civility'] = 'Mr';
-        $data['first_name'] = 'Jean Pierre';
-        $data['last_name'] = 'Barjac';
-        $data['street'] = '47 rue du Groland';
-        $data['postcode'] = '789500';
-        $data['city'] = 'Bordeaux';
-        $data['member_number'] = 'E-SD789';
-        $data['subscription_year'] = '2024';
-        $data['subscription_start_date'] = '01/01/2024';
-        $data['subscription_end_date'] = '01/01/2025';
-        $data['current_date'] = '12/01/2024';
-        $data['subscription_fee'] = '70';
-        $data['insurance_fee'] = '120';
-        $data['item_reference'] = 'Standard';
-        $data['payment_mode'] = 'Chèque';
-        //$pdf = Pdf::loadView('pdf.membership.subscription-invoice', $data);
-        $pdf = Pdf::loadView('pdf.membership.insurance-invoice', $data);
-        $file = new UploadedFile(storage_path('app/public/subscription-invoice.pdf'), 'subscription-invoice.pdf');
+        $pdf = Pdf::loadView($view, $data);
+        $pdf->save(storage_path('app/tmp/'.$fileName));
+
+        $file = new UploadedFile(storage_path('app/tmp/'.$fileName));
         $document = new Document;
         $document->upload($file, 'invoice');
         $this->invoices()->save($document);
-        //file_put_contents('debog_file.txt', print_r($file->getClientOriginalExtension(), true));
-        //$pdf = Pdf::loadView('pdf.membership.test', $data);
-        //return $pdf->stream();
-        //$pdf->save(storage_path('app/public/subscription-invoice.pdf'));
-        //return $pdf->download('invoice.pdf');
+        // Store the pdf invoice file.
+        $pdf->save(storage_path('app/public/'.$document->disk_name));
+        // Finally delete the temporary file.
+        Storage::delete(storage_path('app/tmp/'.$fileName));
     }
 }

@@ -164,6 +164,8 @@ return [
         'subscription_insurance_f7' => 'Subscription + Judiciaire + Extrajudiciaire option 1',
         'subscription_insurance_f8' => 'Subscription + Judiciaire + Extrajudiciaire option 2',
         'subscription_insurance_f9' => 'Subscription + Judiciaire + Extrajudiciaire option 3',
+        'subscription_invoice_filename' => 'subscription-invoice',
+        'insurance_invoice_filename' => 'insurance-invoice',
 	'send_emails' => 'Send emails',
 	'vote' => 'Vote',
 	'votes' => 'Votes',

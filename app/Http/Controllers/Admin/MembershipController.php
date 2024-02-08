@@ -82,7 +82,9 @@ class MembershipController extends Controller
         }
 
         $membership->checkOut();
-
+//echo 'test';
+//$payment = $membership->getLastPayment();
+//$payment->createInvoice();
         $except = ($membership->member_number) ? [] : ['member_number', 'member_since'];
 
         $fields = $this->getFields($except);
@@ -252,7 +254,7 @@ class MembershipController extends Controller
     }
 
     /*
-     * Set the payment status as well as the membership status according to the new payment status. 
+     * Set the offline payment status as well as the membership status according to the new payment status. 
      */
     public function setPayment(Request $request, Membership $membership)
     {

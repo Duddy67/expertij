@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Traits\AccessLevel;
 use App\Traits\CheckInCheckOut;
 use App\Traits\OptionList;
+use App\Traits\Renewal;
 use App\Models\Cms\Setting;
 use App\Models\User;
 use App\Models\Cms\Document;
@@ -21,10 +22,11 @@ use App\Models\Membership\Licence;
 use App\Models\Membership\Language;
 use App\Models\Membership\Jurisdiction;
 use App\Models\Membership\Vote;
+use Carbon\Carbon;
 
 class Membership extends Model
 {
-    use HasFactory, AccessLevel, CheckInCheckOut, OptionList;
+    use HasFactory, AccessLevel, CheckInCheckOut, OptionList, Renewal;
 
     /**
      * The table associated with the model.
@@ -326,7 +328,7 @@ class Membership extends Model
      * Creates and returns a payment that is set according to
      * the purchased item as well as the membership status.
      */
-    public function getPayment(array $query): Payment
+    public function createPayment(array $query): Payment
     {
         $item = '';
         $prices = Setting::getDataByGroup('prices', $this);
@@ -408,5 +410,59 @@ class Membership extends Model
         $newNumber = $lastNumber + 1;
 
         return date('Y').'-'.$newNumber.'-'.$letter;
+    }
+
+    public function createSubscriptionInvoice(Payment $payment)
+    {
+        $prices = Setting::getDataByGroup('prices', $this);
+
+        $data = $this->getInvoiceData($payment);
+        $data['subscription_fee'] = ($this->associated_member) ? $prices['associated_subscription_fee'] : $prices['subscription_fee'];
+        $data['item_reference'] = __('labels.membership.subscription');
+
+        $fileName = __('labels.membership.subscription_invoice_filename').'-'.$this->member_number.'-'.Carbon::today()->format('d-m-Y');
+        $payment->createInvoice('pdf.membership.subscription-invoice', $data, $fileName);
+    }
+
+    public function createInsuranceInvoice(Payment $payment)
+    {
+        $prices = Setting::getDataByGroup('prices', $this);
+
+        $data = $this->getInvoiceData($payment);
+        // Get the insurance formula (f1, f2...).
+        $formula = substr($payment->item, -2);
+        $data['item_reference'] = __('labels.membership.insurance_'.$formula);
+        $data['insurance_fee'] = $prices['insurance_fee_'.$formula];
+
+        $fileName = __('labels.membership.insurance_invoice_filename').'-'.$this->member_number.'-'.Carbon::today()->format('d-m-Y');
+        $payment->createInvoice('pdf.membership.insurance-invoice', $data, $fileName);
+    }
+
+    private function getInvoiceData(Payment $payment)
+    {
+        $user = $this->user;
+
+        $data = [];
+        $data['civility'] = $user->civility;
+        $data['first_name'] = $user->first_name;
+        $data['last_name'] = $user->last_name;
+        $data['street'] = $user->address->street;
+        $data['postcode'] = $user->address->postcode;
+        $data['city'] = $user->address->city;
+        $data['member_number'] = $this->member_number;
+
+        $renewalDate = $this->getRenewalDate();
+        if ($this->isRenewalPeriod()) {
+            $renewalDate = $this->getLatestRenewalDate();
+        }
+
+        $data['subscription_year'] = $renewalDate->format('Y');
+
+        $data['subscription_start_date'] = $renewalDate->format('d/m/Y');
+        $data['subscription_end_date'] = '01/01/2025';
+        $data['current_date'] = Carbon::today('d/m/Y')
+        $data['payment_mode'] = $payment->payment_mode;
+
+        return $data;
     }
 }
