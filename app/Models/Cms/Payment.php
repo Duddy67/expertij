@@ -64,16 +64,23 @@ class Payment extends Model
         return $this->morphMany(Document::class, 'documentable')->where('field', 'invoice');
     }
 
+    /*
+     * Creates a pdf invoice file.
+     */
     public function createInvoice(string $view, array $data, string $fileName)
     {
+        // Create a tmp directory in case it doesn't exists.
+        Storage::makeDirectory('tmp');
         $pdf = Pdf::loadView($view, $data);
+        // Store temporarily the invoice file. 
         $pdf->save(storage_path('app/tmp/'.$fileName));
-
-        $file = new UploadedFile(storage_path('app/tmp/'.$fileName));
+        // Create a object from the temporary file.
+        $file = new UploadedFile(storage_path('app/tmp/'.$fileName), $fileName);
+        // Store the invoice file as a Document object
         $document = new Document;
         $document->upload($file, 'invoice');
         $this->invoices()->save($document);
-        // Store the pdf invoice file.
+        // Store the pdf invoice file on the disk.
         $pdf->save(storage_path('app/public/'.$document->disk_name));
         // Finally delete the temporary file.
         Storage::delete(storage_path('app/tmp/'.$fileName));

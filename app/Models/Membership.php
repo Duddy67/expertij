@@ -415,35 +415,40 @@ class Membership extends Model
     public function createSubscriptionInvoice(Payment $payment)
     {
         $prices = Setting::getDataByGroup('prices', $this);
-
         $data = $this->getInvoiceData($payment);
+
+        // Use the prices directly from the setting table to prevent computation in case the member has paid for both the subscription and the invoice.
         $data['subscription_fee'] = ($this->associated_member) ? $prices['associated_subscription_fee'] : $prices['subscription_fee'];
         $data['item_reference'] = __('labels.membership.subscription');
 
-        $fileName = __('labels.membership.subscription_invoice_filename').'-'.$this->member_number.'-'.Carbon::today()->format('d-m-Y');
+        $fileName = __('labels.membership.subscription_invoice_filename').'-'.$this->member_number.'-'.Carbon::today()->format('d-m-Y').'.pdf';
         $payment->createInvoice('pdf.membership.subscription-invoice', $data, $fileName);
     }
 
     public function createInsuranceInvoice(Payment $payment)
     {
         $prices = Setting::getDataByGroup('prices', $this);
-
         $data = $this->getInvoiceData($payment);
+
         // Get the insurance formula (f1, f2...).
         $formula = substr($payment->item, -2);
         $data['item_reference'] = __('labels.membership.insurance_'.$formula);
+        // Use the prices directly from the setting table to prevent computation in case the member has paid for both the subscription and the invoice.
         $data['insurance_fee'] = $prices['insurance_fee_'.$formula];
 
-        $fileName = __('labels.membership.insurance_invoice_filename').'-'.$this->member_number.'-'.Carbon::today()->format('d-m-Y');
+        $fileName = __('labels.membership.insurance_invoice_filename').'-'.$this->member_number.'-'.Carbon::today()->format('d-m-Y').'.pdf';
         $payment->createInvoice('pdf.membership.insurance-invoice', $data, $fileName);
     }
 
-    private function getInvoiceData(Payment $payment)
+    /*
+     * Creates and returns the common data used in both subscription and insurance invoices. 
+     */
+    private function getInvoiceData(Payment $payment): array
     {
         $user = $this->user;
 
         $data = [];
-        $data['civility'] = $user->civility;
+        $data['civility'] = __('labels.user.'.$user->civility);
         $data['first_name'] = $user->first_name;
         $data['last_name'] = $user->last_name;
         $data['street'] = $user->address->street;
@@ -452,15 +457,16 @@ class Membership extends Model
         $data['member_number'] = $this->member_number;
 
         $renewalDate = $this->getRenewalDate();
+
         if ($this->isRenewalPeriod()) {
             $renewalDate = $this->getLatestRenewalDate();
         }
 
         $data['subscription_year'] = $renewalDate->format('Y');
-
         $data['subscription_start_date'] = $renewalDate->format('d/m/Y');
-        $data['subscription_end_date'] = '01/01/2025';
-        $data['current_date'] = Carbon::today('d/m/Y')
+        $renewalDate->addYear();
+        $data['subscription_end_date'] = $renewalDate->format('d/m/Y');
+        $data['current_date'] = Carbon::today()->format('d/m/Y');
         $data['payment_mode'] = $payment->payment_mode;
 
         return $data;

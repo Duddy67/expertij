@@ -21,7 +21,6 @@ use App\Models\Cms\Document;
 use App\Traits\Emails;
 use App\Http\Requests\Membership\StoreRequest;
 use App\Http\Requests\Membership\UpdateRequest;
-use Barryvdh\DomPDF\Facade\Pdf;
 
 class MembershipController extends Controller
 {
@@ -594,31 +593,5 @@ class MembershipController extends Controller
         $html = view('themes.'.$page['theme'].'.partials.membership.edit.attestation-file-button', compact('fileUrl', 'fileName'))->render();
 
         return ['containerId' => $containerId, 'html' => $html];
-    }
-
-    public function pdf()
-    {
-        $data = [];
-        $data['civility'] = 'Mr';
-        $data['first_name'] = 'Jean Pierre';
-        $data['last_name'] = 'Barjac';
-        $data['street'] = '47 rue du Groland';
-        $data['postcode'] = '789500';
-        $data['city'] = 'Bordeaux';
-        $data['member_number'] = 'E-SD789';
-        $data['subscription_year'] = '2024';
-        $data['subscription_start_date'] = '01/01/2024';
-        $data['subscription_end_date'] = '01/01/2025';
-        $data['current_date'] = '12/01/2024';
-        $data['subscription_fee'] = '70';
-        $data['insurance_fee'] = '120';
-        $data['item_reference'] = 'Standard';
-        $data['payment_mode'] = 'Chèque';
-        //$pdf = Pdf::loadView('pdf.membership.subscription-invoice', $data);
-        $pdf = Pdf::loadView('pdf.membership.insurance-invoice', $data);
-        //$pdf = Pdf::loadView('pdf.membership.test', $data);
-        //return $pdf->stream();
-        $pdf->save(storage_path('app/public/insurance-invoice.pdf'));
-        //return $pdf->download('invoice.pdf');
     }
 }

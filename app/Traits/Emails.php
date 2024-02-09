@@ -199,18 +199,36 @@ trait Emails
     {
         $user = $membership->user;
         $payment = $membership->getLastPayment();
+        $attachments = [];
         $data = new \stdClass();
         $data->first_name = $user->first_name;
         $data->last_name = $user->last_name;
         $data->email = $user->email;
         $data->amount = $payment->amount;
-        $data->item = __('labels.generic.'.$payment->item);
+        $data->item = __('labels.membership.'.$payment->item);
         $data->payment_mode = __('labels.generic.'.$payment->mode);
+
+        // Check for invoices.
+        foreach ($payment->invoices as $invoice) {
+            $attachments[] = [
+                'file' => storage_path('app/public/'.$invoice->disk_name),
+                'options' => ['as' => $invoice->file_name, 'mime' => $invoice->content_type]
+            ];
+        }
+
+        if (!empty($attachments)) {
+            $data->attachments = $attachments;
+        }
 
         $code = 'payment-'.$payment->status;
 
         if (!Email::sendEmail($code, $data)) {
             return false;
+        }
+
+        // Don't send possible invoices to administrators.
+        if (isset($data->attachments)) {
+            unset($data->attachments);
         }
 
         // Informs the administrators about the payment.

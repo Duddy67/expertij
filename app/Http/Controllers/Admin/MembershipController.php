@@ -82,9 +82,7 @@ class MembershipController extends Controller
         }
 
         $membership->checkOut();
-//echo 'test';
-//$payment = $membership->getLastPayment();
-//$payment->createInvoice();
+
         $except = ($membership->member_number) ? [] : ['member_number', 'member_since'];
 
         $fields = $this->getFields($except);
@@ -279,6 +277,22 @@ class MembershipController extends Controller
 
         $payment->status = $request->input('payment_status');
         $payment->save();
+
+        if ($payment->status == 'completed') {
+            // Create an invoice for the payment according to the purchased item.
+            if ($payment->item == 'subscription') {
+                $membership->createSubscriptionInvoice($payment);
+            }
+            elseif (str_starts_with($payment->item, 'insurance_')) {
+                $membership->createInsuranceInvoice($payment);
+            }
+            // The member has paid for both subscription and insurance. (item = subscription_insurance_xx).
+            else {
+                // Create one invoice for each item.
+                $membership->createSubscriptionInvoice($payment);
+                $membership->createInsuranceInvoice($payment);
+            }
+        }
 
         // Informs the user about their payment.
         $this->payment($membership);
