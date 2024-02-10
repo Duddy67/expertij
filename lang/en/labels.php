@@ -22,6 +22,7 @@ return [
 	'menuitems' => 'Menu items',
 	'files' => 'Files',
 	'subcategories' => 'Sub-categories',
+        'documents' => 'Documents',
     ],
     'user' => [
 	'last_name' => 'Last name',
@@ -251,6 +252,8 @@ return [
 	'category' => 'Category',
 	'ordering' => 'Ordering',
 	'type' => 'Type',
+	'size' => 'Size',
+	'date' => 'Date',
 	'layout' => 'Layout',
 	'layout_items' => 'Layout items',
 	'format' => 'Format',

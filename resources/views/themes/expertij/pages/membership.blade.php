@@ -12,6 +12,10 @@
             @php $label = ($membership->status == 'member' && !$membership->hasInsurance()) ? 'insurances' : 'payment'; @endphp
             <a class="nav-item nav-link" id="payment-tab" href="#payment" data-bs-toggle="tab">{{ __('labels.generic.'.$label) }}</a>
         @endif
+
+        @if (!empty($invoices))
+            <a class="nav-item nav-link" id="documents-tab" href="#documents" data-bs-toggle="tab">{{ __('labels.title.documents') }}</a>
+        @endif
     </nav>
 
     <div class="tab-content">
@@ -126,6 +130,12 @@
         @if ((in_array($membership->status, ['pending_subscription', 'pending_renewal']) && !$membership->hasPendingPayment()) || ($membership->status == 'member' && !$membership->hasInsurance()))
             <div class="tab-pane" id="payment">
                 @include('themes.expertij.partials.membership.edit.payment')
+            </div>
+        @endif
+
+        @if (!empty($invoices))
+            <div class="tab-pane" id="documents">
+                @include('themes.expertij.partials.membership.edit.document')
             </div>
         @endif
     </div>

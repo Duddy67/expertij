@@ -251,6 +251,14 @@ class Document extends Model
     }
 
     /*
+     * Returns the formated size of the file.
+     */
+    public function getSize()
+    {
+        return self::formatSizeUnits($this->file_size);
+    }
+
+    /*
      * Returns the given bytes in the proper size format according to the byte units.
      * @return string
      */

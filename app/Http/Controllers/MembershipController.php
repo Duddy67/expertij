@@ -210,7 +210,15 @@ class MembershipController extends Controller
         //$query = array_merge($request->query(), ['membership' => $membership->id]);
         $prices = Setting::getDataByGroup('prices', $membership);
 
-        return view('themes.'.$page['theme'].'.index', compact('page', 'options', 'membership', 'prices'));
+        $invoices = [];
+
+        foreach ($membership->payments as $payment) {
+            foreach ($payment->invoices as $invoice) {
+                $invoices[] = $invoice;
+            }
+        }
+
+        return view('themes.'.$page['theme'].'.index', compact('page', 'options', 'membership', 'prices', 'invoices'));
     }
 
     /**
