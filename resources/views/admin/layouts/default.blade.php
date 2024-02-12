@@ -101,7 +101,13 @@
                             <li class="list-group-item list-group-item-action {{ $active }}">
                                 <a href="{{ route('admin.memberships.index') }}" class="sidebar-link">@lang ('labels.membership.members')</a>
                             </li>
-                            @allowto('memberships-settings')
+                            @allowto('update-membership-settings')
+                                @php $active = ($routeName == 'admin.memberships.sharings.index' || $routeName == 'admin.memberships.sharings.create' || $routeName == 'admin.memberships.sharings.edit') ? 'active' : '' @endphp
+                                <li class="list-group-item list-group-item-action {{ $active }}">
+                                    <a href="{{ route('admin.memberships.sharings.index') }}" class="sidebar-link">@lang ('labels.generic.document_sharing')</a>
+                                </li>
+                            @endallowto
+                            @allowto('update-membership-settings')
                                 @php $active = (request()->is('admin/memberships/settings*')) ? 'active' : '' @endphp
                                 <li class="list-group-item list-group-item-action {{ $active }}">
                                     <a href="{{ route('admin.memberships.settings.index') }}" class="sidebar-link">@lang ('labels.title.settings')</a>
@@ -132,7 +138,7 @@
                                     <a href="{{ route('admin.posts.categories.index') }}" class="sidebar-link">@lang ('labels.title.categories')</a>
                                 </li>
                             @endallowto
-                            @allowto('post-settings')
+                            @allowto('update-post-settings')
                                 @php $active = (request()->is('admin/posts/settings*')) ? 'active' : '' @endphp
                                 <li class="list-group-item list-group-item-action {{ $active }}">
                                     <a href="{{ route('admin.posts.settings.index') }}" class="sidebar-link">@lang ('labels.title.settings')</a>

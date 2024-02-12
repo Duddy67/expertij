@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 
-class AdminPostSettings
+class AdminMembershipSettings
 {
     /**
      * Handle an incoming request.
@@ -18,7 +18,7 @@ class AdminPostSettings
     {
 	$routeName = $request->route()->getName();
 
-	if ($routeName == 'admin.posts.settings.index' && !auth()->user()->isAllowedTo('update-post-settings')) {
+	if ($routeName == 'admin.memberships.settings.index' && !auth()->user()->isAllowedTo('update-membership-settings')) {
 	    return redirect()->route('admin')->with('error', __('messages.generic.access_not_auth'));
 	}
 

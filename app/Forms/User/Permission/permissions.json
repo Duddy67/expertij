@@ -100,6 +100,12 @@
 	"type": "level2",
 	"roles": "admin",
 	"optional": "manager"
+      },
+      {
+	"name": "update-post-settings",
+	"type": "level1",
+	"roles": "",
+	"optional": "admin"
       }
   ],
   "memberships": [
@@ -118,17 +124,22 @@
 	"type": "level3",
 	"roles": "admin|manager|assistant",
 	"optional": "assistant"
+      },
+      {
+	"name": "create-membership-sharings",
+	"type": "level3",
+	"roles": "admin|manager|assistant|registered"
+      },
+      {
+	"name": "update-membership-settings",
+	"type": "level1",
+	"roles": "",
+	"optional": "admin"
       }
   ],
   "settings": [
       {
 	"name": "global-settings",
-	"type": "level1",
-	"roles": "",
-	"optional": "admin"
-      },
-      {
-	"name": "post-settings",
 	"type": "level1",
 	"roles": "",
 	"optional": "admin"

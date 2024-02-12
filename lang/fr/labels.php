@@ -364,6 +364,7 @@ return [
         'bank_transfer' => 'Virement bancaire',
         'website' => 'Site web',
         'photo_deleted' => 'Photo supprimée',
+        'document_sharing' => 'Documents Partagés',
     ],
     'filter' => [
 	'search' => 'Recherche',

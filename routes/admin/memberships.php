@@ -2,10 +2,13 @@
 
 use App\Http\Controllers\Admin\MembershipController as AdminMembershipController;
 use App\Http\Controllers\Admin\Membership\SettingController as AdminMembershipSettingController;
+use App\Http\Controllers\Admin\Membership\SharingController as AdminMembershipSharingController;
 
 // Settings
 Route::get('/memberships/settings', [AdminMembershipSettingController::class, 'index'])->name('admin.memberships.settings.index');
 Route::patch('/memberships/settings', [AdminMembershipSettingController::class, 'update'])->name('admin.memberships.settings.update');
+// Sharings
+Route::resource('/memberships/sharings', AdminMembershipSharingController::class, ['as' => 'admin.memberships'])->except(['show']);
 // Memberships
 Route::delete('/memberships', [AdminMembershipController::class, 'massDestroy'])->name('admin.memberships.massDestroy');
 Route::get('/memberships/cancel/{membership?}', [AdminMembershipController::class, 'cancel'])->name('admin.memberships.cancel');

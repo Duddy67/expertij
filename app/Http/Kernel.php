@@ -77,6 +77,8 @@ class Kernel extends HttpKernel
         'admin.cms.settings' => \App\Http\Middleware\AdminSettings::class,
         'admin.cms.emails' => \App\Http\Middleware\AdminEmails::class,
         'admin.memberships' => \App\Http\Middleware\AdminMemberships::class,
+        'admin.memberships.sharings' => \App\Http\Middleware\AdminMembershipSharings::class,
+        'admin.memberships.settings' => \App\Http\Middleware\AdminMembershipSettings::class,
         'admin.posts' => \App\Http\Middleware\AdminPosts::class,
         'admin.posts.categories' => \App\Http\Middleware\AdminPostCategories::class,
         'admin.posts.settings' => \App\Http\Middleware\AdminPostSettings::class,

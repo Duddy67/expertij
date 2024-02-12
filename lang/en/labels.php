@@ -363,6 +363,7 @@ return [
         'bank_transfer' => 'Bank transfer',
         'website' => 'Website',
         'photo_deleted' => 'Photo deleted',
+        'document_sharing' => 'Document Sharing',
     ],
     'filter' => [
 	'search' => 'Search',
