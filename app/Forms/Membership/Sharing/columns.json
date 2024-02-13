@@ -6,25 +6,14 @@
     "type": "string"
   },
   {
-    "label": "labels.generic.title",
-    "name": "title",
+    "label": "labels.generic.name",
+    "name": "name",
     "extra": ["sortable", "linkable"],
     "type": "string"
   },
   {
-    "label": "labels.generic.ordering",
-    "name": "ordering",
-    "type": "array"
-  },
-  {
     "label": "labels.generic.status",
     "name": "status",
-    "type": "string"
-  },
-  {
-    "label": "labels.menuitem.url",
-    "name": "url",
-    "extra": ["sortable"],
     "type": "string"
   },
   {

@@ -1,45 +1,11 @@
 [
   {
-    "label": "labels.generic.title",
+    "label": "labels.generic.name",
     "type": "text",
-    "name": "title",
-    "id": "title",
+    "name": "name",
+    "id": "name",
     "class": "form-control-lg",
-    "placeholder": "labels.generic.title"
-  },
-  {
-    "label": "labels.menuitem.url",
-    "type": "text",
-    "name": "url",
-    "id": "url",
-    "placeholder": "labels.menuitem.url"
-  },
-  {
-    "label": "labels.menuitem.model_name",
-    "type": "text",
-    "name": "model_name",
-    "id": "model_name",
-    "placeholder": "labels.menuitem.model_example"
-  },
-  {
-    "label": "labels.menuitem.parent_item",
-    "type": "select",
-    "name": "parent_id",
-    "function": "parent_item",
-    "id": "parent_id",
-    "options": [] 
-  },
-  {
-    "label": "labels.menuitem.class",
-    "type": "text",
-    "name": "class",
-    "id": "class"
-  },
-  {
-    "label": "labels.menuitem.anchor",
-    "type": "text",
-    "name": "anchor",
-    "id": "anchor"
+    "placeholder": "labels.generic.name"
   },
   {
     "label": "labels.generic.status",

@@ -8,6 +8,11 @@ use App\Http\Controllers\Admin\Membership\SharingController as AdminMembershipSh
 Route::get('/memberships/settings', [AdminMembershipSettingController::class, 'index'])->name('admin.memberships.settings.index');
 Route::patch('/memberships/settings', [AdminMembershipSettingController::class, 'update'])->name('admin.memberships.settings.update');
 // Sharings
+Route::delete('/memberships/sharings', [AdminMembershipSharingController::class, 'massDestroy'])->name('admin.memberships.sharings.massDestroy');
+Route::get('/memberships/sharings/cancel/{sharing?}', [AdminMembershipSharingController::class, 'cancel'])->name('admin.memberships.sharings.cancel');
+Route::put('/memberships/sharings/checkin', [AdminMembershipSharingController::class, 'massCheckIn'])->name('admin.memberships.sharings.massCheckIn');
+Route::put('/memberships/sharings/publish', [AdminMembershipSharingController::class, 'massPublish'])->name('admin.memberships.sharings.massPublish');
+Route::put('/memberships/sharings/unpublish', [AdminMembershipSharingController::class, 'massUnpublish'])->name('admin.memberships.sharings.massUnpublish');
 Route::resource('/memberships/sharings', AdminMembershipSharingController::class, ['as' => 'admin.memberships'])->except(['show']);
 // Memberships
 Route::delete('/memberships', [AdminMembershipController::class, 'massDestroy'])->name('admin.memberships.massDestroy');

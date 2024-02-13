@@ -1,7 +1,7 @@
 @extends ('admin.layouts.default')
 
 @section ('main')
-    <h3>@php echo (isset($item)) ? __('labels.menuitem.edit_menu_item') : __('labels.menuitem.create_menu_item'); @endphp</h3>
+    <h3>@php echo (isset($item)) ? __('labels.generic.edit_document_sharing') : __('labels.generic.create_document_sharing'); @endphp</h3>
 
     @include('admin.partials.x-toolbar')
 
@@ -17,6 +17,8 @@
             @php $value = (isset($item)) ? old($field->name, $field->value) : old($field->name); @endphp
             <x-input :field="$field" :value="$value" />
         @endforeach
+
+        @include('admin.partials.document-sharing')
 
         <input type="hidden" id="cancelEdit" value="{{ route('admin.memberships.sharings.cancel', $query) }}">
         <input type="hidden" id="close" name="_close" value="0">
@@ -48,6 +50,7 @@
     <script type="text/javascript" src="{{ asset('/vendor/codalia/c.datepicker.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/js/datepicker.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/vendor/codalia/c.ajax.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('/js/admin/document.sharing.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/js/admin/form.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/js/admin/disable.toolbars.js') }}"></script>
 @endpush
