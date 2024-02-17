@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name', 150);
             $table->tinyText('description')->nullable();
+            $table->char('status', 12);
             $table->char('access_level', 10);
             $table->unsignedBigInteger('checked_out')->nullable();
             $table->timestamp('checked_out_time')->nullable();

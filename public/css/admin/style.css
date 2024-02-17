@@ -312,21 +312,4 @@ tr.clickable-row {
 
 iframe {
   width: 100%;
-
 }
-
-@media (min-width: 1200px) {
-  .modal-xl {
-  /*width: 2000px !important;*/
-
-  }
-}
-
-@media (min-width: 576px) {
-  .modal-xl {
-  max-width: 1400px !important;
-
-  }
-}
-
-

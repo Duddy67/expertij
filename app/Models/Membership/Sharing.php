@@ -26,6 +26,29 @@ class Sharing extends Model
     protected $table = 'membership_sharings';
 
     /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'name',
+        'status',
+        'owned_by',
+        'access_level',
+    ];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'checked_out_time'
+    ];
+
+    /**
      * Get the documents associated with the sharing.
      */
     public function documents(): MorphMany
