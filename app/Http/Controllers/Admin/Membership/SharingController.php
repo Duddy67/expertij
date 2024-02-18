@@ -14,7 +14,7 @@ use App\Http\Requests\Membership\Sharing\UpdateRequest;
 
 class SharingController extends Controller
 {
-    use Form;
+    use Form, CheckInCheckOut;
 
     /*
      * Instance of the Sharing model, (used in the Form trait).
@@ -95,7 +95,6 @@ class SharingController extends Controller
                 $document = new Document;
                 $document->upload($input, 'sharing');
                 $sharing->documents()->save($document);
-      //file_put_contents('debog_file.txt', print_r($input, true));
             }
         }
 
@@ -143,7 +142,6 @@ class SharingController extends Controller
         $query = array_merge($request->query(), ['sharing' => $id]);
 
         return view('admin.membership.sharing.form', compact('sharing', 'fields', 'actions', 'dateFormat', 'query'));
-        //
     }
 
     /**
@@ -174,6 +172,19 @@ class SharingController extends Controller
     }
 
     /**
+     * Checks in one or more memberships.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return Response
+     */
+    public function massCheckIn(Request $request)
+    {
+        $messages = CheckInCheckOut::checkInMultiple($request->input('ids'), '\\App\\Models\\Membership\\Sharing');
+
+        return redirect()->route('admin.memberships.sharings.index', $request->query())->with($messages);
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -182,5 +193,10 @@ class SharingController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function deleteDocument(Request $request, $id)
+    {
+file_put_contents('debog_file.txt', print_r($request->all(), true));
     }
 }

@@ -9,6 +9,7 @@ Route::get('/memberships/settings', [AdminMembershipSettingController::class, 'i
 Route::patch('/memberships/settings', [AdminMembershipSettingController::class, 'update'])->name('admin.memberships.settings.update');
 // Sharings
 Route::delete('/memberships/sharings', [AdminMembershipSharingController::class, 'massDestroy'])->name('admin.memberships.sharings.massDestroy');
+Route::delete('/memberships/sharings/document/{document}', [AdminMembershipSharingController::class, 'deleteDocument'])->name('admin.memberships.sharings.document.delete');
 Route::get('/memberships/sharings/cancel/{sharing?}', [AdminMembershipSharingController::class, 'cancel'])->name('admin.memberships.sharings.cancel');
 Route::put('/memberships/sharings/checkin', [AdminMembershipSharingController::class, 'massCheckIn'])->name('admin.memberships.sharings.massCheckIn');
 Route::put('/memberships/sharings/publish', [AdminMembershipSharingController::class, 'massPublish'])->name('admin.memberships.sharings.massPublish');

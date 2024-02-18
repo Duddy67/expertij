@@ -16,6 +16,28 @@
                     nbItemsPerPage: 8
         });
 
+        /*document.getElementsByClassName('delete-document').addEventListener('click', (event) => {
+          //event.target.style.background = "pink";
+            alert('click'+event.target.dataset.documentId);
+            console.log(event);
+        });*/
+        let form = document.getElementById('deleteDocument');
+        let deleteRoute = form.action;
+
+        for(const el of document.querySelectorAll(".delete-document")){
+            el.addEventListener('click', function(e){
+                const route = deleteRoute.replace(/.$/, e.target.dataset.documentId);
+                console.log(route);
+                let formData = new FormData(form);
+                let ajax = new C_Ajax.init({
+                    method: 'post',
+                    url: route,
+                    dataType: 'json',
+                    data: formData,
+                    headers: {'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'), 'Accept': 'application/json'}
+                });
+            });
+        }
 
         populateDocumentItem = function(idNb, data) {
             // Defines the default field values.
@@ -23,19 +45,12 @@
                 data = {id: '', title: '', path: '', filename: '', type: '', size: 0};
             }
 
-            // Element label
-            let attribs = {'title': 'File', 'class':'item-label', 'id':'document-label-'+idNb};
-            document.getElementById('document-row-1-cell-1-'+idNb).append(repeater.createElement('span', attribs));
-            document.getElementById('document-label-'+idNb).textContent = 'File';
-
-            elementType = 'input';
-
             if (data.path == '') {
-                attribs = {'type':'file', 'name':'document_'+idNb, 'id':'document-'+idNb, 'class':'form-control'};
+                let attribs = {'type':'file', 'name':'document_'+idNb, 'id':'document-'+idNb, 'class':'form-control'};
                 document.getElementById('document-row-1-cell-1-'+idNb).append(repeater.createElement('input', attribs));
             }
             else {
-                attribs = {'title': 'fileName', 'name':'document_'+idNb, 'data-id': 41, 'id':'document-'+idNb, 'class':'btn btn-success', 'href': 'https://path/to/the/file'};
+                let attribs = {'title': 'fileName', 'name':'document_'+idNb, 'data-id': 41, 'id':'document-'+idNb, 'class':'btn btn-success', 'href': 'https://path/to/the/file'};
                 elementType = 'a';
                 let link = repeater.createElement('a', attribs)
                 var linkText = document.createTextNode("my title text");
