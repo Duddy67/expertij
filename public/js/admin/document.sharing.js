@@ -7,61 +7,65 @@
         let path = getUrl.pathname.replace(pathParts[pathParts.length-1],'');
         const baseUrl = getUrl.protocol + '//' + getUrl.host + '/' + path;
 
-        let repeater = new C_Repeater.init({
+        /*let repeater = new C_Repeater.init({
                     item:'document',
                     ordering: false,
                     rootLocation: baseUrl,
                     rowsCells: [2,1],
                     Select2: false,
                     nbItemsPerPage: 8
+        });*/
+
+        document.getElementById('documentSharing').addEventListener('click', (event) => {
+            if (event.target.tagName == 'BUTTON' && event.target.classList.contains('document-management')) {
+                console.log(event.target.dataset.action);
+                const action = event.target.dataset.action;
+                let form = action == 'add' ? document.getElementById(action + '-document') : document.getElementById(action + '-document-' + event.target.dataset.documentId);
+                //const route = action == 'create' ? form.action : form.action.replace(/.$/, event.target.dataset.documentId);
+                const route = form.action;
+                let formData = new FormData(form);
+                runAjax(route, formData);
+            }
         });
 
-        /*document.getElementsByClassName('delete-document').addEventListener('click', (event) => {
-          //event.target.style.background = "pink";
-            alert('click'+event.target.dataset.documentId);
-            console.log(event);
-        });*/
-        let form = document.getElementById('deleteDocument');
-        let deleteRoute = form.action;
-
-        for(const el of document.querySelectorAll(".delete-document")){
-            el.addEventListener('click', function(e){
-                const route = deleteRoute.replace(/.$/, e.target.dataset.documentId);
-                console.log(route);
-                let formData = new FormData(form);
-                let ajax = new C_Ajax.init({
-                    method: 'post',
-                    url: route,
-                    dataType: 'json',
-                    data: formData,
-                    headers: {'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'), 'Accept': 'application/json'}
-                });
-            });
-        }
-
-        populateDocumentItem = function(idNb, data) {
+        /*populateDocumentItem = function(idNb, data) {
             // Defines the default field values.
-            if (data === undefined) {
-                data = {id: '', title: '', path: '', filename: '', type: '', size: 0};
-            }
 
-            if (data.path == '') {
-                let attribs = {'type':'file', 'name':'document_'+idNb, 'id':'document-'+idNb, 'class':'form-control'};
-                document.getElementById('document-row-1-cell-1-'+idNb).append(repeater.createElement('input', attribs));
-            }
-            else {
-                let attribs = {'title': 'fileName', 'name':'document_'+idNb, 'data-id': 41, 'id':'document-'+idNb, 'class':'btn btn-success', 'href': 'https://path/to/the/file'};
-                elementType = 'a';
-                let link = repeater.createElement('a', attribs)
-                var linkText = document.createTextNode("my title text");
-                link.appendChild(linkText);
-                document.getElementById('document-row-1-cell-1-'+idNb).append(link);
-            }
+            let attribs = {'type':'file', 'name':'document_'+idNb, 'id':'document-'+idNb, 'class':'form-control w-50 float-start me-4'};
+            document.getElementById('document-row-1-cell-1-'+idNb).append(repeater.createElement('input', attribs));
 
-        }
+            if (document.getElementById('document-0') === null) {
+                attribs = {'type':'button', 'data-action': 'create', 'class':'btn btn-primary document-management'};
+                let button = repeater.createElement('button', attribs);
+                button.textContent = 'Create';
+                document.getElementById('document-row-1-cell-1-'+idNb).append(button);
+            }
+        }*/
     });
 
+    function runAjax(route, formData) {
+        let ajax = new C_Ajax.init({
+            method: 'post',
+            url: route,
+            dataType: 'json',
+            data: formData,
+            headers: {'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'), 'Accept': 'application/json'}
+        });
+
+        ajax.run(getAjaxResult);
+    } 
 
 
+    function getAjaxResult(status, result) {
+      if(status === 200) {
+        console.log(result);
+        let table = document.getElementById('documentTable');
+        let tbody = table.getElementsByTagName('tbody')[0];
+        tbody.insertAdjacentHTML('beforeend', result.documentRow);
+      }
+      else {
+	  alert('Error: '+result.response);
+      }
+    }
         
 })();

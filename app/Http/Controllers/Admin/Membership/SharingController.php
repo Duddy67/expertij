@@ -195,8 +195,23 @@ class SharingController extends Controller
         //
     }
 
-    public function deleteDocument(Request $request, $id)
+    public function addDocument(Request $request)
+    {
+        $document = Document::where('id', 12)->first();
+        $sharing = Sharing::where('id', 1)->first();
+        $view = view('admin.partials.sharing.document-row', compact('document', 'sharing'))->render();
+
+        return response()->json(['success' => __('messages.post.update_success'), 'documentRow' => $view]);
+    }
+
+    public function replaceDocument(Request $request, $id)
     {
 file_put_contents('debog_file.txt', print_r($request->all(), true));
+
+    }
+
+    public function deleteDocument(Request $request, $id)
+    {
+file_put_contents('debog_file.txt', print_r('delete', true));
     }
 }
