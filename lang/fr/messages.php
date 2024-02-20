@@ -107,8 +107,10 @@ return [
     ],
     'document' => [
         'create_success' => 'Document créé avec succès.',
+        'replace_success' => 'Document remplacé avec succès.',
         'delete_success' => 'Le document ":name" a été supprimé avec succès.',
         'no_document_to_delete' => 'Aucun document à supprimer.',
+        'file_not_found' => 'Fichier non trouvé.',
     ],
     'menu' => [
         'menu_not_found' => 'Le menu ayant le code: :code ne peut être trouvé.',

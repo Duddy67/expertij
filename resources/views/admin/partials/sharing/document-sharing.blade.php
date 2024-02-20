@@ -25,7 +25,7 @@
         @method('post')
         @csrf
 
-        <input type="file" class="form-control" name="document_0" id="document-0" />
+        <input type="file" class="form-control" name="add_document" id="document-0" />
         <button type="button" class="btn btn-primary document-management" data-action="add">Add</button>
         <div class="text-danger" id="document_0Error"></div>
         @if (isset($sharing))

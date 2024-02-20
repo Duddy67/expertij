@@ -1,4 +1,4 @@
-<tr class="align-middle" id="row-document-{{ $document->id }}">
+<tr class="align-middle" id="document-row-{{ $document->id }}">
   <td><a href="{{ url('/').$document->getUrl() }}" target="_blank" download="{{ $document->file_name }}">{{ $document->file_name }}</a></td>
   <td>{{ $document->content_type }}</td>
   <td>{{ $document->getSize() }}</td>

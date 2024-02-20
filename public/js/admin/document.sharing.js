@@ -59,13 +59,32 @@
     function getAjaxResult(status, result) {
       if(status === 200) {
         console.log(result);
-        let table = document.getElementById('documentTable');
-        let tbody = table.getElementsByTagName('tbody')[0];
-        tbody.insertAdjacentHTML('beforeend', result.documentRow);
+        if (result.action == 'add') {
+            let table = document.getElementById('documentTable');
+            let tbody = table.getElementsByTagName('tbody')[0];
+            tbody.insertAdjacentHTML('beforeend', result.row);
+            displayMessage('success', result.success)
+        }
+        else if (result.action == 'delete') {
+            document.getElementById('document-row-' + result.id).remove();
+        }
       }
       else {
 	  alert('Error: '+result.response);
       }
     }
         
+    function displayMessage(type, message) {
+        // Hide the possible displayed flash messages.
+        document.querySelectorAll('.flash-message').forEach(elem => {
+            if (!elem.classList.contains('d-none')) {
+                elem.classList.add('d-none');
+            }
+        });
+
+        const messageAlert = document.getElementById('ajax-message-alert');
+        messageAlert.classList.remove('d-none', 'alert-success', 'alert-danger', 'alert-warning', 'alert-info');
+        messageAlert.classList.add('alert-'+type);
+        document.getElementById('ajax-message').innerHTML = message;
+    }
 })();

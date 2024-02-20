@@ -197,21 +197,40 @@ class SharingController extends Controller
 
     public function addDocument(Request $request)
     {
+        // Check first there is a file to upload.
+        if (!$request->hasFile('add_document')) {
+            return response()->json(['response' => __('messages.document.file_not_found')], 404);
+        }
+file_put_contents('debog_file.txt', print_r($request->file('add_document'), true));
+        $sharing = Sharing::where('id', $request->input('_sharing_id'))->first();
         $document = Document::where('id', 12)->first();
-        $sharing = Sharing::where('id', 1)->first();
-        $view = view('admin.partials.sharing.document-row', compact('document', 'sharing'))->render();
+        //$document = new Document;
+        //$document->upload($request->input('add_document'), 'sharing');
+        //$sharing->documents()->save($document);
+        $row = view('admin.partials.sharing.document-row', compact('document', 'sharing'))->render();
 
-        return response()->json(['success' => __('messages.post.update_success'), 'documentRow' => $view]);
+        return response()->json(['success' => __('messages.document.create_success'), 'action' => 'add', 'row' => $row]);
     }
 
     public function replaceDocument(Request $request, $id)
     {
-file_put_contents('debog_file.txt', print_r($request->all(), true));
+        // Check first there is a file to upload.
+        if (!$request->hasFile('replace_document_'.$id)) {
+            return response()->json(['response' => __('messages.document.file_not_found')], 404);
+        }
 
+        //$document = new Document;
+        //$document->upload($request->input('replace_document_'.$id), 'sharing');
+        //$sharing->documents()->save($document);
+        $row = view('admin.partials.sharing.document-row', compact('document', 'sharing'))->render();
+
+        return response()->json(['success' => __('messages.document.replace_success'), 'action' => 'replace', 'row' => $row]);
     }
 
     public function deleteDocument(Request $request, $id)
     {
+        $document = Document::where('id', $id)->first();
 file_put_contents('debog_file.txt', print_r('delete', true));
+        return response()->json(['success' => __('messages.document.delete_success'), 'action' => 'delete', 'name' => '','id' => $id]);
     }
 }

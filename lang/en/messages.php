@@ -107,8 +107,10 @@ return [
     ],
     'document' => [
         'create_success' => 'Document successfully created.',
+        'replace_success' => 'Document successfully replaced.',
         'delete_success' => 'The document ":name" has been successfully deleted.',
         'no_document_to_delete' => 'No document to delete.',
+        'file_not_found' => 'File not found.',
     ],
     'menu' => [
         'menu_not_found' => 'The menu with the code: :code cannot be found.',
