@@ -83,7 +83,9 @@ return [
 	'micro_entrepreneur' => 'Micro-entrepreneur',
 	'company' => 'Société',
 	'court' => 'Tribunal judiciaire',
+	'courts' => 'Tribunaux judiciaires',
 	'appeal_court' => 'Cour d\'appel',
+	'appeal_courts' => 'Cours d\'appel',
 	'licences' => 'Certificats',
 	'add_licence' => 'Ajouter une licence',
 	'delete_licence' => 'Supprimer la licence',
@@ -365,6 +367,10 @@ return [
         'website' => 'Site web',
         'photo_deleted' => 'Photo supprimée',
         'document_sharing' => 'Documents Partagés',
+	'recipients' => 'Destinataires',
+	'shared_with' => 'Partagé(s) avec',
+	'document_n' => 'Document :number',
+	'optional' => 'Optionel',
     ],
     'filter' => [
 	'search' => 'Recherche',
@@ -392,6 +398,7 @@ return [
 	'send_test_email' => 'Envoyer un email de test',
 	'accept' => 'Accepter',
 	'reject' => 'Rejeter',
+	'add' => 'Ajouter',
     ],
     'pagination' => [
 	'results' => 'Affiche :first à :last éléments sur :total résultats',

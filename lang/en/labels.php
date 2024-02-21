@@ -83,7 +83,9 @@ return [
 	'micro_entrepreneur' => 'Micro entrepreneur',
 	'company' => 'Company',
 	'court' => 'Court',
+	'courts' => 'Courts',
 	'appeal_court' => 'Appeal court',
+	'appeal_courts' => 'Appeal courts',
 	'licences' => 'Licences',
 	'add_licence' => 'Add licence',
 	'delete_licence' => 'Delete licence',
@@ -364,6 +366,10 @@ return [
         'website' => 'Website',
         'photo_deleted' => 'Photo deleted',
         'document_sharing' => 'Document Sharing',
+	'recipients' => 'Recipients',
+	'shared_with' => 'Shared with',
+	'document_n' => 'Document :number',
+	'optional' => 'Optional',
     ],
     'filter' => [
 	'search' => 'Search',
@@ -391,6 +397,7 @@ return [
 	'send_test_email' => 'Send test email',
 	'accept' => 'Accept',
 	'reject' => 'Reject',
+	'add' => 'Add',
     ],
     'pagination' => [
 	'results' => 'Showing :first to :last of :total results',

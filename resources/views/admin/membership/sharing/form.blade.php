@@ -5,18 +5,8 @@
 
     @include('admin.partials.x-toolbar')
 
-        <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <button class="nav-link active" id="details-tab" data-bs-toggle="tab" data-bs-target="#details-tab-pane" type="button" role="tab" aria-controls="details-tab-pane" aria-selected="true">@php echo __('labels.generic.details'); @endphp</button>
-            </li>
-            <li class="nav-item" role="presentation">
-                <button class="nav-link" id="documents-tab" data-bs-toggle="tab" data-bs-target="#documents-tab-pane" type="button" role="tab" aria-controls="documents-tab-pane" aria-selected="false">@php echo __('labels.title.documents'); @endphp</button>
-            </li>
-        </ul>
-
-        <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade active show" id="details-tab-pane" role="tab-panel" aria-labelledby="details-tab" tabindex="0">
     @php $action = (isset($sharing)) ? route('admin.memberships.sharings.update', $query) : route('admin.memberships.sharings.store', $query) @endphp
+
     <form method="post" action="{{ $action }}" id="itemForm">
         @csrf
 
@@ -24,10 +14,45 @@
             @method('put')
         @endif
 
-        @foreach ($fields as $field)
-            @php $value = (isset($sharing)) ? old($field->name, $field->value) : old($field->name); @endphp
-            <x-input :field="$field" :value="$value" />
-        @endforeach
+        @php $value = (isset($sharing)) ? old('name', $fields[0]->value) : old('name'); @endphp
+        <x-input :field="$fields[0]" :value="$value" />
+        @php array_shift($fields); // Remove the very first field (ie: title) from the array. @endphp
+
+        <ul class="nav nav-tabs mt-4" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="details-tab" data-bs-toggle="tab" data-bs-target="#details-tab-pane" type="button" role="tab" aria-controls="details-tab-pane" aria-selected="true">@php echo __('labels.generic.details'); @endphp</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="shared_with-tab" data-bs-toggle="tab" data-bs-target="#shared_with-tab-pane" type="button" role="tab" aria-controls="shared_with-tab-pane" aria-selected="false">@php echo __('labels.generic.shared_with'); @endphp</button>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="myTabContent">
+            @foreach ($fields as $key => $field)
+                @if (isset($field->tab))
+                    @php $active = ($field->tab == 'details') ? 'show active' : '';
+                         $dataTab = $field->tab; @endphp
+                    <div class="tab-pane fade {{ $active }}" id="{{ $field->tab }}-tab-pane" role="tab-panel" aria-labelledby="{{ $field->tab }}-tab" tabindex="0">
+                @endif
+
+                @if (isset($field->tab) || (isset($field->extra) && in_array('new_row', $field->extra)))
+                    <div class="row">
+                @endif
+
+                <div class="col-6">
+                @php $value = (isset($sharing)) ? old($field->name, $field->value) : old($field->name); @endphp
+                <x-input :field="$field" :value="$value" />
+                </div>
+
+                @if (isset($fields[$key + 1]->tab) || (isset($fields[$key + 1]->extra) && in_array('new_row', $fields[$key + 1]->extra)) || !isset($fields[$key + 1]))
+                    </div>
+                @endif
+
+                @if (!next($fields) || isset($fields[$key + 1]->tab))
+                    </div>
+                @endif
+            @endforeach
+        </div>
 
 
         <input type="hidden" id="cancelEdit" value="{{ route('admin.memberships.sharings.cancel', $query) }}">
@@ -37,23 +62,20 @@
         @if (isset($sharing))
             <input type="hidden" id="_dateFormat" value="{{ $dateFormat }}">
             <input type="hidden" id="_locale" value="{{ config('app.locale') }}">
+        @else
+            @include('admin.partials.sharing.document-sharing')
         @endif
     </form>
-        </div>
-        <div class="tab-pane fade mt-4" id="documents-tab-pane" role="tab-panel" aria-labelledby="documents-tab" tabindex="0">
-        @include('admin.partials.sharing.document-sharing')
-        </div>
-        </div>
-
 
     @if (isset($sharing))
+        @include('admin.partials.sharing.document-sharing')
+
         <form id="deleteItem" action="{{ route('admin.memberships.sharings.destroy', $query) }}" method="post">
             @method('delete')
             @csrf
         </form>
-
-
     @endif
+
 @endsection
 
 @push ('style')

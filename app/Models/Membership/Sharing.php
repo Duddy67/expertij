@@ -32,6 +32,9 @@ class Sharing extends Model
      */
     protected $fillable = [
         'name',
+        'licence_types',
+        'courts',
+        'appeal_courts',
         'status',
         'owned_by',
         'access_level',
@@ -95,14 +98,14 @@ class Sharing extends Model
         return $query->paginate($perPage);
     }
 
-    public function getLicenceTypeOptions(): array
+    public function getLicenceTypesOptions(): array
     {
         $membership = new membership;
 
         return $membership->getLicenceTypeOptions();
     }
 
-    public function getCourtOptions(): array
+    public function getCourtsOptions(): array
     {
         $options = [];
         $courts = Jurisdiction::where('type', 'court')->get();
@@ -114,7 +117,7 @@ class Sharing extends Model
         return $options;
     }
 
-    public function getAppealCourtOptions(): array
+    public function getAppealCourtsOptions(): array
     {
         $options = [];
         $appealCourts = Jurisdiction::where('type', 'appeal_court')->get();

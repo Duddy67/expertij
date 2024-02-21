@@ -72,43 +72,6 @@ class SharingController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(StoreRequest $request)
-    {
-        $sharing = Sharing::create([
-          'name' => $request->input('name'), 
-          //'description' => $request->input('description'), 
-          'status' => $request->input('status'), 
-          'access_level' => $request->input('access_level'), 
-          //'permission' => $request->input('permission'),
-          'owned_by' => $request->input('owned_by'),
-        ]);
-
-        $sharing->save();
-
-        foreach ($request->all() as $key => $input) {
-            if (str_starts_with($key, 'document_')) {
-                $document = new Document;
-                $document->upload($input, 'sharing');
-                $sharing->documents()->save($document);
-            }
-        }
-
-        $request->session()->flash('success', __('messages.post.create_success'));
-
-        if ($request->input('_close', null)) {
-            return response()->json(['redirect' => route('admin.memberships.sharings.index', $request->query())]);
-        }
-
-        // Redirect to the edit form.
-        return response()->json(['redirect' => route('admin.memberships.sharings.edit', array_merge($request->query(), ['sharing' => $sharing->id]))]);
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -159,16 +122,95 @@ class SharingController extends Controller
 
         return redirect()->route('admin.memberships.sharings.index', $request->query());
     }
+
     /**
-     * Update the specified resource in storage.
+     * Update the specified post. (AJAX)
+     *
+     * @param  \App\Http\Requests\Post\UpdateRequest  $request
+     * @param  \App\Models\Membership\Sharing  $sharing
+     * @return JSON
+     */
+    public function update(UpdateRequest $request, Sharing $sharing)
+    {
+        if ($sharing->checked_out != auth()->user()->id) {
+            $request->session()->flash('error', __('messages.generic.user_id_does_not_match'));
+            return response()->json(['redirect' => route('admin.memberships.sharings.index', $request->query())]);
+        }
+
+        if (!$sharing->canEdit()) {
+            $request->session()->flash('error', __('messages.generic.edit_not_auth'));
+            return response()->json(['redirect' => route('admin.memberships.sharings.index', $request->query())]);
+        }
+
+        $sharing->name = $request->input('name');
+        $sharing->licence_types = implode(',', $request->input('licence_types'));
+        $sharing->courts = (empty($request->input('courts', []))) ? null : implode(',', $request->input('courts'));
+        $sharing->appeal_courts = (empty($request->input('appeal_courts', []))) ? null : implode(',', $request->input('appeal_courts'));
+
+        if ($sharing->canChangeStatus()) {
+            $sharing->status = $request->input('status');
+        }
+
+        if ($sharing->canChangeAccessLevel()) {
+            $sharing->access_level = $request->input('access_level');
+        }
+
+        if ($sharing->canChangeAttachments()) {
+            $sharing->owned_by = $request->input('owned_by');
+        }
+
+        $sharing->save();
+
+        if ($request->input('_close', null)) {
+            $sharing->safeCheckIn();
+            // Store the message to be displayed on the list view after the redirect.
+            $request->session()->flash('success', __('messages.post.update_success'));
+            return response()->json(['redirect' => route('admin.memberships.sharings.index', $request->query())]);
+        }
+
+        // Used in the Form trait.
+        $this->item = $sharing;
+
+        return response()->json(['success' => __('messages.post.update_success'), 'updates' => $this->getFieldValuesToUpdate($request)]);
+    }
+
+    /**
+     * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateRequest $request, $id)
+    public function store(StoreRequest $request)
     {
-        //
+        $sharing = Sharing::create([
+          'name' => $request->input('name'), 
+          'licence_types' => implode(',', $request->input('licence_types')), 
+          'courts' => (empty($request->input('courts', []))) ? null : implode(',', $request->input('courts')), 
+          'appeal_courts' => (empty($request->input('appeal_courts', []))) ? null : implode(',', $request->input('appeal_courts')), 
+          //'description' => $request->input('description'), 
+          'status' => $request->input('status'), 
+          'access_level' => $request->input('access_level'), 
+          'owned_by' => $request->input('owned_by'),
+        ]);
+
+        $sharing->save();
+
+        foreach ($request->all() as $key => $input) {
+            if (str_starts_with($key, 'document_')) {
+                $document = new Document;
+                $document->upload($input, 'sharing');
+                $sharing->documents()->save($document);
+            }
+        }
+
+        $request->session()->flash('success', __('messages.post.create_success'));
+
+        if ($request->input('_close', null)) {
+            return response()->json(['redirect' => route('admin.memberships.sharings.index', $request->query())]);
+        }
+
+        // Redirect to the edit form.
+        return response()->json(['redirect' => route('admin.memberships.sharings.edit', array_merge($request->query(), ['sharing' => $sharing->id]))]);
     }
 
     /**
@@ -201,12 +243,13 @@ class SharingController extends Controller
         if (!$request->hasFile('add_document')) {
             return response()->json(['response' => __('messages.document.file_not_found')], 404);
         }
-file_put_contents('debog_file.txt', print_r($request->file('add_document'), true));
+
         $sharing = Sharing::where('id', $request->input('_sharing_id'))->first();
-        $document = Document::where('id', 12)->first();
-        //$document = new Document;
-        //$document->upload($request->input('add_document'), 'sharing');
-        //$sharing->documents()->save($document);
+        // Create and upload the new document.
+        $document = new Document;
+        $document->upload($request->file('add_document'), 'sharing');
+        // Add the new document.
+        $sharing->documents()->save($document);
         $row = view('admin.partials.sharing.document-row', compact('document', 'sharing'))->render();
 
         return response()->json(['success' => __('messages.document.create_success'), 'action' => 'add', 'row' => $row]);
@@ -220,17 +263,16 @@ file_put_contents('debog_file.txt', print_r($request->file('add_document'), true
         }
 
         //$document = new Document;
-        //$document->upload($request->input('replace_document_'.$id), 'sharing');
+        //$document->upload($request->file('replace_document_'.$id), 'sharing');
         //$sharing->documents()->save($document);
         $row = view('admin.partials.sharing.document-row', compact('document', 'sharing'))->render();
 
-        return response()->json(['success' => __('messages.document.replace_success'), 'action' => 'replace', 'row' => $row]);
+        return response()->json(['success' => __('messages.document.replace_success'), 'action' => 'replace', 'oldId' => $id, 'row' => $row]);
     }
 
     public function deleteDocument(Request $request, $id)
     {
         $document = Document::where('id', $id)->first();
-file_put_contents('debog_file.txt', print_r('delete', true));
         return response()->json(['success' => __('messages.document.delete_success'), 'action' => 'delete', 'name' => '','id' => $id]);
     }
 }

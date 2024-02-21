@@ -28,13 +28,8 @@ class UpdateRequest extends FormRequest
      */
     public function rules()
     {
-        $rules = [
-	    'name' => [
-		'required',
-		'regex:/^[a-z0-9-]{3,}$/',
-		Rule::unique('membership_sharings')->ignore($this->sharing->id)
-	    ]
-        ];
+        $rules['name'] = 'required';
+        $rules['licence_types'] = 'required';
 
 	if (auth()->user()->getRoleLevel() > $this->sharing->getOwnerRoleLevel() || $this->sharing->owned_by == auth()->user()->id) {
 	    $rules['access_level'] = 'required';

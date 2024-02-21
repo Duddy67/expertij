@@ -63,6 +63,7 @@
             let table = document.getElementById('documentTable');
             let tbody = table.getElementsByTagName('tbody')[0];
             tbody.insertAdjacentHTML('beforeend', result.row);
+            document.getElementById('add_document').value = null;
             displayMessage('success', result.success)
         }
         else if (result.action == 'delete') {

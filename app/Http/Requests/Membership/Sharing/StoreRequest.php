@@ -33,10 +33,11 @@ class StoreRequest extends FormRequest
             }
         }
 
-        $rules['document_0'] = 'required|mimes:pdf,doc,docx,png,jpg,jpeg|max:10000';
+        $rules['document_1'] = 'required|mimes:pdf,doc,docx,png,jpg,jpeg|max:10000';
         $rules['name'] = 'required'; 
+        $rules['licence_types'] = 'required';
         $rules['access_level'] = 'required';
-        //'permission' => 'required',
+        $rules['status'] = 'required';
         $rules['owned_by'] = 'required';
 
         return $rules;

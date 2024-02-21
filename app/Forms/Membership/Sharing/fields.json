@@ -12,6 +12,7 @@
     "type": "select",
     "name": "status",
     "id": "status",
+    "tab": "details",
     "blank": "labels.generic.select_option",
     "options": [] 
   },
@@ -28,6 +29,7 @@
     "type": "select",
     "name": "owned_by",
     "id": "owned_by",
+    "extra": ["new_row"],
     "blank": "labels.generic.select_option",
     "options": [] 
   },
@@ -44,7 +46,7 @@
     "type": "text",
     "name": "updated_by",
     "id": "updated_by",
-    "extra": ["disabled"],
+    "extra": ["disabled", "new_row"],
     "placeholder": "labels.generic.no_update"
   },
   {
@@ -54,5 +56,33 @@
     "dataset": {"date":"0", "time":"0"},
     "id": "updated_at",
     "extra": ["disabled"]
+  },
+  {
+    "label": "labels.membership.licences",
+    "type": "select",
+    "name": "licence_types",
+    "extra": ["multiple"],
+    "id": "licence_types",
+    "tab": "shared_with",
+    "blank": "labels.generic.select_option",
+    "options": []
+  },
+  {
+    "label": "labels.membership.courts",
+    "type": "select",
+    "name": "courts",
+    "extra": ["multiple"],
+    "id": "courts",
+    "blank": "labels.generic.select_option",
+    "options": []
+  },
+  {
+    "label": "labels.membership.appeal_courts",
+    "type": "select",
+    "name": "appeal_courts",
+    "extra": ["multiple", "new_row"],
+    "id": "appeal_courts",
+    "blank": "labels.generic.select_option",
+    "options": []
   }
 ]

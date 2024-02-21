@@ -298,6 +298,12 @@ trait OptionList
      */
     public function getSelectedValue(\stdClass $field): mixed
     {
+        // Check for drop-down-list with a multiple attribute and which value is from type string. 
+        if ($field->type == 'select' && isset($field->extra) && in_array('multiple', $field->extra) && gettype($this->{$field->name}) == 'string') {
+            // Convert the string type value into an array.
+            return explode(',', $this->{$field->name});
+        }
+
         return $this->{$field->name};
     }
 }
