@@ -59,6 +59,23 @@ class Sharing extends Model
         return $this->morphMany(Document::class, 'documentable');
     }
 
+    /**
+     * Delete the model from the database (override).
+     *
+     * @return bool|null
+     *
+     * @throws \LogicException
+     */
+    public function delete()
+    {
+        // Delete the documents one by one or the corresponding files
+        // on the server won't be deleted.
+        foreach ($this->documents as $document) {
+            $document->delete();
+        }
+
+        parent::delete();
+    }
 
     /*
      * Gets the group items according to the filter, sort and pagination settings.

@@ -23,10 +23,11 @@
                 @method('post')
                 @csrf
 
-                <input type="file" class="form-control w-75 float-start me-3" name="add_document" id="add-new-document" />
+                <input type="file" class="form-control w-75 float-start me-3" name="add_document" id="addDocument" />
                 <button type="button" class="btn btn-primary document-management" data-action="add">{{ __('labels.button.add') }}</button>
 
                 <input type="hidden" name="_sharing_id" value="{{ $sharing->id }}">
+                <input type="hidden" name="_field_name" value="add_document">
             </form>
         </div>
     @else 
@@ -35,7 +36,9 @@
         <div class="text-danger" id="document_1Error"></div>
         <label for="document-2" class="mt-3 mb-2">{{ __('labels.generic.document_n', ['number' => 2]) }} ({{ __('labels.generic.optional') }})</label>
         <input type="file" class="form-control w-50" name="document_2" id="document-2" />
+        <div class="text-danger" id="document_2Error"></div>
         <label for="document-3" class="mt-3 mb-2">{{ __('labels.generic.document_n', ['number' => 3]) }} ({{ __('labels.generic.optional') }})</label>
         <input type="file" class="form-control w-50" name="document_3" id="document-3" />
+        <div class="text-danger" id="document_3Error"></div>
     @endif
 </div>

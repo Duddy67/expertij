@@ -174,6 +174,10 @@ return [
 	'votes' => 'Votes',
 	'voting' => 'Vote',
     ],
+    'sharing' => [
+	'create_sharing' => 'Créer un partage de document',
+	'edit_sharing' => 'Editer un partage de document',
+    ],
     'category' => [
 	'create_category' => 'Créer une catégorie',
 	'edit_category' => 'Editer une catégorie',
@@ -347,6 +351,8 @@ return [
 	'insurances' => 'Assurances',
 	'pay_now' => 'Payer',
 	'missing_document' => 'Document manquant',
+	'add_document' => 'Ajouter un document',
+	'replace_document' => 'Remplacer un document',
         'january' => 'Janvier',
         'february' => 'Février',
         'march' => 'Mars',
@@ -399,6 +405,7 @@ return [
 	'accept' => 'Accepter',
 	'reject' => 'Rejeter',
 	'add' => 'Ajouter',
+	'replace' => 'Remplacer',
     ],
     'pagination' => [
 	'results' => 'Affiche :first à :last éléments sur :total résultats',

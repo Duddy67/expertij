@@ -11,6 +11,7 @@ use App\Traits\Form;
 use App\Traits\CheckInCheckOut;
 use App\Http\Requests\Membership\Sharing\StoreRequest;
 use App\Http\Requests\Membership\Sharing\UpdateRequest;
+use App\Http\Requests\Membership\Sharing\DocumentRequest;
 
 class SharingController extends Controller
 {
@@ -164,14 +165,14 @@ class SharingController extends Controller
         if ($request->input('_close', null)) {
             $sharing->safeCheckIn();
             // Store the message to be displayed on the list view after the redirect.
-            $request->session()->flash('success', __('messages.post.update_success'));
+            $request->session()->flash('success', __('messages.sharing.update_success'));
             return response()->json(['redirect' => route('admin.memberships.sharings.index', $request->query())]);
         }
 
         // Used in the Form trait.
         $this->item = $sharing;
 
-        return response()->json(['success' => __('messages.post.update_success'), 'updates' => $this->getFieldValuesToUpdate($request)]);
+        return response()->json(['success' => __('messages.sharing.update_success'), 'updates' => $this->getFieldValuesToUpdate($request)]);
     }
 
     /**
@@ -203,7 +204,7 @@ class SharingController extends Controller
             }
         }
 
-        $request->session()->flash('success', __('messages.post.create_success'));
+        $request->session()->flash('success', __('messages.sharing.create_success'));
 
         if ($request->input('_close', null)) {
             return response()->json(['redirect' => route('admin.memberships.sharings.index', $request->query())]);
@@ -237,13 +238,8 @@ class SharingController extends Controller
         //
     }
 
-    public function addDocument(Request $request)
+    public function addDocument(DocumentRequest $request)
     {
-        // Check first there is a file to upload.
-        if (!$request->hasFile('add_document')) {
-            return response()->json(['response' => __('messages.document.file_not_found')], 404);
-        }
-
         $sharing = Sharing::where('id', $request->input('_sharing_id'))->first();
         // Create and upload the new document.
         $document = new Document;
@@ -255,17 +251,18 @@ class SharingController extends Controller
         return response()->json(['success' => __('messages.document.create_success'), 'action' => 'add', 'row' => $row]);
     }
 
-    public function replaceDocument(Request $request, $id)
+    public function replaceDocument(DocumentRequest $request, $id)
     {
-        // Check first there is a file to upload.
-        if (!$request->hasFile('replace_document_'.$id)) {
-            return response()->json(['response' => __('messages.document.file_not_found')], 404);
-        }
-
-        //$document = new Document;
-        //$document->upload($request->file('replace_document_'.$id), 'sharing');
-        //$sharing->documents()->save($document);
+        $sharing = Sharing::where('id', $request->input('_sharing_id'))->first();
+        //$document = Document::where('id', 6)->first();
+        $document = new Document;
+        $document->upload($request->file('replace_document_'.$id), 'sharing');
+        $sharing->documents()->save($document);
         $row = view('admin.partials.sharing.document-row', compact('document', 'sharing'))->render();
+
+        // Delete the replaced document.
+        $document = Document::where('id', $id)->first();
+        $document->delete();
 
         return response()->json(['success' => __('messages.document.replace_success'), 'action' => 'replace', 'oldId' => $id, 'row' => $row]);
     }
@@ -273,6 +270,9 @@ class SharingController extends Controller
     public function deleteDocument(Request $request, $id)
     {
         $document = Document::where('id', $id)->first();
-        return response()->json(['success' => __('messages.document.delete_success'), 'action' => 'delete', 'name' => '','id' => $id]);
+        $name = $document->file_name;
+        $document->delete();
+
+        return response()->json(['success' => __('messages.document.delete_success', ['name' => $name]), 'action' => 'delete', 'id' => $id]);
     }
 }

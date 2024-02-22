@@ -112,6 +112,13 @@ return [
         'no_document_to_delete' => 'Aucun document à supprimer.',
         'file_not_found' => 'Fichier non trouvé.',
     ],
+    'sharing' => [
+        'create_success' => 'Partage de document créé avec succès.',
+        'update_success' => 'Partage de document mis à jour avec succès.',
+        'delete_success' => 'Partage de document :title supprimé avec succès.',
+        'delete_list_success' => ':number partages de document ont été supprimés avec succès.',
+        'change_status_list_success' => 'Statuts de partage de document changés avec succès.',
+    ],
     'menu' => [
         'menu_not_found' => 'Le menu ayant le code: :code ne peut être trouvé.',
     ],

@@ -25,31 +25,15 @@ class StoreRequest extends FormRequest
     public function rules()
     {
         $rules = [];
-
-      //file_put_contents('debog_file.txt', print_r($this->request->all(), true));
-        foreach ($this->request->all() as $key => $input) {
-            if (str_starts_with($key, 'document_')) {
-                $rules[$key] = 'required|mimes:pdf,doc,docx,png,jpg,jpeg|max:10000';
-            }
-        }
-
-        $rules['document_1'] = 'required|mimes:pdf,doc,docx,png,jpg,jpeg|max:10000';
         $rules['name'] = 'required'; 
         $rules['licence_types'] = 'required';
         $rules['access_level'] = 'required';
         $rules['status'] = 'required';
         $rules['owned_by'] = 'required';
+        $rules['document_1'] = 'required|mimes:pdf,doc,docx,png,jpg,jpeg|max:10000';
+        $rules['document_2'] = 'nullable|mimes:pdf,doc,docx,png,jpg,jpeg|max:10000';
+        $rules['document_3'] = 'nullable|mimes:pdf,doc,docx,png,jpg,jpeg|max:10000';
 
         return $rules;
-        /*return [
-	    'name' => [
-		'required',
-		'regex:/^[a-z0-9-]{3,}$/',
-		'unique:groups'
-	    ],
-	    'access_level' => 'required',
-	    //'permission' => 'required',
-	    'owned_by' => 'required'
-        ];*/
     }
 }

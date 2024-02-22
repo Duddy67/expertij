@@ -122,6 +122,13 @@ return [
         'delete_list_success' => ':number menu items have been successfully deleted.',
         'change_status_list_success' => 'Menu item statuses successfully changed.',
     ],
+    'sharing' => [
+        'create_success' => 'Document sharing successfully created.',
+        'update_success' => 'Document sharing successfully updated.',
+        'delete_success' => 'Document sharing successfully deleted.',
+        'delete_list_success' => ':number document sharings have been successfully deleted.',
+        'change_status_list_success' => 'Document sharing statuses successfully changed.',
+    ],
     'search' => [
         'invalid_keyword_length' => 'Keyword must be at least :length characters.',
         'no_matches_found' => 'No matches found.',

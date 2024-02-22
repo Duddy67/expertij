@@ -1,7 +1,7 @@
 @extends ('admin.layouts.default')
 
 @section ('main')
-    <h3>@php echo (isset($sharing)) ? __('labels.generic.edit_document_sharing') : __('labels.generic.create_document_sharing'); @endphp</h3>
+    <h3>@php echo (isset($sharing)) ? __('labels.sharing.edit_sharing') : __('labels.sharing.create_sharing'); @endphp</h3>
 
     @include('admin.partials.x-toolbar')
 
@@ -90,7 +90,6 @@
     <script type="text/javascript" src="{{ asset('/vendor/codalia/c.datepicker.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/js/datepicker.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/vendor/codalia/c.ajax.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('/vendor/codalia/c.repeater.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/js/admin/document.sharing.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/js/admin/form.js') }}"></script>
     <script type="text/javascript" src="{{ asset('/js/admin/disable.toolbars.js') }}"></script>

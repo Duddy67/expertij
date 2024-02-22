@@ -1,25 +1,21 @@
 (function() {
     // Run a function when the page is fully loaded including graphics.
     document.addEventListener('DOMContentLoaded', () => {
-        let getUrl = window.location;
-        let pathParts = getUrl.pathname.split('/');
-        // Removes the file name from the path.
-        let path = getUrl.pathname.replace(pathParts[pathParts.length-1],'');
-        const baseUrl = getUrl.protocol + '//' + getUrl.host + '/' + path;
 
-        /*let repeater = new C_Repeater.init({
-                    item:'document',
-                    ordering: false,
-                    rootLocation: baseUrl,
-                    rowsCells: [2,1],
-                    Select2: false,
-                    nbItemsPerPage: 8
-        });*/
+        const messages = (document.getElementById('JsMessages')) ? JSON.parse(document.getElementById('JsMessages').value) : {};
 
         document.getElementById('documentSharing').addEventListener('click', (event) => {
             if (event.target.tagName == 'BUTTON' && event.target.classList.contains('document-management')) {
                 console.log(event.target.dataset.action);
                 const action = event.target.dataset.action;
+
+                if (action == 'delete') {
+                    if (!window.confirm(messages.confirm_item_deletion)) {
+                        return;
+                    }
+                }
+
+                // The add-document form has no document id. 
                 let form = action == 'add' ? document.getElementById(action + '-document') : document.getElementById(action + '-document-' + event.target.dataset.documentId);
                 //const route = action == 'create' ? form.action : form.action.replace(/.$/, event.target.dataset.documentId);
                 const route = form.action;
@@ -28,19 +24,7 @@
             }
         });
 
-        /*populateDocumentItem = function(idNb, data) {
-            // Defines the default field values.
-
-            let attribs = {'type':'file', 'name':'document_'+idNb, 'id':'document-'+idNb, 'class':'form-control w-50 float-start me-4'};
-            document.getElementById('document-row-1-cell-1-'+idNb).append(repeater.createElement('input', attribs));
-
-            if (document.getElementById('document-0') === null) {
-                attribs = {'type':'button', 'data-action': 'create', 'class':'btn btn-primary document-management'};
-                let button = repeater.createElement('button', attribs);
-                button.textContent = 'Create';
-                document.getElementById('document-row-1-cell-1-'+idNb).append(button);
-            }
-        }*/
+        hideDeleteButton();
     });
 
     function runAjax(route, formData) {
@@ -55,26 +39,49 @@
         ajax.run(getAjaxResult);
     } 
 
-
     function getAjaxResult(status, result) {
       if(status === 200) {
-        console.log(result);
         if (result.action == 'add') {
-            let table = document.getElementById('documentTable');
+            const table = document.getElementById('documentTable');
             let tbody = table.getElementsByTagName('tbody')[0];
+            // Insert the new document row at the end of the table.
             tbody.insertAdjacentHTML('beforeend', result.row);
-            document.getElementById('add_document').value = null;
+            // Clean the file input.
+            document.getElementById('addDocument').value = null;
+            displayMessage('success', result.success)
+        }
+        else if (result.action == 'replace') {
+            const table = document.getElementById('documentTable');
+            let oldRow = document.getElementById('document-row-' + result.oldId);
+            // Replace the old document row with the new one.
+            oldRow.insertAdjacentHTML('afterend', result.row);
+            oldRow.remove();
+            // In case it's the first document in the table that was replaced.
+            hideDeleteButton();
             displayMessage('success', result.success)
         }
         else if (result.action == 'delete') {
             document.getElementById('document-row-' + result.id).remove();
+            displayMessage('success', result.success)
         }
       }
       else {
-	  alert('Error: '+result.response);
+        console.log(result);
+	  alert(result.message);
       }
     }
         
+    // Hide the delete button of the first document row of the table (as the first document can be replaced but cannot be deleted).
+    function hideDeleteButton() {
+        const table = document.getElementById('documentTable');
+
+        if (table) {
+            const documentRow = table.getElementsByTagName('tr')[1];
+            let deleteButton = documentRow.getElementsByTagName('button')[1];
+            deleteButton.style.display = 'none';
+        }
+    }
+
     function displayMessage(type, message) {
         // Hide the possible displayed flash messages.
         document.querySelectorAll('.flash-message').forEach(elem => {
