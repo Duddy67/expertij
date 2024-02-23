@@ -16,6 +16,7 @@ Route::put('/memberships/sharings/unpublish', [AdminMembershipSharingController:
 Route::post('/memberships/sharings/document', [AdminMembershipSharingController::class, 'addDocument'])->name('admin.memberships.sharings.document.add');
 Route::put('/memberships/sharings/document/{document}', [AdminMembershipSharingController::class, 'replaceDocument'])->name('admin.memberships.sharings.document.replace');
 Route::delete('/memberships/sharings/document/{document}', [AdminMembershipSharingController::class, 'deleteDocument'])->name('admin.memberships.sharings.document.delete');
+Route::put('/memberships/sharings/send-emails/{sharing}', [AdminMembershipSharingController::class, 'sendEmails'])->name('admin.memberships.sharings.sendEmails');
 Route::resource('/memberships/sharings', AdminMembershipSharingController::class, ['as' => 'admin.memberships'])->except(['show']);
 // Memberships
 Route::delete('/memberships', [AdminMembershipController::class, 'massDestroy'])->name('admin.memberships.massDestroy');

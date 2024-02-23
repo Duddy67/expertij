@@ -6,6 +6,7 @@ use App\Models\Cms\Email;
 use App\Models\User;
 use App\Models\User\Group;
 use App\Models\Membership;
+use App\Models\Membership\Sharing;
 use App\Models\Cms\Setting;
 use App\Models\Cms\Payment;
 use App\Traits\Renewal;
@@ -261,6 +262,50 @@ trait Emails
             }
         }
 
+        return true;
+    }
+
+    public function informDocumentRecipients(Sharing $sharing): bool
+    {
+        $recipients = User::whereHas('membership.licences', function ($query) use($sharing) {
+            $licences = explode(',', $sharing->licence_types);
+            foreach ($licences as $key => $licence) {
+                
+                if ($key == 0) {
+                    $query->where(function ($query) use ($sharing, $licence) {
+                        $query->where('type', $licence);
+
+                        if ($licence == 'expert' && $sharing->appeal_courts) {
+                            $appealCourts = explode(',', $sharing->appeal_courts);
+                            $query->whereIn('jurisdiction_id', $appealCourts);
+                        }
+
+                        if ($licence == 'ceseda' && $sharing->courts) {
+                            $courts = explode(',', $sharing->courts);
+                            $query->whereIn('jurisdiction_id', $courts);
+                        }
+                    });
+                }
+                else {
+                    $query->orWhere(function ($query) use ($sharing, $licence) {
+                        $query->where('type', $licence);
+
+                        if ($licence == 'expert' && $sharing->appeal_courts) {
+                            $appealCourts = explode(',', $sharing->appeal_courts);
+                            $query->whereIn('jurisdiction_id', $appealCourts);
+                        }
+
+                        if ($licence == 'ceseda' && $sharing->courts) {
+                            $courts = explode(',', $sharing->courts);
+                            $query->whereIn('jurisdiction_id', $courts);
+                        }
+                    });
+                }
+            }
+
+        })->pluck('email')->toArray();
+
+//file_put_contents('debog_file.txt', print_r($recipients, true));
         return true;
     }
 

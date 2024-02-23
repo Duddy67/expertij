@@ -70,6 +70,11 @@
     @if (isset($sharing))
         @include('admin.partials.sharing.document-sharing')
 
+        <form id="emails" action="{{ route('admin.memberships.sharings.sendEmails', $query) }}" method="post">
+            @method('put')
+            @csrf
+        </form>
+
         <form id="deleteItem" action="{{ route('admin.memberships.sharings.destroy', $query) }}" method="post">
             @method('delete')
             @csrf

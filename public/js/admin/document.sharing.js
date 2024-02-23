@@ -25,6 +25,10 @@
         });
 
         hideDeleteButton();
+
+        // N.B: jQuery is required with the Select2 plugin.
+        $('#licence_types').change( function() { setJuridictions($(this)); });
+        setJuridictions($('#licence_types'));
     });
 
     function runAjax(route, formData) {
@@ -62,7 +66,7 @@
         }
         else if (result.action == 'delete') {
             document.getElementById('document-row-' + result.id).remove();
-            displayMessage('success', result.success)
+            displayMessage('success', result.success);
         }
       }
       else {
@@ -80,6 +84,30 @@
             let deleteButton = documentRow.getElementsByTagName('button')[1];
             deleteButton.style.display = 'none';
         }
+    }
+
+    function setJuridictions(elem) {
+        if (elem.val() == '') {
+	    $('#appeal_courts').prop('disabled', true);
+	    $('#courts').prop('disabled', true);
+
+	    return;
+	}
+
+        let types = elem.val();
+
+        if (types.length == 1 && types[0] == 'expert') {
+	    $('#appeal_courts').prop('disabled', false);
+	    $('#courts').prop('disabled', true);
+	}
+        else if (types.length == 1 && types[0] == 'ceseda') {
+	    $('#appeal_courts').prop('disabled', true);
+	    $('#courts').prop('disabled', false);
+	}
+        else if (types.length == 2) {
+	    $('#appeal_courts').prop('disabled', false);
+	    $('#courts').prop('disabled', false);
+	}
     }
 
     function displayMessage(type, message) {

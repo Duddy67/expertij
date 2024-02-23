@@ -9,13 +9,14 @@ use App\Models\Cms\Document;
 use App\Models\Cms\Setting;
 use App\Traits\Form;
 use App\Traits\CheckInCheckOut;
+use App\Traits\Emails;
 use App\Http\Requests\Membership\Sharing\StoreRequest;
 use App\Http\Requests\Membership\Sharing\UpdateRequest;
 use App\Http\Requests\Membership\Sharing\DocumentRequest;
 
 class SharingController extends Controller
 {
-    use Form, CheckInCheckOut;
+    use Form, CheckInCheckOut, Emails;
 
     /*
      * Instance of the Sharing model, (used in the Form trait).
@@ -236,6 +237,24 @@ class SharingController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     *  Sends notification emails to the recipients.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function sendEmails(Request $request, Sharing $sharing)
+    {
+        if ($this->informDocumentRecipients($sharing)) {
+            //$membership->sending_emails = true;
+            //$membership->save();
+            return response()->json(['success' => __('messages.membership.alert_decision_makers'), 'updates' => ['sendEmails' => true]]);
+        }
+        else {
+            return response()->json(['warning' => __('messages.generic.cannot_send_email')]);
+        }
     }
 
     public function addDocument(DocumentRequest $request)

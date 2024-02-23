@@ -33,9 +33,12 @@ class UpdateRequest extends FormRequest
 
 	if (auth()->user()->getRoleLevel() > $this->sharing->getOwnerRoleLevel() || $this->sharing->owned_by == auth()->user()->id) {
 	    $rules['access_level'] = 'required';
-	    //$rules['permission'] = 'required';
 	    $rules['owned_by'] = 'required';
 	}
+
+        if ($this->sharing->canChangeStatus()) {
+            $rules['status'] = 'required';
+        }
 
 	return $rules;
     }
