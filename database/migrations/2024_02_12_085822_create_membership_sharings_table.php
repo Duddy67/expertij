@@ -20,6 +20,7 @@ return new class extends Migration
             $table->char('licence_types', 20);
             $table->string('courts', 100);
             $table->string('appeal_courts', 100);
+            $table->boolean('sending_emails')->default(0);
             $table->char('status', 12);
             $table->char('access_level', 10);
             $table->unsignedBigInteger('checked_out')->nullable();

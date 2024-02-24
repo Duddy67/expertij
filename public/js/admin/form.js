@@ -75,7 +75,7 @@
     }
 
     function sendEmails(e) {
-        if (window.confirm('Send emails ?')) {
+        if (window.confirm(localNamespace['messages'].sending_emails_confirmation)) {
             runAjax('emails');
         }
     }

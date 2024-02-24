@@ -265,10 +265,15 @@ trait Emails
         return true;
     }
 
-    public function informDocumentRecipients(Sharing $sharing): bool
+    /*
+     * Informs the members a document is available.
+     */
+    public function alertDocument(Sharing $sharing): bool
     {
         $recipients = User::whereHas('membership.licences', function ($query) use($sharing) {
             $licences = explode(',', $sharing->licence_types);
+
+            // Set a condition for each licence.
             foreach ($licences as $key => $licence) {
                 
                 if ($key == 0) {
@@ -286,6 +291,7 @@ trait Emails
                         }
                     });
                 }
+                // Add next licences (if any) as a OR condition.
                 else {
                     $query->orWhere(function ($query) use ($sharing, $licence) {
                         $query->where('type', $licence);
@@ -305,7 +311,17 @@ trait Emails
 
         })->pluck('email')->toArray();
 
-//file_put_contents('debog_file.txt', print_r($recipients, true));
+        $data = new \stdClass();
+        $data->name = $sharing->name;
+
+        if (!empty($recipients)) {
+            $data->recipients = $recipients;
+
+            if (!Email::sendEmail('alert-document', $data)) {
+                return false;
+            }
+        }
+
         return true;
     }
 

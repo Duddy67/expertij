@@ -229,14 +229,52 @@ class SharingController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified sharing from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Membership\Sharing $sharing
+     * @return Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, Sharing $sharing)
     {
-        //
+        if (!$sharing->canDelete()) {
+            return redirect()->route('admin.memberships.sharings.edit', array_merge($request->query(), ['sharing' => $sharing->id]))->with('error',  __('messages.generic.delete_not_auth'));
+        }
+
+        $name = $sharing->name;
+        $sharing->delete();
+
+        return redirect()->route('admin.memberships.sharings.index', $request->query())->with('success', __('messages.sharing.delete_success', ['name' => $name]));
+    }
+
+    /**
+     * Removes one or more sharings from storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return Response
+     */
+    public function massDestroy(Request $request)
+    {
+        $deleted = 0;
+
+        // Remove the posts selected from the list.
+        foreach ($request->input('ids') as $id) {
+            $sharing = Sharing::findOrFail($id);
+
+            if (!$sharing->canDelete()) {
+              return redirect()->route('admin.memberships.sharings.index', $request->query())->with(
+                  [
+                      'error' => __('messages.generic.delete_not_auth'),
+                      'success' => __('messages.sharing.delete_list_success', ['number' => $deleted])
+                  ]);
+            }
+
+            $sharing->delete();
+
+            $deleted++;
+        }
+
+        return redirect()->route('admin.memberships.sharings.index', $request->query())->with('success', __('messages.sharing.delete_list_success', ['number' => $deleted]));
     }
 
     /**
@@ -247,10 +285,10 @@ class SharingController extends Controller
      */
     public function sendEmails(Request $request, Sharing $sharing)
     {
-        if ($this->informDocumentRecipients($sharing)) {
-            //$membership->sending_emails = true;
-            //$membership->save();
-            return response()->json(['success' => __('messages.membership.alert_decision_makers'), 'updates' => ['sendEmails' => true]]);
+        if ($this->alertDocument($sharing)) {
+            $sharing->sending_emails = true;
+            $sharing->save();
+            return response()->json(['success' => __('messages.sharing.alert_document'), 'updates' => ['sendEmails' => true]]);
         }
         else {
             return response()->json(['warning' => __('messages.generic.cannot_send_email')]);
@@ -273,13 +311,13 @@ class SharingController extends Controller
     public function replaceDocument(DocumentRequest $request, $id)
     {
         $sharing = Sharing::where('id', $request->input('_sharing_id'))->first();
-        //$document = Document::where('id', 6)->first();
+        // Create and upload the new document.
         $document = new Document;
         $document->upload($request->file('replace_document_'.$id), 'sharing');
         $sharing->documents()->save($document);
         $row = view('admin.partials.sharing.document-row', compact('document', 'sharing'))->render();
 
-        // Delete the replaced document.
+        // Delete the document that was replaced.
         $document = Document::where('id', $id)->first();
         $document->delete();
 

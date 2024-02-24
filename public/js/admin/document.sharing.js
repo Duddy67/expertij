@@ -17,7 +17,6 @@
 
                 // The add-document form has no document id. 
                 let form = action == 'add' ? document.getElementById(action + '-document') : document.getElementById(action + '-document-' + event.target.dataset.documentId);
-                //const route = action == 'create' ? form.action : form.action.replace(/.$/, event.target.dataset.documentId);
                 const route = form.action;
                 let formData = new FormData(form);
                 runAjax(route, formData);
@@ -29,6 +28,10 @@
         // N.B: jQuery is required with the Select2 plugin.
         $('#licence_types').change( function() { setJuridictions($(this)); });
         setJuridictions($('#licence_types'));
+
+        if (document.getElementById('_sendingEmails').value == 1) {
+           document.getElementById('sendEmails').disabled = true
+        }
     });
 
     function runAjax(route, formData) {

@@ -62,6 +62,7 @@
         @if (isset($sharing))
             <input type="hidden" id="_dateFormat" value="{{ $dateFormat }}">
             <input type="hidden" id="_locale" value="{{ config('app.locale') }}">
+            <input type="hidden" id="_sendingEmails" value="{{ $sharing->sending_emails }}">
         @else
             @include('admin.partials.sharing.document-sharing')
         @endif

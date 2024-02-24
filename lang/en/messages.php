@@ -128,6 +128,7 @@ return [
         'delete_success' => 'Document sharing successfully deleted.',
         'delete_list_success' => ':number document sharings have been successfully deleted.',
         'change_status_list_success' => 'Document sharing statuses successfully changed.',
+        'alert_document' => 'A notification email has been sent to the members.',
     ],
     'search' => [
         'invalid_keyword_length' => 'Keyword must be at least :length characters.',
@@ -187,5 +188,6 @@ return [
         'paypal_payment_confirmation' => 'Vous avez choisi de payer via PayPal. Vous allez être redirigé(e) vers PayPal. Souhaitez vous continuer ?',
         'sherlocks_payment_confirmation' => 'Vous avez choisi de payer via LCL. Une carte de credit va vous être proposée. Souhaitez vous continuer ?',
         'free_period_payment_confirmation' => 'Compte tenu de votre adhésion tardive pour cette année, l\'adhésion pour l\'année suivante est gratuite. Souhaitez vous continuer ?',
+        'sending_emails_confirmation' => 'This will send an email to the concerned users. Are you sure ?',
     ]
 ];
