@@ -376,6 +376,10 @@ return [
 	'shared_with' => 'Shared with',
 	'document_n' => 'Document :number',
 	'optional' => 'Optional',
+        'documents' => 'Documents',
+        'document' => 'Document',
+        'invoices' => 'Invoices',
+        'invoice' => 'Invoice',
     ],
     'filter' => [
 	'search' => 'Search',

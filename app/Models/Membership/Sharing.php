@@ -13,6 +13,7 @@ use App\Traits\AccessLevel;
 use App\Traits\CheckInCheckOut;
 use App\Traits\OptionList;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class Sharing extends Model
 {
@@ -113,6 +114,51 @@ class Sharing extends Model
         });
 
         return $query->paginate($perPage);
+    }
+
+    /*
+     * Gets the shared documents for a given membership.
+     */
+    public static function getSharedDocuments(Membership $membership): array
+    {
+        $documents = [];
+        $query = '';
+
+        // Build a query with brackets for each licence type.
+        foreach ($membership->licences as $licence) {
+            $query .= '(`licence_types` LIKE "%'.$licence->type.'%" AND ';
+
+            // Adapt the conditions according to the licence type.
+            if ($licence->type == 'expert') {
+                $query .= '(`appeal_courts` = "" OR `appeal_courts` = "'.$licence->jurisdiction_id.'" OR `appeal_courts` LIKE "'.$licence->jurisdiction_id.',%" OR `appeal_courts` LIKE "%,'.$licence->jurisdiction_id.'" OR `appeal_courts` LIKE "%,'.$licence->jurisdiction_id.',%")';
+            }
+            // ceseda
+            else {
+                $query .= '(`courts` = "" OR `courts` = "'.$licence->jurisdiction_id.'" OR `courts` LIKE "'.$licence->jurisdiction_id.',%" OR `courts` LIKE "%,'.$licence->jurisdiction_id.'" OR `courts` LIKE "%,'.$licence->jurisdiction_id.',%")';
+            }
+
+            // Close the condition and add a OR clause in case of multiple licences.
+            $query .= ') OR ';
+        }
+
+        // Remove the final OR clause from the end of the query.
+        $query = substr($query, 0, -4);
+
+        // Get the sharing ids.
+        $ids = DB::table('membership_sharings')
+                ->whereRaw($query)
+                ->pluck('id')->toArray();
+
+        $sharings = Sharing::whereIn('id', $ids)->get();
+
+        // Get the documents.
+        foreach ($sharings as $sharing) {
+            foreach ($sharing->documents as $document) {
+                $documents[] = $document;
+            }
+        }
+
+        return $documents;
     }
 
     public function getLicenceTypesOptions(): array

@@ -377,6 +377,10 @@ return [
 	'shared_with' => 'Partagé(s) avec',
 	'document_n' => 'Document :number',
 	'optional' => 'Optionel',
+        'documents' => 'Documents',
+        'document' => 'Document',
+        'invoices' => 'Factures',
+        'invoice' => 'Facture',
     ],
     'filter' => [
 	'search' => 'Recherche',

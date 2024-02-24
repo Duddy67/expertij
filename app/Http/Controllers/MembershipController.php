@@ -13,6 +13,7 @@ use App\Models\Membership\Skill;
 use App\Models\Membership\Jurisdiction;
 use App\Models\Membership\Language;
 use App\Models\Membership\Vote;
+use App\Models\Membership\Sharing;
 use App\Models\User;
 use App\Models\User\Citizenship;
 use App\Models\Cms\Setting;
@@ -207,7 +208,6 @@ class MembershipController extends Controller
         $options = $this->getOptions();
         // Get the user's membership.
         $membership = Auth::user()->membership;
-        //$query = array_merge($request->query(), ['membership' => $membership->id]);
         $prices = Setting::getDataByGroup('prices', $membership);
 
         $invoices = [];
@@ -218,7 +218,9 @@ class MembershipController extends Controller
             }
         }
 
-        return view('themes.'.$page['theme'].'.index', compact('page', 'options', 'membership', 'prices', 'invoices'));
+        $documents = Sharing::getSharedDocuments($membership);
+
+        return view('themes.'.$page['theme'].'.index', compact('page', 'options', 'membership', 'prices', 'invoices', 'documents'));
     }
 
     /**

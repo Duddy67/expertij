@@ -13,7 +13,7 @@
             <a class="nav-item nav-link" id="payment-tab" href="#payment" data-bs-toggle="tab">{{ __('labels.generic.'.$label) }}</a>
         @endif
 
-        @if (!empty($invoices))
+        @if (!empty($invoices) || !empty($documents))
             <a class="nav-item nav-link" id="documents-tab" href="#documents" data-bs-toggle="tab">{{ __('labels.title.documents') }}</a>
         @endif
     </nav>
