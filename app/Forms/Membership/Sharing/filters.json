@@ -5,6 +5,23 @@
     "name": "search",
     "id": "search",
     "placeholder": "labels.filter.search_by_name"
+  },
+  {
+    "label": "labels.filter.owned_by",
+    "type": "select",
+    "name": "owned_by",
+    "function": "owned_by_filter",
+    "extra": ["multiple"],
+    "id": "filters-ownedBy",
+    "options": [] 
+  },
+  {
+    "label": "labels.filter.per_page",
+    "type": "select",
+    "name": "per_page",
+    "id": "filters-perPage",
+    "blank": "labels.generic.select_option",
+    "options": [] 
   }
 ]
 

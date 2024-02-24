@@ -115,7 +115,7 @@ return [
     'sharing' => [
         'create_success' => 'Partage de document créé avec succès.',
         'update_success' => 'Partage de document mis à jour avec succès.',
-        'delete_success' => 'Partage de document :title supprimé avec succès.',
+        'delete_success' => 'Partage de document :name supprimé avec succès.',
         'delete_list_success' => ':number partages de document ont été supprimés avec succès.',
         'change_status_list_success' => 'Statuts de partage de document changés avec succès.',
         'alert_document' => 'Un email de notification a été envoyé aux adhérents.',

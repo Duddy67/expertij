@@ -17,6 +17,11 @@
     "type": "string"
   },
   {
+    "label": "labels.generic.owned_by",
+    "name": "owned_by",
+    "type": "string"
+  },
+  {
     "label": "labels.generic.created_at",
     "name": "created_at",
     "type": "date"
