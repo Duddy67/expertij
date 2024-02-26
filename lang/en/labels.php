@@ -123,6 +123,7 @@ return [
         'applicants' => 'Applicants',
         'member' => 'Member',
         'member_number' => 'Member number',
+        'member_since' => 'Member since',
         'pending_renewal' => 'Pending renewal',
         'revoked' => 'Revoked',
         'cancellation' => 'Cancellation',

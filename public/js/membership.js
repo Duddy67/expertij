@@ -79,13 +79,13 @@ document.addEventListener('DOMContentLoaded', () => {
     function setForm(element) {
         if (element.checked) {
             // Associated members have no licence and no professional status.
-            document.getElementById('licence-tab').style.display = 'none';
-            document.getElementById('professional-status-tab').style.display = 'none';
+            document.getElementById('licences-tab').style.display = 'none';
+            document.getElementById('professional_information-tab').style.display = 'none';
         }
         else {
             // Regular members have both licences and professional status.
-            document.getElementById('licence-tab').style.display = 'block';
-            document.getElementById('professional-status-tab').style.display = 'block';
+            document.getElementById('licences-tab').style.display = 'block';
+            document.getElementById('professional_information-tab').style.display = 'block';
         }
     }
 

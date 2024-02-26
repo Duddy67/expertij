@@ -116,6 +116,7 @@ return [
 	'update_professional_status' => 'Mettre à jour le statut professionnel',
 	'members' => 'Adhérents',
         'member_number' => 'Numéro adhérent',
+        'member_since' => 'Membre depuis',
         'pending' => 'En attente',
         'refused' => 'Refusé',
         'pending_subscription' => 'En attente d\'adhésion',
