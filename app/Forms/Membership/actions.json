@@ -21,6 +21,13 @@
 	"type": "button"
       },
       {
+	"id": "export",
+	"label": "labels.button.export",
+        "class": "btn-primary",
+        "icon": "fa fa-upload",
+	"type": "button"
+      },
+      {
 	"id": "checkRenewal",
 	"label": "labels.membership.renewal",
         "class": "btn-success",

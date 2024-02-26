@@ -14,7 +14,7 @@
         </div>
     </div>
     <div class="row" id="attestation-file-button-{{ $i }}-{{ $j }}">
-        @include('themes.expertij.partials.membership.edit.attestation-file-button', ['fileUrl' => $attestation->document->getUrl(), 'fileName' => $attestation->document->file_name])
+        @include('themes.expertij.partials.membership.edit.document-file-button', ['fileUrl' => $attestation->document->getUrl(), 'fileName' => $attestation->document->file_name])
     </div>
 
     <input type="hidden" name="licences[{{ $i }}][attestations][{{ $j }}][_id]" value="{{ $attestation->id }}">

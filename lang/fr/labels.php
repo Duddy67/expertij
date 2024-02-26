@@ -382,6 +382,7 @@ return [
         'document' => 'Document',
         'invoices' => 'Factures',
         'invoice' => 'Facture',
+        'resume' => 'Curriculum vitae',
     ],
     'filter' => [
 	'search' => 'Recherche',
@@ -411,6 +412,7 @@ return [
 	'reject' => 'Rejeter',
 	'add' => 'Ajouter',
 	'replace' => 'Remplacer',
+	'export' => 'Exporter',
     ],
     'pagination' => [
 	'results' => 'Affiche :first à :last éléments sur :total résultats',

@@ -75,7 +75,7 @@
                 @if (!next($fields) || isset($fields[$key + 1]->tab))
                     @if ($field->name == 'why_expertij')
                         @if ($membership->professionalAttestation)
-                            @include('themes.expertij.partials.membership.edit.attestation-file-button', ['fileUrl' => $membership->professionalAttestation->getUrl(), 'fileName' => $membership->professionalAttestation->file_name])
+                            @include('themes.expertij.partials.membership.edit.document-file-button', ['fileUrl' => $membership->professionalAttestation->getUrl(), 'fileName' => $membership->professionalAttestation->file_name])
                         @else
                             @include('themes.expertij.partials.membership.edit.missing-document-button')
                         @endif

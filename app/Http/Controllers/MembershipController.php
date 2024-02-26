@@ -140,6 +140,9 @@ class MembershipController extends Controller
             $professionalAttestation = $this->uploadDocument($request, 'professional_attestation'); 
             $membership->professionalAttestation()->save($professionalAttestation);
 
+            // as well as the given resumé.
+            $resume = $this->uploadDocument($request, 'resume'); 
+            $membership->resume()->save($resume);
 
             foreach ($request->input('licences') as $i => $licenceItem) {
                 // First, get the jurisdiction type according to the licence type in order to get the jurisdiction id. 
@@ -253,6 +256,19 @@ class MembershipController extends Controller
             $membership->professionalAttestation()->save($document);
             $replacements[] = $this->getReplacementData($document, 'attestation-file-button');
             $updates['professional_attestation'] = '';
+        }
+
+        // Check for possible resume file replacement.
+        if ($request->has('resume')) {
+            // Delete the previous attestation.
+            if ($membership->resume) {
+                $membership->resume->delete();
+            }
+
+            $document = $this->uploadDocument($request, 'resume'); 
+            $membership->resume()->save($document);
+            $replacements[] = $this->getReplacementData($document, 'resume-file-button');
+            $updates['resume'] = '';
         }
 
         $result = ['success' => __('messages.membership.update_success')];
@@ -600,7 +616,7 @@ class MembershipController extends Controller
         $page = Setting::getPage('membership');
         $fileUrl = $document->getUrl();
         $fileName = $document->file_name;
-        $html = view('themes.'.$page['theme'].'.partials.membership.edit.attestation-file-button', compact('fileUrl', 'fileName'))->render();
+        $html = view('themes.'.$page['theme'].'.partials.membership.edit.document-file-button', compact('fileUrl', 'fileName'))->render();
 
         return ['containerId' => $containerId, 'html' => $html];
     }

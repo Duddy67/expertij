@@ -381,6 +381,7 @@ return [
         'document' => 'Document',
         'invoices' => 'Invoices',
         'invoice' => 'Invoice',
+        'resume' => 'Resumé',
     ],
     'filter' => [
 	'search' => 'Search',
@@ -410,6 +411,7 @@ return [
 	'reject' => 'Reject',
 	'add' => 'Add',
 	'replace' => 'Replace',
+	'export' => 'Export',
     ],
     'pagination' => [
 	'results' => 'Showing :first to :last of :total results',

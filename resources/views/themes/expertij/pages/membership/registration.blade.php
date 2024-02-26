@@ -224,6 +224,11 @@
                         <input type="file" name="professional_attestation" class="form-control" id="professional_attestation">
                         <div class="text-danger" id="professional_attestationError"></div>
                     </div>
+                    <div class="col-md-6 form-group">
+                        <label for="resume">{{ __('labels.generic.resume') }}</label>
+                        <input type="file" name="resume" class="form-control" id="resume">
+                        <div class="text-danger" id="resumeError"></div>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 form-group">

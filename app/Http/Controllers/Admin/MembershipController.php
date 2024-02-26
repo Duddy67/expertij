@@ -232,6 +232,25 @@ class MembershipController extends Controller
         return redirect()->route('admin.memberships.index', $request->query())->with($message);
     }
 
+    public function export(Request $request)
+    {
+        $file = Membership::createExportList($request);
+
+        /*if (file_exists($file)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="'.basename($file).'"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($file));
+            readfile($file);
+            exit;
+        }*/
+
+        return redirect()->route('admin.memberships.index');
+    }
+
     /**
      *  Sends notification emails to the decision makers.
      *

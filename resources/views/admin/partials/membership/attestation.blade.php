@@ -7,7 +7,7 @@
         </div>
         <div class="col-md-6" id="attestation-file-button-{{ $i }}-{{ $j }}">
             @if ($attestation->document)
-                @include('themes.expertij.partials.membership.edit.attestation-file-button', ['fileUrl' => $attestation->document->getUrl(), 'fileName' => $attestation->document->file_name])
+                @include('themes.expertij.partials.membership.edit.document-file-button', ['fileUrl' => $attestation->document->getUrl(), 'fileName' => $attestation->document->file_name])
             @else
                 @include('themes.expertij.partials.membership.edit.missing-document-button')
             @endif

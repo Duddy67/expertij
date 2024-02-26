@@ -189,5 +189,6 @@ return [
         'sherlocks_payment_confirmation' => 'Vous avez choisi de payer via LCL. Une carte de credit va vous être proposée. Souhaitez vous continuer ?',
         'free_period_payment_confirmation' => 'Compte tenu de votre adhésion tardive pour cette année, l\'adhésion pour l\'année suivante est gratuite. Souhaitez vous continuer ?',
         'sending_emails_confirmation' => 'This will send an email to the concerned users. Are you sure ?',
+        'export_list_confirmation' => 'This will export the member list below through a csv file. Are you sure ?',
     ]
 ];

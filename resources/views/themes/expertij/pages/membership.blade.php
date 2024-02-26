@@ -112,9 +112,23 @@
                         <input type="file" name="professional_attestation" class="form-control" id="professional_attestation">
                         <div class="text-danger" id="professional_attestationError"></div>
                     </div>
+                    <div class="col-md-6 form-group">
+                        <label for="resume">{{ __('labels.generic.resume') }}</label>
+                        <input type="file" name="resume" class="form-control" id="resume">
+                        <div class="text-danger" id="resumeError"></div>
+                    </div>
                 </div>
-                <div class="row" id="attestation-file-button">
-                    @include('themes.expertij.partials.membership.edit.attestation-file-button', ['fileUrl' => $membership->professionalAttestation->getUrl(), 'fileName' => $membership->professionalAttestation->file_name])
+                <div class="row">
+                <div class="col-md-6 form-group" id="attestation-file-button">
+                    @include('themes.expertij.partials.membership.edit.document-file-button', ['fileUrl' => $membership->professionalAttestation->getUrl(), 'fileName' => $membership->professionalAttestation->file_name])
+                </div>
+                <div class="col-md-6 form-group" id="resume-file-button">
+                @if ($membership->resume)
+                    @include('themes.expertij.partials.membership.edit.document-file-button', ['fileUrl' => $membership->resume->getUrl(), 'fileName' => $membership->resume->file_name])
+                @else
+                    @include('themes.expertij.partials.membership.edit.missing-document-button')
+                @endif
+                </div>
                 </div>
                 <input type="hidden" id="_locale" value="{{ config('app.locale') }}">
             </form>

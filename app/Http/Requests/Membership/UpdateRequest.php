@@ -66,6 +66,7 @@ class UpdateRequest extends FormRequest
             $rules['siret_number'] = 'required|digits:14';
             $rules['naf_code'] = 'required|size:5';
             $rules['professional_attestation'] = 'nullable|mimes:pdf,doc,docx,png,jpg,jpeg|max:10000';
+            $rules['resume'] = 'nullable|mimes:pdf,doc,docx,png,jpg,jpeg|max:10000';
         }
 
         return $rules;
@@ -107,6 +108,7 @@ class UpdateRequest extends FormRequest
                 'professional_status' => __('labels.membership.professional_status'), 
                 'professional_status_info' => __('labels.membership.professional_status_info'), 
                 'professional_attestation' => __('labels.membership.professional_attestation'), 
+                'resume' => __('labels.generic.resume'), 
                 'since' => __('labels.generic.since'), 
                 'naf_code' => __('labels.membership.naf_code'), 
             ];

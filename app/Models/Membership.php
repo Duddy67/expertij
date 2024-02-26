@@ -119,6 +119,14 @@ class Membership extends Model
     }
 
     /**
+     * The resume that belongs to the membership.
+     */
+    public function resume(): MorphOne
+    {
+        return $this->morphOne(Document::class, 'documentable')->where('field', 'resume');
+    }
+
+    /**
      * Delete the model from the database (override).
      *
      * @return bool|null
@@ -187,7 +195,22 @@ class Membership extends Model
             $query->where('associated_member', $value);
         }
 
-        return $query->paginate($perPage);
+        // Return all of the results or the paginated result.
+        return ($perPage == -1) ? $query->paginate($query->count()) : $query->paginate($perPage);
+    }
+
+    public static function createExportList(Request $request): string
+    {
+        // Cancel pagination to get all of the results.
+        $request->merge(['per_page' => -1]);
+        // Run the membership query.
+        $memberships = Membership::getMemberships($request);
+
+        // TODO: Create the csv file from the results.
+
+        $file = 'export.csv';
+
+        return storage_path('app/tmp/'.$file);
     }
 
     public function getLicenceTypeOptions(): array
