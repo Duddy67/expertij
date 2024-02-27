@@ -19,6 +19,7 @@ use App\Models\User\Citizenship;
 use App\Models\Cms\Setting;
 use App\Models\Cms\Address;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class MembershipController extends Controller
 {
@@ -236,7 +237,7 @@ class MembershipController extends Controller
     {
         $file = Membership::createExportList($request);
 
-        /*if (file_exists($file)) {
+        if (file_exists($file)) {
             header('Content-Description: File Transfer');
             header('Content-Type: application/octet-stream');
             header('Content-Disposition: attachment; filename="'.basename($file).'"');
@@ -245,10 +246,10 @@ class MembershipController extends Controller
             header('Pragma: public');
             header('Content-Length: ' . filesize($file));
             readfile($file);
+            // Remove the file from the server.
+            unlink($file);
             exit;
-        }*/
-
-        return redirect()->route('admin.memberships.index');
+        }
     }
 
     /**

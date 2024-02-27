@@ -21,7 +21,7 @@
 	"type": "button"
       },
       {
-	"id": "export",
+	"id": "exportList",
 	"label": "labels.button.export",
         "class": "btn-primary",
         "icon": "fa fa-upload",

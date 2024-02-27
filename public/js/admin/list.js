@@ -3,7 +3,7 @@
 
     // Run a function when the page is fully loaded including graphics.
     $(window).on('load', function() {
-	let actions = ['create', 'massDestroy', 'batch', 'checkin', 'publish', 'unpublish', 'checkRenewal', 'export'];
+	let actions = ['create', 'massDestroy', 'batch', 'checkin', 'publish', 'unpublish', 'checkRenewal', 'exportList'];
 
 	actions.forEach(function (action) {
 	    $('#'+action).click( function() { $.fn[action](); });
@@ -175,9 +175,9 @@
         }
     }
 
-    $.fn.export = function() {
+    $.fn.exportList = function() {
         if (window.confirm(messages.export_list_confirmation)) {
-            window.location.href = $('#_export').val();
+            window.location.href = $('#_exportList').val();
         }
     }
 

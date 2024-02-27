@@ -23,6 +23,7 @@ use App\Models\Membership\Language;
 use App\Models\Membership\Jurisdiction;
 use App\Models\Membership\Vote;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class Membership extends Model
 {
@@ -195,7 +196,7 @@ class Membership extends Model
             $query->where('associated_member', $value);
         }
 
-        // Return all of the results or the paginated result.
+        // Return all of the results or the paginated result according to the $perPage value.
         return ($perPage == -1) ? $query->paginate($query->count()) : $query->paginate($perPage);
     }
 
@@ -206,9 +207,36 @@ class Membership extends Model
         // Run the membership query.
         $memberships = Membership::getMemberships($request);
 
-        // TODO: Create the csv file from the results.
+        // Create the csv file from the query results.
 
-        $file = 'export.csv';
+        $list = [['Nom', 'Prénom', 'Email', 'Statut', 'Numéro adhérent']];
+        $fields = [];
+
+        foreach ($memberships as $membership) {
+            $fields[] = $membership->user->first_name;
+            $fields[] = $membership->user->last_name;
+            $fields[] = $membership->user->email;
+            $fields[] = __('labels.membership.'.$membership->status);
+            $fields[] = ($membership->member_number) ? $membership->member_number : 'Pas encore adhérent';
+
+            $list[] = $fields;
+            $fields = [];
+        }
+
+        // Create a tmp directory in case it doesn't exists.
+        Storage::makeDirectory('tmp');
+
+        // Build the name of the file from the current date.
+        $file = 'export-'.Carbon::now()->format('d-m-Y-H-i').'.csv';
+        // Create the csv file.
+        $fp = fopen(storage_path('app/tmp/'.$file), 'w');
+
+        // Write into the file.
+        foreach ($list as $fields) {
+            fputcsv($fp, $fields);
+        }
+
+        fclose($fp);
 
         return storage_path('app/tmp/'.$file);
     }
