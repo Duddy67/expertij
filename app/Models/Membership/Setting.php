@@ -88,4 +88,9 @@ class Setting extends Model
         $value = (self::checkFlag($name)) ? 0 : 1;
         Setting::where('group', 'flags')->where('key', $name)->update(['value' => $value]);
     }
+
+    public static function setRunningRenewalDate(string $date)
+    {
+        Setting::where('group', 'flags')->where('key', 'running_renewal_date')->update(['value' => $date]);
+    }
 }

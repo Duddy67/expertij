@@ -144,5 +144,11 @@
     "name": "renewal_reminder",
     "id": "renewal_reminder",
     "group": "flags"
+  },
+  {
+    "type": "hidden",
+    "name": "running_renewal_date",
+    "id": "running_renewal_date",
+    "group": "flags"
   }
 ]

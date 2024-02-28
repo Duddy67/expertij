@@ -21,6 +21,7 @@ use App\Models\Cms\Address;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
+use App\Models\Membership\Setting as MembershipSetting;
 class MembershipController extends Controller
 {
     use Form, Emails, Renewal;
@@ -63,7 +64,12 @@ class MembershipController extends Controller
         $rows = $this->getRows($columns, $items);
         $query = $request->query();
         $url = ['route' => 'admin.memberships', 'item_name' => 'membership', 'query' => $query];
-
+$test = Carbon::create('2026-01-01');
+var_dump($this->getLatestRenewalDate()->format('Y-m-d H:i'));
+var_dump($test->format('Y-m-d H:i'));
+var_dump($test->lessThan($this->getLatestRenewalDate()));
+MembershipSetting::setRunningRenewalDate($this->getLatestRenewalDate()->format('Y-m-d'));
+//var_dump(Carbon::today()->format('Y-m-d H:i'));
         return view('admin.membership.list', compact('items', 'columns', 'rows', 'actions', 'filters', 'url', 'query'));
     }
 

@@ -86,8 +86,13 @@ trait Renewal
 
     public function setRenewal(): string
     {
+        $runningRenewalDate = Setting::getDataByGroup('running_renewal_date', Membership::class);
+        // Set to the current renewal date in case the $runningRenewalDate variable is null.
+        $runningRenewalDate = ($runningRenewalDate) ? Carbon::create($runningRenewalDate) : $this->getRenewalDate();
+
         // The renewal period has started.
-        if (!MembershipSetting::checkFlag('renewal_reset') && $this->isRenewalPeriod()) {
+        if ($this->isRenewalPeriod() && $runningRenewalDate->lessThan($this->getLatestRenewalDate())) {
+        //if (!MembershipSetting::checkFlag('renewal_reset') && $this->isRenewalPeriod()) {
             // Reset all the member statuses to pending_renewal
             //Membership::where('status', 'member')->update(['status' => 'pending_renewal']);
             // Cancel all the possible old pending payments.
@@ -96,17 +101,19 @@ trait Renewal
             })->update(['status' => 'cancelled']);*/
 
             // Activate the reset flag.
-            MembershipSetting::toggleFlag('renewal_reset');
+            //MembershipSetting::toggleFlag('renewal_reset');
+            // Set the flag to the new running renewal date (ie: the latest renewal date).
+            MembershipSetting::setRunningRenewalDate($this->getLatestRenewalDate()->format('Y-m-d'));
 
             return 'start_renewal';
         }
         // The renewal period is over.
-        elseif (MembershipSetting::checkFlag('renewal_reset') && !$this->isRenewalPeriod()) {
+        /*elseif (MembershipSetting::checkFlag('renewal_reset') && !$this->isRenewalPeriod()) {
             // Deactivate the reset flag.
             MembershipSetting::toggleFlag('renewal_reset');
 
             return 'stop_renewal';
-        }
+        }*/
 
         return 'all_clear';
     }
