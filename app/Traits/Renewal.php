@@ -92,7 +92,6 @@ trait Renewal
 
         // The renewal period has started.
         if ($this->isRenewalPeriod() && $runningRenewalDate->lessThan($this->getLatestRenewalDate())) {
-        //if (!MembershipSetting::checkFlag('renewal_reset') && $this->isRenewalPeriod()) {
             // Reset all the member statuses to pending_renewal
             //Membership::where('status', 'member')->update(['status' => 'pending_renewal']);
             // Cancel all the possible old pending payments.
@@ -100,27 +99,18 @@ trait Renewal
                 $query->where('status', 'pending_renewal');
             })->update(['status' => 'cancelled']);*/
 
-            // Activate the reset flag.
-            //MembershipSetting::toggleFlag('renewal_reset');
             // Set the flag to the new running renewal date (ie: the latest renewal date).
             MembershipSetting::setRunningRenewalDate($this->getLatestRenewalDate()->format('Y-m-d'));
 
             return 'start_renewal';
         }
-        // The renewal period is over.
-        /*elseif (MembershipSetting::checkFlag('renewal_reset') && !$this->isRenewalPeriod()) {
-            // Deactivate the reset flag.
-            MembershipSetting::toggleFlag('renewal_reset');
-
-            return 'stop_renewal';
-        }*/
 
         return 'all_clear';
     }
 
     public function setReminder(): string
     {
-        if (!MembershipSetting::checkFlag('renewal_reminder') && $this->isReminderTime()) {
+        /*if (!MembershipSetting::checkFlag('renewal_reminder') && $this->isReminderTime()) {
             // Activate the reminder flag.
             MembershipSetting::toggleFlag('renewal_reminder');
 
@@ -131,7 +121,7 @@ trait Renewal
             MembershipSetting::toggleFlag('renewal_reminder');
 
             return 'stop_reminder_time';
-        }
+        }*/
 
         return 'all_clear';
     }

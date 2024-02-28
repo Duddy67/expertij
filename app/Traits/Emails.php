@@ -243,7 +243,7 @@ trait Emails
     /*
      * Informs the members about the renewal membership.
      */
-    public function renewalAlert(): bool
+    public function renewalAlert($code): bool
     {
         $recipients = User::whereHas('membership', function ($query) {
             $query->where('status', 'pending_renewal');
@@ -252,12 +252,14 @@ trait Emails
         $data = new \stdClass();
         $data->subscription_fee = Setting::getValue('prices', 'subscription_fee', 0, Membership::class);
         $data->associated_subscription_fee = Setting::getValue('prices', 'associated_subscription_fee', 0, Membership::class);
-        $data->renewal_date = $this->getRenewalDate()->format('d/m/Y');
+        // Set the renewal date to the new renewal date for the pending-renewal email and to the running renewal date for 
+        // the reminder (as the reminder is sent after the renewal period).
+        $data->renewal_date = ($code == 'pending-renewal') ? $this->getLatestRenewalDate()->format('d/m/Y') : $this->getRenewalDate()->format('d/m/Y');
 
         if (!empty($recipients)) {
             $data->recipients = $recipients;
 
-            if (!Email::sendEmail('pending-renewal', $data)) {
+            if (!Email::sendEmail($code, $data)) {
                 return false;
             }
         }
