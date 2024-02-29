@@ -62,10 +62,26 @@
     "group": "prices"
   },
   {
+    "label": "labels.membership.insurance_coverage_f1",
+    "type": "text",
+    "name": "insurance_coverage_f1",
+    "id": "insurance_coverage_f1",
+    "class": "mb-3",
+    "group": "prices"
+  },
+  {
     "label": "labels.membership.insurance_fee_f2",
     "type": "text",
     "name": "insurance_fee_f2",
     "id": "insurance_fee_f2",
+    "class": "mb-3",
+    "group": "prices"
+  },
+  {
+    "label": "labels.membership.insurance_coverage_f2",
+    "type": "text",
+    "name": "insurance_coverage_f2",
+    "id": "insurance_coverage_f2",
     "class": "mb-3",
     "group": "prices"
   },
@@ -78,10 +94,26 @@
     "group": "prices"
   },
   {
+    "label": "labels.membership.insurance_coverage_f3",
+    "type": "text",
+    "name": "insurance_coverage_f3",
+    "id": "insurance_coverage_f3",
+    "class": "mb-3",
+    "group": "prices"
+  },
+  {
     "label": "labels.membership.insurance_fee_f4",
     "type": "text",
     "name": "insurance_fee_f4",
     "id": "insurance_fee_f4",
+    "class": "mb-3",
+    "group": "prices"
+  },
+  {
+    "label": "labels.membership.insurance_coverage_f4",
+    "type": "text",
+    "name": "insurance_coverage_f4",
+    "id": "insurance_coverage_f4",
     "class": "mb-3",
     "group": "prices"
   },
@@ -94,10 +126,26 @@
     "group": "prices"
   },
   {
+    "label": "labels.membership.insurance_coverage_f5",
+    "type": "text",
+    "name": "insurance_coverage_f5",
+    "id": "insurance_coverage_f5",
+    "class": "mb-3",
+    "group": "prices"
+  },
+  {
     "label": "labels.membership.insurance_fee_f6",
     "type": "text",
     "name": "insurance_fee_f6",
     "id": "insurance_fee_f6",
+    "class": "mb-3",
+    "group": "prices"
+  },
+  {
+    "label": "labels.membership.insurance_coverage_f6",
+    "type": "text",
+    "name": "insurance_coverage_f6",
+    "id": "insurance_coverage_f6",
     "class": "mb-3",
     "group": "prices"
   },
@@ -110,6 +158,14 @@
     "group": "prices"
   },
   {
+    "label": "labels.membership.insurance_coverage_f7",
+    "type": "text",
+    "name": "insurance_coverage_f7",
+    "id": "insurance_coverage_f7",
+    "class": "mb-3",
+    "group": "prices"
+  },
+  {
     "label": "labels.membership.insurance_fee_f8",
     "type": "text",
     "name": "insurance_fee_f8",
@@ -118,10 +174,26 @@
     "group": "prices"
   },
   {
+    "label": "labels.membership.insurance_coverage_f8",
+    "type": "text",
+    "name": "insurance_coverage_f8",
+    "id": "insurance_coverage_f8",
+    "class": "mb-3",
+    "group": "prices"
+  },
+  {
     "label": "labels.membership.insurance_fee_f9",
     "type": "text",
     "name": "insurance_fee_f9",
     "id": "insurance_fee_f9",
+    "class": "mb-3",
+    "group": "prices"
+  },
+  {
+    "label": "labels.membership.insurance_coverage_f9",
+    "type": "text",
+    "name": "insurance_coverage_f9",
+    "id": "insurance_coverage_f9",
     "class": "mb-3",
     "group": "prices"
   },

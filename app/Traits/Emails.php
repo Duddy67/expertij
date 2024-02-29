@@ -175,6 +175,7 @@ trait Emails
             $formula = substr($payment->item, -2);
             $data->insurance_formula = __('labels.membership.insurance_'.$formula);
             $data->insurance_fee = $prices['insurance_fee_'.$formula];
+            $data->insurance_coverage = $prices['insurance_coverage_'.$formula];
 
             // The member wants to pay for both the subscription and the insurance.
             if (str_starts_with($payment->item, 'subscription_insurance_')) {
