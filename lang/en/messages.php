@@ -54,6 +54,7 @@ return [
         'delete_not_auth' => 'You are not authorised to delete groups.',
     ],
     'membership' => [
+        'create_success' => 'Membership application successfully created.',
         'update_success' => 'Membership successfully updated.',
         'licences_update_success' => 'Licence(s) successfully updated.',
         'professional_status_info_required' => 'The :attribute field is required.',

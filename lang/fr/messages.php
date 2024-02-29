@@ -54,6 +54,7 @@ return [
         'delete_not_auth' => 'Vous n\'êtes pas autorisé(e) à supprimer des groupes.',
     ],
     'membership' => [
+        'create_success' => 'Votre demande d\'adhésion a été créée avec succès. Un administrateur va en être averti.',
         'update_success' => 'Adhésion mise à jour avec succès.',
         'licences_update_success' => 'Certificat(s) mis à jour avec succès.',
         'professional_status_info_required' => 'Le champ :attribute est obligatoire.',

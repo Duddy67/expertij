@@ -189,7 +189,7 @@ class MembershipController extends Controller
             $user->photo()->save($photo);
         }
 
-        $request->session()->flash('success', __('messages.post.create_success'));
+        $request->session()->flash('success', __('messages.membership.create_success'));
 
         // Authenticate the new user.
         Auth::login($user);
