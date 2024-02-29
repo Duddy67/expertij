@@ -243,7 +243,7 @@ trait Emails
     /*
      * Informs the members about the renewal membership.
      */
-    public function renewalAlert($code): bool
+    public function renewalAlert(string $code): bool
     {
         $recipients = User::whereHas('membership', function ($query) {
             $query->where('status', 'pending_renewal');

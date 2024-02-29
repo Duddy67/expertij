@@ -31,9 +31,10 @@
     <input type="hidden" id="checkinItems" value="{{ route('admin.memberships.massCheckIn', $query) }}">
     <input type="hidden" id="publishItems" value="{{ route('admin.memberships.massPublish', $query) }}">
     <input type="hidden" id="unpublishItems" value="{{ route('admin.memberships.massUnpublish', $query) }}">
-    <input type="hidden" id="_checkRenewal" value="{{ route('admin.memberships.checkRenewal', $query) }}">
+    <input type="hidden" id="_renewal" value="{{ route('admin.memberships.renewal', $query) }}">
     <input type="hidden" id="_renewalReminder" value="{{ route('admin.memberships.reminder', $query) }}">
     <input type="hidden" id="_exportList" value="{{ route('admin.memberships.export', $query) }}">
+    <input type="hidden" id="_lastReminderDate" value="{{ $lastReminderDate }}">
     <x-js-messages />
 
     <form id="selectedItems" action="{{ route('admin.memberships.index', $query) }}" method="post">

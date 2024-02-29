@@ -64,8 +64,10 @@ class MembershipController extends Controller
         $rows = $this->getRows($columns, $items);
         $query = $request->query();
         $url = ['route' => 'admin.memberships', 'item_name' => 'membership', 'query' => $query];
+        $lastReminderDate = Setting::getValue('flags', 'last_reminder_date', 0, Membership::class);
+        $lastReminderDate = ($lastReminderDate) ? Carbon::create($lastReminderDate)->format('d/m/Y H:i') : __('labels.generic.none');
 
-        return view('admin.membership.list', compact('items', 'columns', 'rows', 'actions', 'filters', 'url', 'query'));
+        return view('admin.membership.list', compact('items', 'columns', 'rows', 'actions', 'filters', 'url', 'lastReminderDate', 'query'));
     }
 
     /**
@@ -199,49 +201,36 @@ class MembershipController extends Controller
         return redirect()->route('admin.memberships.index', $request->query())->with($messages);
     }
 
-    public function checkRenewal(Request $request)
+    /*
+     * Check the renewal period and send emails to the members accordingly. 
+     */
+    public function renewal(Request $request)
     {
-        $renewal = $this->setRenewal();
-        $message = ['info'];
+        $renewal = $this->checkRenewal();
 
-        // Send emails to members if needed.
-
+        // The renewal period has started.
         if ($renewal == 'start_renewal') {
-            // send emails to members.
+            // Send emails to the members.
+            $this->renewalAlert('pending-renewal');
         }
 
-        $reminder = $this->setReminder();
-
-        if ($reminder == 'reminder_time') {
-            // send reminder emails to members.
-        }
-
-        // Set the message according to the renewal and reminder states.
-
-        if ($renewal == 'all_clear' && $reminder == 'all_clear') {
-            $message['info'] = __('messages.membership.all_clear');
-        }
-        elseif ($renewal != 'all_clear' && $reminder != 'all_clear') {
-            $message['info'] = __('messages.membership.'.$renewal).' '.__('messages.membership.'.$reminder);
-        }
-        elseif ($renewal != 'all_clear') {
-            $message['info'] = __('messages.membership.'.$renewal);
-        }
-        elseif ($reminder != 'all_clear') {
-            $message['info'] = __('messages.membership.'.$reminder);
-        }
-
-        return redirect()->route('admin.memberships.index', $request->query())->with($message);
+        return redirect()->route('admin.memberships.index', $request->query())->with('info', __('messages.membership.'.$renewal));
     }
 
     public function renewalReminder(Request $request)
     {
         // Do not send reminder during the renewal period.
         if ($this->isRenewalPeriod()) {
-            return redirect()->route('admin.memberships.index', $request->query())->with(__('messages.membership.renewal_period_running'));
+            return redirect()->route('admin.memberships.index', $request->query())->with('info', __('messages.membership.renewal_period_no_reminders'));
         }
-//file_put_contents('debog_file.txt', print_r($request->all(), true));
-        return redirect()->route('admin.memberships.index', $request->query())->with('success', 'emails sent');
+
+        // Alert the members who haven't paid their membership fee yet.
+        $this->renewalAlert('pending-renewal-reminder');
+
+        // Update the last reminder date.
+        MembershipSetting::setLastReminderDate(Carbon::now(Setting::getValue('app', 'timezone'))->format('Y-m-d H:i'));
+
+        return redirect()->route('admin.memberships.index', $request->query())->with('info', __('messages.membership.reminder_emails_sent'));
     }
 
     public function export(Request $request)

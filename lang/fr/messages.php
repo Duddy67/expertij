@@ -69,7 +69,9 @@ return [
         'stop_renewal' => 'La période de renouvellement a été réinitialisée.',
         'reminder_time' => 'Un email de rappel a été envoyé aux adhérents qui n\'ont pas encore payé leur cotisation.',
         'stop_reminder_time' => 'L\'envoi de l\'email de rappel a été réinitialisée.',
-        'all_clear' => 'Aucune action n\'a été effectuée.',
+        'no_renewal_action' => 'La période de renouvellement est terminée ou le processus de renouvellement a déjà été lancé. Aucune action n\'a été effectuée.',
+        'reminder_emails_sent' => 'Les emails de rappel ont bien été envoyés aux membres.',
+        'renewal_period_no_reminders' => 'Les emails de rappel ne peuvent pas être envoyés durant la période de renouvellement.',
     ],
     'post' => [
         'create_success' => 'Post créé avec succès.',
@@ -190,5 +192,6 @@ return [
         'free_period_payment_confirmation' => 'Compte tenu de votre adhésion tardive pour cette année, l\'adhésion pour l\'année suivante est gratuite. Souhaitez vous continuer ?',
         'sending_emails_confirmation' => 'Ceci enverra un email de notification aux utilisateurs concernés. Etes vous sûr(e) ?',
         'export_list_confirmation' => 'Ceci exportera la liste d\'adhérents ci-dessous dans un fichier csv. Etes vous sûr(e) ?',
+        'renewal_reminder_confirmation' => "Ceci enverra un email de rappel aux adhérents n'ayant toujours pas réglé leur cotisation.\nEtes vous sûr(e) ?\nDernier envoi: ",
     ]
 ];

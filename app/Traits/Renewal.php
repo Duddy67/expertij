@@ -12,6 +12,9 @@ use Carbon\Carbon;
 
 trait Renewal
 {
+    /*
+     * Returns the running renewal date.
+     */
     public function getRenewalDate(): Carbon
     {
         $renewal = Setting::getDataByGroup('renewal', Membership::class);
@@ -19,6 +22,9 @@ trait Renewal
         return new Carbon(date('Y').'-'.$renewal['month'].'-'.$renewal['day']);
     }
 
+    /*
+     * Returns the new renewal date.
+     */
     public function getLatestRenewalDate(): Carbon
     {
         $renewal = $this->getRenewalDate(); 
@@ -43,34 +49,6 @@ trait Renewal
         return ($today->greaterThanOrEqualTo($renewalPeriodStart)) ? true : false;
     }
 
-    /*
-     * Checks if it's time to send a reminder to the members.
-     */
-    public function isReminderTime(): bool
-    {
-        $today = Carbon::today();
-        $days = Setting::getValue('renewal', 'reminder', '0', Membership::class);
-
-        // The reminder time starts x days before the renewal date.
-        if (str_starts_with($days, '-')) {
-            $days = ltrim($days, '-');
-            // Subtract x days before the renewal date.
-            $reminderTime = $this->getLatestRenewalDate()->subDays($days);
-            // The renewal date is the end of the reminder time.
-            $endReminderTime = $this->getLatestRenewalDate();
-        }
-        // The reminder time starts x days after the renewal date.
-        else {
-            // Add x days after the renewal date.
-            $reminderTime = $this->getRenewalDate()->addDays($days);
-            // Add x more days to end the reminder time.
-            $days = $days * 2;
-            $endReminderTime = $this->getRenewalDate()->addDays($days);
-        }
-
-        return ($today->greaterThanOrEqualTo($reminderTime) && $today->lessThan($endReminderTime)) ? true : false;
-    }
-
     public function isFreePeriod(): bool
     {
         $renewal = $this->getRenewalDate(); 
@@ -84,7 +62,7 @@ trait Renewal
         return ($today->greaterThanOrEqualTo($freePeriodStart) && $today->lessThan($renewal)) ? true : false;
     }
 
-    public function setRenewal(): string
+    public function checkRenewal(): string
     {
         $runningRenewalDate = Setting::getDataByGroup('running_renewal_date', Membership::class);
         // Set to the current renewal date in case the $runningRenewalDate variable is null.
@@ -93,11 +71,11 @@ trait Renewal
         // The renewal period has started.
         if ($this->isRenewalPeriod() && $runningRenewalDate->lessThan($this->getLatestRenewalDate())) {
             // Reset all the member statuses to pending_renewal
-            //Membership::where('status', 'member')->update(['status' => 'pending_renewal']);
+            Membership::where('status', 'member')->update(['status' => 'pending_renewal']);
             // Cancel all the possible old pending payments.
-            /*Payment::where('status', 'pending')->whereHas('membership', function ($query) {
+            Payment::where('status', 'pending')->whereHas('membership', function ($query) {
                 $query->where('status', 'pending_renewal');
-            })->update(['status' => 'cancelled']);*/
+            })->update(['status' => 'cancelled']);
 
             // Set the flag to the new running renewal date (ie: the latest renewal date).
             MembershipSetting::setRunningRenewalDate($this->getLatestRenewalDate()->format('Y-m-d'));
@@ -105,25 +83,8 @@ trait Renewal
             return 'start_renewal';
         }
 
-        return 'all_clear';
-    }
-
-    public function setReminder(): string
-    {
-        /*if (!MembershipSetting::checkFlag('renewal_reminder') && $this->isReminderTime()) {
-            // Activate the reminder flag.
-            MembershipSetting::toggleFlag('renewal_reminder');
-
-            return 'reminder_time';
-        }
-        elseif (MembershipSetting::checkFlag('renewal_reminder') && !$this->isReminderTime()) {
-            // Deactivate the reminder flag.
-            MembershipSetting::toggleFlag('renewal_reminder');
-
-            return 'stop_reminder_time';
-        }*/
-
-        return 'all_clear';
+        // No action has been performed.
+        return 'no_renewal_action';
     }
 }
 

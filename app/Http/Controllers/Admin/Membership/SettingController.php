@@ -60,7 +60,7 @@ class SettingController extends Controller
     {
         $post = $request->except('_token', '_method', '_tab');
         $this->truncateSettings();
-//file_put_contents('debog_file.txt', print_r($post, true));
+
         foreach ($post as $group => $params) {
           foreach ($params as $key => $value) {
               Setting::create(['group' => $group, 'key' => $key, 'value' => $value]);

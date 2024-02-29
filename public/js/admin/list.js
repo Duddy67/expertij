@@ -3,7 +3,7 @@
 
     // Run a function when the page is fully loaded including graphics.
     $(window).on('load', function() {
-	let actions = ['create', 'massDestroy', 'batch', 'checkin', 'publish', 'unpublish', 'checkRenewal', 'exportList', 'renewalReminder'];
+	let actions = ['create', 'massDestroy', 'batch', 'checkin', 'publish', 'unpublish', 'renewal', 'exportList', 'renewalReminder'];
 
 	actions.forEach(function (action) {
 	    $('#'+action).click( function() { $.fn[action](); });
@@ -169,9 +169,9 @@
 	}
     }
 
-    $.fn.checkRenewal = function() {
+    $.fn.renewal = function() {
         if (window.confirm(messages.confirm_renewal_process)) {
-            window.location.href = $('#_checkRenewal').val();
+            window.location.href = $('#_renewal').val();
         }
     }
 
@@ -182,7 +182,10 @@
     }
 
     $.fn.renewalReminder = function() {
-        if (window.confirm(messages.export_list_confirmation)) {
+        const lastReminderDate = document.getElementById('_lastReminderDate').value;
+        const message = messages.renewal_reminder_confirmation + lastReminderDate;
+
+        if (window.confirm(message)) {
             window.location.href = $('#_renewalReminder').val();
         }
     }

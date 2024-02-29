@@ -69,7 +69,9 @@ return [
         'stop_renewal' => 'The renewal period has been reset.',
         'reminder_time' => 'A reminder email has been sent to the members who haven\'t pay their subscription yet.',
         'stop_reminder_time' => 'The reminder sending period has been reset.',
-        'all_clear' => 'No action has been performed.',
+        'no_renewal_action' => 'The renewal period is over or the renewal has already been performed. No action has been performed.',
+        'reminder_emails_sent' => 'The reminder emails have been sent to the members.',
+        'renewal_period_no_reminders' => 'Reminder emails cannot be sent during the renewal period.',
     ],
     'post' => [
         'create_success' => 'Post successfully created.',
@@ -190,5 +192,6 @@ return [
         'free_period_payment_confirmation' => 'Compte tenu de votre adhésion tardive pour cette année, l\'adhésion pour l\'année suivante est gratuite. Souhaitez vous continuer ?',
         'sending_emails_confirmation' => 'This will send an email to the concerned users. Are you sure ?',
         'export_list_confirmation' => 'This will export the member list below through a csv file. Are you sure ?',
+        'renewal_reminder_confirmation' => 'This will send an reminder to the members who haven\'t paid their membership fee yet. Are you sure ?',
     ]
 ];

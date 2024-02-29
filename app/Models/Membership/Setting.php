@@ -72,12 +72,9 @@ class Setting extends Model
         return $options;
     }
 
-    /*
-     * Returns the current state (activated/deactivated) of a given flag.
-     */
-    public static function checkFlag($name): bool
+    public static function setLastReminderDate(string $date)
     {
-        return ((int)Setting::where('group', 'flags')->where('key', $name)->value('value')) ? true : false;
+        Setting::where('group', 'flags')->where('key', 'last_reminder_date')->update(['value' => $date]);
     }
 
     public static function setRunningRenewalDate(string $date)

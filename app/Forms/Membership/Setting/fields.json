@@ -29,14 +29,6 @@
     "group": "renewal"
   },
   {
-    "label": "labels.membership.renewal_reminder",
-    "type": "text",
-    "name": "reminder",
-    "id": "reminder",
-    "class": "mb-3",
-    "group": "renewal"
-  },
-  {
     "label": "labels.membership.free_period",
     "type": "text",
     "name": "free_period",
@@ -135,14 +127,8 @@
   },
   {
     "type": "hidden",
-    "name": "renewal_reset",
-    "id": "renewal_reset",
-    "group": "flags"
-  },
-  {
-    "type": "hidden",
-    "name": "renewal_reminder",
-    "id": "renewal_reminder",
+    "name": "last_reminder_date",
+    "id": "last_reminder_date",
     "group": "flags"
   },
   {

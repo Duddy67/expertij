@@ -28,7 +28,7 @@
 	"type": "button"
       },
       {
-	"id": "checkRenewal",
+	"id": "renewal",
 	"label": "labels.membership.renewal",
         "class": "btn-success",
         "icon": "fa fa-repeat",

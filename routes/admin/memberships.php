@@ -24,7 +24,7 @@ Route::get('/memberships/cancel/{membership?}', [AdminMembershipController::clas
 Route::put('/memberships/checkin', [AdminMembershipController::class, 'massCheckIn'])->name('admin.memberships.massCheckIn');
 Route::put('/memberships/publish', [AdminMembershipController::class, 'massPublish'])->name('admin.memberships.massPublish');
 Route::put('/memberships/unpublish', [AdminMembershipController::class, 'massUnpublish'])->name('admin.memberships.massUnpublish');
-Route::get('/memberships/check-renewal', [AdminMembershipController::class, 'checkRenewal'])->name('admin.memberships.checkRenewal');
+Route::get('/memberships/renewal', [AdminMembershipController::class, 'renewal'])->name('admin.memberships.renewal');
 Route::get('/memberships/export', [AdminMembershipController::class, 'export'])->name('admin.memberships.export');
 Route::get('/memberships/reminder', [AdminMembershipController::class, 'renewalReminder'])->name('admin.memberships.reminder');
 Route::put('/memberships/send-emails/{membership}', [AdminMembershipController::class, 'sendEmails'])->name('admin.memberships.sendEmails');
