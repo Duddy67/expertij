@@ -183,6 +183,7 @@ return [
 	'vote' => 'Voter',
 	'votes' => 'Votes',
 	'voting' => 'Vote',
+	'coverage' => 'Couverture',
     ],
     'sharing' => [
 	'create_sharing' => 'Créer un partage de document',
@@ -392,6 +393,8 @@ return [
         'invoices' => 'Factures',
         'invoice' => 'Facture',
         'resume' => 'Curriculum vitae',
+        'running' => 'En cours',
+        'expired' => 'Expiré(e)',
     ],
     'filter' => [
 	'search' => 'Recherche',

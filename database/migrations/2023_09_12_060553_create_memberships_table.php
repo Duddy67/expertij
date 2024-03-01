@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('memberships', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->unsignedBigInteger('insurance_id')->nullable();
             $table->string('status', 20);
             $table->char('access_level', 10)->default('public_ro');
             $table->boolean('member_list')->default(0);
@@ -25,6 +24,7 @@ return new class extends Migration
             $table->string('member_number', 30)->nullable();
             $table->boolean('associated_member')->default(0);
             $table->boolean('free_period')->default(0);
+            $table->char('insurance_code', 3)->nullable();
             $table->string('professional_status', 20);
             $table->string('professional_status_info', 30)->nullable();
             $table->unsignedSmallInteger('since');

@@ -17,7 +17,6 @@ use App\Models\Cms\Setting;
 use App\Models\User;
 use App\Models\Cms\Document;
 use App\Models\Cms\Payment;
-use App\Models\Membership\Insurance;
 use App\Models\Membership\Licence;
 use App\Models\Membership\Language;
 use App\Models\Membership\Jurisdiction;
@@ -77,14 +76,6 @@ class Membership extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    /**
-     * Get the insurance that owns the membership.
-     */
-    public function insurance(): BelongsTo
-    {
-        return $this->belongsTo(Insurance::class);
     }
 
     /**
@@ -352,17 +343,6 @@ class Membership extends Model
     }
 
     /*
-     *  Checks whether the membership has an insurance.
-     */
-    public function hasInsurance(): bool
-    {
-        // Get the last payment.
-        $payment = $this->payments->last();
-
-        return ($payment && str_contains($payment->item, 'insurance') && $payment->status != 'cancelled') ? true : false;
-    }
-
-    /*
      *  Checks whether the membership has a pending payment.
      */
     public function hasPendingPayment(): bool
@@ -461,6 +441,41 @@ class Membership extends Model
         $newNumber = $lastNumber + 1;
 
         return date('Y').'-'.$newNumber.'-'.$letter;
+    }
+
+    /*
+     *  Checks whether the membership has an insurance.
+     */
+    public function hasInsurance(): bool
+    {
+        return ($this->insurance_code) ? true : false;
+    }
+
+    public function getInsurance()
+    {
+        if ($this->insurance_code === null) {
+            return null;
+        }
+
+        $prices = Setting::getDataByGroup('prices', $this);
+        $insurance = new \stdClass();
+        $insurance->name = __('labels.membership.insurance_'.$this->insurance_code);
+        $insurance->price = $prices['insurance_fee_'.$this->insurance_code];
+        $insurance->coverage = $prices['insurance_coverage_'.$this->insurance_code];
+
+        return $insurance;
+    }
+
+    public function setInsurance($code)
+    {
+        $this->insurance_code = $code;
+        $this->save();
+    }
+
+    public function cancelInsurance()
+    {
+        $this->insurance_code = null;
+        $this->save();
     }
 
     public function createSubscriptionInvoice(Payment $payment)

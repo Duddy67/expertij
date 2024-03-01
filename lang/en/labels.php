@@ -183,6 +183,7 @@ return [
 	'vote' => 'Vote',
 	'votes' => 'Votes',
 	'voting' => 'Voting',
+	'coverage' => 'Coverage',
     ],
     'sharing' => [
 	'create_sharing' => 'Create a document sharing',
@@ -391,6 +392,8 @@ return [
         'invoices' => 'Invoices',
         'invoice' => 'Invoice',
         'resume' => 'Resumé',
+        'running' => 'Running',
+        'expired' => 'Expired',
     ],
     'filter' => [
 	'search' => 'Search',

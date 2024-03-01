@@ -298,6 +298,21 @@ class MembershipController extends Controller
         $payment->status = $request->input('payment_status');
         $payment->save();
 
+        // Set insurance.
+
+        if ($payment->item == 'subscription') {
+            // Cancel a possible previous insurance.
+            $membership->cancelInsurance();
+        }
+        else {
+            // Get the insurance code from the item variable.
+            $code = substr($payment->item, -2);
+            // Add the insurance to the membership.
+            $membership->setInsurance($code);
+        }
+
+        // Create the invoices.
+
         if ($payment->status == 'completed') {
             // Create an invoice for the payment according to the purchased item.
             if ($payment->item == 'subscription') {

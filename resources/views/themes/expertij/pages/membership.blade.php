@@ -24,6 +24,13 @@
                 <label for="status">{{ __('labels.generic.status') }}</label>
                 <input type="text" name="_status" class="form-control" id="status" value="{{ __('labels.membership.'.$membership->status) }}" disabled>
             </div>
+
+            @if ($membership->status == 'member' && $membership->hasInsurance())
+                <div class="col-md-6 form-group">
+                    <label for="status">{{ __('labels.membership.insurance') }}</label>
+                    <input type="text" name="_insurance" class="form-control" id="insurance" value="{{ __('labels.membership.insurance_'.$membership->insurance_code) }}" disabled>
+                </div>
+            @endif
         </div>
 
         <div class="tab-pane" id="licences">
