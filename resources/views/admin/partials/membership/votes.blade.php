@@ -1,9 +1,5 @@
 
-@if (empty($membership->votes)) 
-    <div class="alert alert-info" role="alert">
-        {{ __('messages.generic.no_item_found') }}
-    </div>
-@else
+@if ($membership->votes->count()) 
     <table class="table table-striped">
         <thead>
             <tr>
@@ -24,4 +20,8 @@
             @endforeach
         </tbody>
     </table>
+@else
+    <div class="alert alert-info" role="alert">
+        {{ __('messages.generic.no_item_found') }}
+    </div>
 @endif

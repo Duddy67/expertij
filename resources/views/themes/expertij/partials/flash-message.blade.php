@@ -29,7 +29,7 @@
 @if ($errors->any())
     <div class="alert alert-danger flash-message">
 	<button type="button" class="btn-close" data-bs-dismiss="alert"></button>	
-	Please check the form below for errors
+        {{ __('messages.generic.form_errors') }}
     </div>
 @endif
 

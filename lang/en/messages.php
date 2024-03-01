@@ -178,6 +178,7 @@ return [
         'cheque_payment_success' => 'Your cheque payment has been successfully taken into account.',
         'bank_transfer_payment_success' => 'Your bank transfer payment has been successfully taken into account.',
         'free_period_privilege_success' => 'Your free period privilege has been successfully taken into account.',
+        'form_errors' => 'Please check the form below for errors.',
     ],
     'js_messages' => [
         'status_change_confirmation' => 'The member status is about to be changed. Are you sure ?',

@@ -178,6 +178,7 @@ return [
         'cheque_payment_success' => 'Votre paiement par chèque a été pris en compte avec succès.',
         'bank_transfer_payment_success' => 'Votre paiement par transfert banquaire a été pris en compte avec succès.',
         'free_period_privilege_success' => 'Votre privilège de gratuité a été pris en compte avec succès.',
+        'form_errors' => 'Veuillez vérifier les champs dans le formulaire ci-dessous.',
     ],
     'js_messages' => [
         'status_change_confirmation' => 'Le statut de l\'adhérent(e) est sur le point d\'être changé. Etes vous sûr(e) ?',
