@@ -124,6 +124,11 @@ class Sharing extends Model
         $documents = [];
         $query = '';
 
+        // Documents are not shared with associated members.
+        if ($membership->associated_member) {
+            return $documents;
+        }
+
         // Build a query with brackets for each licence type.
         foreach ($membership->licences as $licence) {
             $query .= '(`licence_types` LIKE "%'.$licence->type.'%" AND ';
