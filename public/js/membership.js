@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Hides the irrelevant tabs for associated members in the membership space.
-    if (document.getElementById('_isAssociatedMember')) {
+    if (document.getElementById('_isAssociatedMember') && document.getElementById('_isAssociatedMember').value == 1) {
         // Associated members have no licence and no professional status.
         document.getElementById('licences-tab').style.display = 'none';
         document.getElementById('professional_information-tab').style.display = 'none';
