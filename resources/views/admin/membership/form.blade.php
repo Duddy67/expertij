@@ -10,6 +10,7 @@
         @method('put')
 
          @php $value = (isset($membership)) ? old('name', $membership->user->name) : old('name'); @endphp
+         @php $value = ($membership->associated_member) ? $value.' ('.__('labels.membership.associated_member').')' : $value; @endphp
          <x-input :field="$fields[0]" :value="$value" />
          @php array_shift($fields); // Remove the very first field (ie: name) from the array. @endphp
 
@@ -43,6 +44,7 @@
                     $dataTab = null;
                     $dateFormats = [];
             @endphp
+
             @foreach ($fields as $key => $field)
                 @if (isset($field->tab))
                     @php $active = ($field->tab == 'membership') ? 'show active' : '';
@@ -128,6 +130,7 @@
             <input type="hidden" id="_locale" value="{{ config('app.locale') }}">
             <input type="hidden" id="_sendingEmails" value="{{ $membership->sending_emails }}">
             <input type="hidden" id="_currentStatus" value="{{ $membership->status }}">
+            <input type="hidden" id="_isAssociatedMember" value="{{ $membership->associated_member }}">
         @endif
 
         @foreach ($dateFormats as $key => $value)

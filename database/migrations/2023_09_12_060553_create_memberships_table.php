@@ -25,11 +25,11 @@ return new class extends Migration
             $table->boolean('associated_member')->default(0);
             $table->boolean('free_period')->default(0);
             $table->char('insurance_code', 3)->nullable();
-            $table->string('professional_status', 20);
+            $table->string('professional_status', 20)->nullable();
             $table->string('professional_status_info', 30)->nullable();
-            $table->unsignedSmallInteger('since');
-            $table->string('siret_number', 14);
-            $table->string('naf_code', 5);
+            $table->unsignedSmallInteger('since')->nullable();
+            $table->string('siret_number', 14)->nullable();
+            $table->string('naf_code', 5)->nullable();
             $table->text('linguistic_training')->nullable();
             $table->text('extra_linguistic_training')->nullable();
             $table->text('professional_experience')->nullable();

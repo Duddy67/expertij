@@ -8,6 +8,12 @@
            document.getElementById('sendEmails').disabled = true
         }
 
+        if (document.getElementById('_isAssociatedMember').value == 1) {
+            // Associated members have no licence and no professional status.
+            document.getElementById('licences-tab').style.display = 'none';
+            document.getElementById('professional_information-tab').style.display = 'none';
+        }
+
         if (document.getElementById('professional_status').value != 'other') {
             document.getElementById('professional_status_info').style.display = 'none'; 
             document.querySelector('label[for="professional_status_info"]').style.display = 'none'; 
