@@ -50,6 +50,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Hides the irrelevant tabs for associated members in the membership space.
+    if (document.getElementById('_isAssociatedMember')) {
+        // Associated members have no licence and no professional status.
+        document.getElementById('licences-tab').style.display = 'none';
+        document.getElementById('professional_information-tab').style.display = 'none';
+    } 
+
     // Set the jurisdiction type (appeal_court / court) for each licence type (expert / ceseda).
     function switchJurisdiction(element) {
         if (element.checked) {
