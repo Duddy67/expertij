@@ -20,12 +20,13 @@ use App\Models\Cms\Setting;
 use App\Models\Cms\Address;
 use App\Models\Cms\Document;
 use App\Traits\Emails;
+use App\Traits\Renewal;
 use App\Http\Requests\Membership\StoreRequest;
 use App\Http\Requests\Membership\UpdateRequest;
 
 class MembershipController extends Controller
 {
-    use Emails, Form;
+    use Emails, Form, Renewal;
 
     /*
      * Instance of the membership model.
@@ -128,6 +129,8 @@ class MembershipController extends Controller
                 'professional_experience' => $request->input('professional_experience'),
                 'observations' => $request->input('observations'),
                 'why_expertij' => $request->input('why_expertij'),
+                // Check for free period.
+                'free_period' => $this->isFreePeriod(),
                 // New subscriptions are pending by default.
                 'status' => 'pending',
                 'owned_by' => $user->id,
@@ -183,6 +186,21 @@ class MembershipController extends Controller
                     }
                 }
             }
+        }
+        // associated member
+        else {
+            // Associate members have no licences nor professional status, information etc...
+            $membership = new Membership([
+                // New subscriptions are pending by default.
+                'status' => 'pending',
+                'owned_by' => $user->id,
+                // Check for free period.
+                'free_period' => $this->isFreePeriod(),
+                'associated_member' => true,
+            ]);
+
+            // Set the relationship with the parent model.
+            $user->membership()->save($membership);
         }
 
         if ($photo = $this->uploadDocument($request, 'photo')) {

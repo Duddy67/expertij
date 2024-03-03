@@ -52,6 +52,8 @@ class Membership extends Model
         'professional_experience',
         'observations',
         'why_expertij',
+        'associated_member',
+        'free_period',
         'owned_by',
     ];
 
