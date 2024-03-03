@@ -41,7 +41,9 @@
             </div>
         </div>
         <input type="hidden" id="backUrl" value="{{ route('memberships.applicants') }}">
+        <input type="hidden" id="_isAssociatedMember" value="{{ $membership->associated_member }}">
     </form>
+    <x-js-messages />
 @endif
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -58,6 +60,11 @@
 
         <div class="tab-content">
             <div class="tab-pane show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+            @if ($membership->associated_member)
+                <input type="text" class="form-control mt-4" value="{{ __('labels.membership.associated_member') }}" disabled="">
+            @endif
+
                 @include('admin.partials.membership.profile', ['user' => $membership->user])
             </div>
 

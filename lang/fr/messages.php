@@ -195,5 +195,6 @@ return [
         'sending_emails_confirmation' => 'Ceci enverra un email de notification aux utilisateurs concernés. Etes vous sûr(e) ?',
         'export_list_confirmation' => 'Ceci exportera la liste d\'adhérents ci-dessous dans un fichier csv. Etes vous sûr(e) ?',
         'renewal_reminder_confirmation' => "Ceci enverra un email de rappel aux adhérents n'ayant toujours pas réglé leur cotisation.\nEtes vous sûr(e) ?\nDernier envoi: ",
+        'applicant_vote_confirmation' => "Ceci validera votre vote auprès des administrateurs.\nEtes vous sûr(e) ?",
     ]
 ];

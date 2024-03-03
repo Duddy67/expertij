@@ -195,5 +195,6 @@ return [
         'sending_emails_confirmation' => 'This will send an email to the concerned users. Are you sure ?',
         'export_list_confirmation' => 'This will export the member list below through a csv file. Are you sure ?',
         'renewal_reminder_confirmation' => 'This will send an reminder to the members who haven\'t paid their membership fee yet. Are you sure ?',
+        'applicant_vote_confirmation' => "This will validate your vote with the administrators.\nAre you sure ?",
     ]
 ];

@@ -41,7 +41,8 @@ Route::put('/memberships/licences', [MembershipController::class, 'updateLicence
 Route::get('/memberships/create', [MembershipController::class, 'create'])->name('memberships.create');
 Route::get('/memberships/edit', [MembershipController::class, 'edit'])->name('memberships.edit');
 Route::get('/memberships/applicants', [MembershipController::class, 'applicants'])->name('memberships.applicants');
-Route::get('/memberships/applicants/{membership}/checkout', [MembershipController::class, 'checkoutApplicant'])->name('memberships.applicants.checkout');
+// Note: Call the route memberships.applicants.edit instead of memberships.applicants.checkout to fit the item-list component logic.
+Route::get('/memberships/applicants/{membership}/checkout', [MembershipController::class, 'checkoutApplicant'])->name('memberships.applicants.edit');
 Route::put('/memberships/applicants/{membership}', [MembershipController::class, 'vote'])->name('memberships.applicants.vote');
 Route::put('/memberships', [MembershipController::class, 'update'])->name('memberships.update');
 Route::post('/memberships', [MembershipController::class, 'store'])->name('memberships.store');
