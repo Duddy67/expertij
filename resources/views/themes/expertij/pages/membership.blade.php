@@ -125,19 +125,24 @@
                         <div class="text-danger" id="resumeError"></div>
                     </div>
                 </div>
-                <div class="row">
-                <div class="col-md-6 form-group" id="attestation-file-button">
-                    @include('themes.expertij.partials.membership.edit.document-file-button', ['fileUrl' => $membership->professionalAttestation->getUrl(), 'fileName' => $membership->professionalAttestation->file_name])
-                </div>
-                <div class="col-md-6 form-group" id="resume-file-button">
-                @if ($membership->resume)
-                    @include('themes.expertij.partials.membership.edit.document-file-button', ['fileUrl' => $membership->resume->getUrl(), 'fileName' => $membership->resume->file_name])
-                @else
-                    @include('themes.expertij.partials.membership.edit.missing-document-button')
+
+                @if (!$membership->associated_member)
+                    <div class="row">
+                        <div class="col-md-6 form-group" id="attestation-file-button">
+                            @include('themes.expertij.partials.membership.edit.document-file-button', ['fileUrl' => $membership->professionalAttestation->getUrl(), 'fileName' => $membership->professionalAttestation->file_name])
+                        </div>
+                        <div class="col-md-6 form-group" id="resume-file-button">
+                        @if ($membership->resume)
+                            @include('themes.expertij.partials.membership.edit.document-file-button', ['fileUrl' => $membership->resume->getUrl(), 'fileName' => $membership->resume->file_name])
+                        @else
+                            @include('themes.expertij.partials.membership.edit.missing-document-button')
+                        @endif
+                        </div>
+                    </div>
                 @endif
-                </div>
-                </div>
+
                 <input type="hidden" id="_locale" value="{{ config('app.locale') }}">
+                <input type="hidden" id="_isAssociatedMember" value="{{ $membership->associated_member }}">
             </form>
             <div class="row mt-5 d-flex align-items-center justify-content-center">
                 <div class="col-md-6 offset-md-4">
