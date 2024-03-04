@@ -40,7 +40,7 @@ class MembershipController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['create', 'store', 'createItem', 'deleteItem', 'pdf']]);
+        $this->middleware('auth', ['except' => ['create', 'store', 'createItem', 'deleteItem', 'members']]);
         $this->middleware('membership.registration', ['only' => ['create', 'store']]);
         $this->middleware('membership.edit', ['only' => ['edit', 'update']]);
         $this->middleware('membership.vote', ['only' => ['applicants', 'checkoutApplicant', 'vote']]);
@@ -48,13 +48,16 @@ class MembershipController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the members.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function members(Request $request)
     {
-        //
+        $members = Membership::getMembers($request, $this->item->isRenewalPeriod());
+        $page = Setting::getPage('membership.members');
+
+        return view('themes.'.$page['theme'].'.index', compact('page', 'members'));
     }
 
     /**

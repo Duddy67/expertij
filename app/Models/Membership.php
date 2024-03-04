@@ -234,6 +234,24 @@ class Membership extends Model
         return storage_path('app/tmp/'.$file);
     }
 
+    public static function getMembers(Request $request, bool $isRenewalPeriod)
+    {
+        $perPage = $request->input('per_page', Setting::getValue('pagination', 'per_page'));
+        $search = $request->input('search', null);
+
+        $query = Membership::query();
+        $query->select('memberships.*', 'users.first_name as first_name', 'users.last_name as last_name', 'users.email as email')
+              ->leftJoin('users', 'memberships.user_id', '=', 'users.id');
+
+        $whereIn = ($isRenewalPeriod) ? ['pending_renewal', 'members'] : ['members'];
+
+        $query->where('associated_member', 0)
+              ->where('member_list', 1)
+              ->whereIn('status', $whereIn);
+
+        return $query->paginate($perPage);
+    }
+
     public function getLicenceTypeOptions(): array
     {
         return [
