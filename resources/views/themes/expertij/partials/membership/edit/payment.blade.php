@@ -46,20 +46,20 @@
         <tr>
           <td>
             <input type="radio" id="free-period" name="payment_mode" value="free_period" checked>
-            Free Period
+            {{ __('labels.membership.free_period') }}
           </td>
         </tr>
     @else
         <tr>
           <td>
             <input type="radio" id="cheque" name="payment_mode" value="cheque" checked>
-            Cheque payment
+            {{ __('labels.generic.cheque') }}
           </td>
         </tr>
         <tr>
           <td>
             <input type="radio" id="bank-transfer" name="payment_mode" value="bank_transfer">
-            Bank transfer
+            {{ __('labels.generic.bank_transfer') }}
           </td>
         </tr>
     @endif

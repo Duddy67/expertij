@@ -1,6 +1,6 @@
 
 @if ($membership->votes->count()) 
-    <table class="table table-striped">
+    <table class="table table-striped mt-4">
         <thead>
             <tr>
                 <th scope="col">{{ __('labels.generic.name') }}</th>
