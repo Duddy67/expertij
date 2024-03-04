@@ -129,7 +129,11 @@
                 @if (!$membership->associated_member)
                     <div class="row">
                         <div class="col-md-6 form-group" id="attestation-file-button">
+                        @if ($membership->professionalAttestation)
                             @include('themes.expertij.partials.membership.edit.document-file-button', ['fileUrl' => $membership->professionalAttestation->getUrl(), 'fileName' => $membership->professionalAttestation->file_name])
+                        @else
+                            @include('themes.expertij.partials.membership.edit.missing-document-button')
+                        @endif
                         </div>
                         <div class="col-md-6 form-group" id="resume-file-button">
                         @if ($membership->resume)

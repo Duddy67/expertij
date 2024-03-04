@@ -83,12 +83,17 @@
                 @if (!next($fields) || isset($fields[$key + 1]->tab))
                     @if ($field->name == 'why_expertij')
                         @if ($membership->professionalAttestation)
-                            @include('themes.expertij.partials.membership.edit.document-file-button', ['fileUrl' => $membership->professionalAttestation->getUrl(), 'fileName' => $membership->professionalAttestation->file_name])
+                            @include('themes.expertij.partials.membership.edit.document-file-button', ['fileUrl' => $membership->professionalAttestation->getUrl(), 'fileName' => $membership->professionalAttestation->file_name, 'label' => 'attestation'])
                         @else
-                            @include('themes.expertij.partials.membership.edit.missing-document-button')
+                            @include('themes.expertij.partials.membership.edit.missing-document-button', ['label' => 'attestation'])
+                        @endif
+
+                        @if ($membership->resume)
+                            @include('themes.expertij.partials.membership.edit.document-file-button', ['fileUrl' => $membership->resume->getUrl(), 'fileName' => $membership->resume->file_name, 'label' => 'resume'])
+                        @else
+                            @include('themes.expertij.partials.membership.edit.missing-document-button', ['label' => 'resume'])
                         @endif
                     @endif
-
                 @endif
             @endforeach
                     </div>
