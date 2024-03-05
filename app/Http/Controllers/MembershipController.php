@@ -59,14 +59,13 @@ class MembershipController extends Controller
         $options = $this->getOptions();
         $query = $request->query();
         // Create language array from the language options. 
-        $languageOptions = $this->item->getLanguageOptions();
         $languages = [];
 
-        foreach ($languageOptions as $option) {
+        foreach ($options['language'] as $option) {
            $languages[$option['value']] = $option['text'];
         }
 
-        return view('themes.'.$page['theme'].'.index', compact('page', 'members', 'languages', 'query'));
+        return view('themes.'.$page['theme'].'.index', compact('page', 'members', 'options', 'languages', 'query'));
     }
 
     /**

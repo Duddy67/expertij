@@ -1,7 +1,63 @@
+@push('styles')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
+@endpush
 
 <div class="card">
     <div class="card-body">
+        <form id="item-filters" action="{{ route('memberships.members', $query) }}" method="get">
+            <div class="row">
+                <div class="col">
+                    <label for="languages">@lang ('labels.membership.languages')</label>
+                    <select name="languages[]" multiple id="languages" class="form-select select2">
+                        @foreach ($options['language'] as $option)
+                            <option value="{{ $option['value'] }}">{{ $option['text'] }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
+                <div class="col">
+                    <label for="licence">@lang ('labels.membership.licence')</label>
+                    <select name="licence" id="licence" class="form-select">
+                        <option>- {{ __('labels.generic.all') }} -</option>
+                        @foreach ($options['licence_type'] as $option)
+                            <option value="{{ $option['value'] }}">{{ $option['text'] }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col">
+                    <label for="skill">@lang ('labels.membership.skill')</label>
+                    <select name="skill" id="skill" class="form-select">
+                        <option>- {{ __('labels.generic.all') }} -</option>
+                        <option value="interpreter">{{ __('labels.membership.interpreter') }}</option>
+                        <option value="translator">{{ __('labels.membership.translator') }}</option>
+                    </select>
+                </div>
+
+                <div class="col">
+                    <label for="appeal_courts">@lang ('labels.membership.appeal_courts')</label>
+                    <select name="appeal_courts[]" multiple id="appeal_courts" class="form-select select2">
+                        @foreach ($options['jurisdictions']['appeal_court'] as $option)
+                            <option value="{{ $option['value'] }}">{{ $option['text'] }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col">
+                    <label for="courts">@lang ('labels.membership.courts')</label>
+                    <select name="courts[]" multiple id="courts" class="form-select select2">
+                        @foreach ($options['jurisdictions']['court'] as $option)
+                            <option value="{{ $option['value'] }}">{{ $option['text'] }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 mt-4">
+                    <button type="button" id="clear-search-btn" class="btn btn-space btn-secondary">@lang ('labels.button.clear')</button>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -61,5 +117,7 @@
 <x-pagination :items=$members />
 
 @push ('scripts')
+    <!-- Select2 Plugin -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script type="text/javascript" src="{{ $public }}/js/members.js"></script>
 @endpush
