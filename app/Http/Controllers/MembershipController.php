@@ -56,8 +56,17 @@ class MembershipController extends Controller
     {
         $members = Membership::getMembers($request, $this->item->isRenewalPeriod());
         $page = Setting::getPage('membership.members');
+        $options = $this->getOptions();
+        $query = $request->query();
+        // Create language array from the language options. 
+        $languageOptions = $this->item->getLanguageOptions();
+        $languages = [];
 
-        return view('themes.'.$page['theme'].'.index', compact('page', 'members'));
+        foreach ($languageOptions as $option) {
+           $languages[$option['value']] = $option['text'];
+        }
+
+        return view('themes.'.$page['theme'].'.index', compact('page', 'members', 'languages', 'query'));
     }
 
     /**

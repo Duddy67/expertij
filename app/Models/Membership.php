@@ -54,6 +54,7 @@ class Membership extends Model
         'why_expertij',
         'associated_member',
         'free_period',
+        'member_list',
         'owned_by',
     ];
 
@@ -243,7 +244,8 @@ class Membership extends Model
         $query->select('memberships.*', 'users.first_name as first_name', 'users.last_name as last_name', 'users.email as email')
               ->leftJoin('users', 'memberships.user_id', '=', 'users.id');
 
-        $whereIn = ($isRenewalPeriod) ? ['pending_renewal', 'members'] : ['members'];
+        // Include the members with a pending renewal status during the renewal period.
+        $whereIn = ($isRenewalPeriod) ? ['pending_renewal', 'member'] : ['member'];
 
         $query->where('associated_member', 0)
               ->where('member_list', 1)
