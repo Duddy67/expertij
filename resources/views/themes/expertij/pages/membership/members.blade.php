@@ -4,7 +4,7 @@
 
 <div class="card">
     <div class="card-body">
-        <form id="item-filters" action="{{ route('memberships.members', $query) }}" method="get">
+        <form id="member-filters" action="{{ route('memberships.members', $query) }}" method="get">
             <div class="row">
                 <div class="col">
                     <label for="languages">@lang ('labels.membership.languages')</label>
@@ -15,26 +15,26 @@
                     </select>
                 </div>
 
-                <div class="col">
-                    <label for="licence">@lang ('labels.membership.licence')</label>
-                    <select name="licence" id="licence" class="form-select">
-                        <option>- {{ __('labels.generic.all') }} -</option>
-                        @foreach ($options['licence_type'] as $option)
-                            <option value="{{ $option['value'] }}">{{ $option['text'] }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div class="col">
+                <div class="col" id="skill-col">
                     <label for="skill">@lang ('labels.membership.skill')</label>
-                    <select name="skill" id="skill" class="form-select">
-                        <option>- {{ __('labels.generic.all') }} -</option>
+                    <select name="skill" id="skill" class="form-select select2">
+                        <option value="">- {{ __('labels.generic.all') }} -</option>
                         <option value="interpreter">{{ __('labels.membership.interpreter') }}</option>
                         <option value="translator">{{ __('labels.membership.translator') }}</option>
                     </select>
                 </div>
 
                 <div class="col">
+                    <label for="licence">@lang ('labels.membership.licence')</label>
+                    <select name="licence" id="licence" class="form-select select2">
+                        <option value="">- {{ __('labels.generic.all') }} -</option>
+                        @foreach ($options['licence_type'] as $option)
+                            <option value="{{ $option['value'] }}">{{ $option['text'] }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col" id="appeal_courts-col">
                     <label for="appeal_courts">@lang ('labels.membership.appeal_courts')</label>
                     <select name="appeal_courts[]" multiple id="appeal_courts" class="form-select select2">
                         @foreach ($options['jurisdictions']['appeal_court'] as $option)
@@ -43,7 +43,7 @@
                     </select>
                 </div>
 
-                <div class="col">
+                <div class="col" id="courts-col">
                     <label for="courts">@lang ('labels.membership.courts')</label>
                     <select name="courts[]" multiple id="courts" class="form-select select2">
                         @foreach ($options['jurisdictions']['court'] as $option)
@@ -54,7 +54,10 @@
             </div>
             <div class="row">
                 <div class="col-6 mt-4">
-                    <button type="button" id="clear-search-btn" class="btn btn-space btn-secondary">@lang ('labels.button.clear')</button>
+                    <button type="button" id="search-btn" class="btn btn-space btn-secondary">@lang ('labels.button.search')</button>
+                </div>
+                <div class="col-6 mt-4">
+                    <button type="button" id="clear-btn" class="btn btn-space btn-secondary">@lang ('labels.button.clear')</button>
                 </div>
             </div>
         </form>

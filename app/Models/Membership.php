@@ -239,7 +239,7 @@ class Membership extends Model
     {
         $perPage = $request->input('per_page', Setting::getValue('pagination', 'per_page'));
         $search = $request->input('search', null);
-
+//file_put_contents('debog_file.txt', print_r($request->all(), true));
         $query = Membership::query();
         $query->select('memberships.*', 'users.first_name as first_name', 'users.last_name as last_name', 'users.email as email')
               ->leftJoin('users', 'memberships.user_id', '=', 'users.id');
