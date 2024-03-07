@@ -8,8 +8,8 @@
         <a class="nav-item nav-link active" id="membership-tab" href="#membership" data-bs-toggle="tab">{{ __('labels.title.membership') }}</a>
         <a class="nav-item nav-link" id="licences-tab" href="#licences" data-bs-toggle="tab">{{ __('labels.membership.licences') }}</a>
         <a class="nav-item nav-link" id="professional_information-tab" href="#professional_information" data-bs-toggle="tab">{{ __('labels.membership.professional_status') }}</a>
-        @if ((in_array($membership->status, ['pending_subscription', 'pending_renewal']) && !$membership->hasPendingPayment()) || ($membership->status == 'member' && !$membership->hasInsurance()))
-            @php $label = ($membership->status == 'member' && !$membership->hasInsurance()) ? 'insurances' : 'payment'; @endphp
+        @if ((in_array($membership->status, ['pending_subscription', 'pending_renewal']) && !$membership->hasPendingPayment()) || ($membership->status == 'member' && !$membership->hasInsurance() && !$membership->hasPendingPayment()))
+            @php $label = ($membership->status == 'member' && !$membership->hasInsurance() && !$membership->hasPendingPayment()) ? 'insurances' : 'payment'; @endphp
             <a class="nav-item nav-link" id="payment-tab" href="#payment" data-bs-toggle="tab">{{ __('labels.generic.'.$label) }}</a>
         @endif
 
