@@ -471,7 +471,19 @@ class Membership extends Model
      */
     public function hasInsurance(): bool
     {
-        return ($this->insurance_code) ? true : false;
+        if ($this->insurance_code) {
+            return true;
+        }
+
+        // Check the member's last payment.
+        $payment = $this->getLastPayment();
+
+        // The insurance subscription is on its way.
+        if (str_starts_with($payment->item, 'insurance_') && $payment->status == 'pending') {
+            return true;
+        }
+
+        return false;
     }
 
     public function getInsurance()
