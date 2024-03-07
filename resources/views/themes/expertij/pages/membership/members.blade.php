@@ -74,7 +74,7 @@
                     <div class="col-sm-4">
                         <p class="h4">{{ $member->first_name }} {{ $member->last_name }}</p>
                         <div>
-                            <img src="{{ url('/').$member->user->photo->getThumbnailUrl() }}" width="100" height="100" />
+                            <img src="{{ url('/').$member->user->getThumbnail() }}" width="100" height="100" />
                         </div>
                         <p class="mt-4">
                             {{ $member->user->address->street }}<br />
