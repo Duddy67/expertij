@@ -83,7 +83,15 @@ class MembershipController extends Controller
      */
     public function create()
     {
-        $page = Setting::getPage('membership.registration');
+        // The subscription form is unavailable during the renewal period.
+        $template = ($this->item->isRenewalPeriod()) ? 'unavailable' : 'registration';
+        $page = Setting::getPage('membership.'.$template);
+
+        if ($template == 'unavailable') {
+            $renewal = $this->item->getLatestRenewalDate();
+            return view('themes.'.$page['theme'].'.index', compact('page', 'renewal'));
+        }
+
         $options = $this->getOptions();
         // Set indexes for licences, attestations and skills
         $i = $j = $k = 0;

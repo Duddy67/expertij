@@ -73,6 +73,7 @@ return [
         'no_renewal_action' => 'La période de renouvellement est terminée ou le processus de renouvellement a déjà été lancé. Aucune action n\'a été effectuée.',
         'reminder_emails_sent' => 'Les emails de rappel ont bien été envoyés aux membres.',
         'renewal_period_no_reminders' => 'Les emails de rappel ne peuvent pas être envoyés durant la période de renouvellement.',
+        'registration_unavailable' => 'Le formulaire d\'inscription est indisponible durant la période de renouvellement. Il sera à nouveau accessible après le :date',
     ],
     'post' => [
         'create_success' => 'Post créé avec succès.',
