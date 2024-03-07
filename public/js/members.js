@@ -16,13 +16,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    document.getElementById('search-btn').addEventListener('click', function (evt) {
-        document.getElementById('member-filters').submit();
-    }, false);
+    // Check first the filters are available.
+    if (document.getElementById('search-btn')) {
+        document.getElementById('search-btn').addEventListener('click', function (evt) {
+            document.getElementById('member-filters').submit();
+        }, false);
 
-    document.getElementById('clear-btn').addEventListener('click', function (evt) {
-        initialize();
-    }, false);
+        document.getElementById('clear-btn').addEventListener('click', function (evt) {
+            initialize();
+        }, false);
+    }
 
     /*
      *  

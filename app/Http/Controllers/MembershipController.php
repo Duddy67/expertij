@@ -54,10 +54,18 @@ class MembershipController extends Controller
      */
     public function members(Request $request)
     {
-        $members = Membership::getMembers($request, $this->item->isRenewalPeriod());
+        // Set the associated flag according to the route name.
+        $associated = ($request->route()->getName() == 'memberships.associated') ? true : false;
+        $members = Membership::getMembers($request, $this->item->isRenewalPeriod(), $associated);
         $page = Setting::getPage('membership.members');
-        $options = $this->getOptions();
         $query = $request->query();
+
+        if ($associated) {
+            // Associated members have no licences.
+            return view('themes.'.$page['theme'].'.index', compact('page', 'members', 'associated', 'query'));
+        }
+
+        $options = $this->getOptions();
         // Create language array from the language options. 
         $languages = [];
 
@@ -65,7 +73,7 @@ class MembershipController extends Controller
            $languages[$option['value']] = $option['text'];
         }
 
-        return view('themes.'.$page['theme'].'.index', compact('page', 'members', 'options', 'languages', 'query'));
+        return view('themes.'.$page['theme'].'.index', compact('page', 'members', 'associated', 'options', 'languages', 'query'));
     }
 
     /**

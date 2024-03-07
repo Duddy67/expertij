@@ -235,19 +235,20 @@ class Membership extends Model
         return storage_path('app/tmp/'.$file);
     }
 
-    public static function getMembers(Request $request, bool $isRenewalPeriod)
+    public static function getMembers(Request $request, bool $isRenewalPeriod, bool $associated)
     {
         $perPage = $request->input('per_page', Setting::getValue('pagination', 'per_page'));
-        $search = $request->input('search', null);
-//file_put_contents('debog_file.txt', print_r($request->all(), true));
+
         $query = Membership::query();
         $query->select('memberships.*', 'users.first_name as first_name', 'users.last_name as last_name', 'users.email as email')
               ->leftJoin('users', 'memberships.user_id', '=', 'users.id');
 
+        // TODO: Check the filter values and set the query accordingly.
+
         // Include the members with a pending renewal status during the renewal period.
         $whereIn = ($isRenewalPeriod) ? ['pending_renewal', 'member'] : ['member'];
 
-        $query->where('associated_member', 0)
+        $query->where('associated_member', $associated)
               ->where('member_list', 1)
               ->whereIn('status', $whereIn);
 
