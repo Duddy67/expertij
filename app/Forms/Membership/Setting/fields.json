@@ -37,6 +37,18 @@
     "group": "renewal"
   },
   {
+    "type": "hidden",
+    "name": "last_reminder_date",
+    "id": "last_reminder_date",
+    "group": "renewal"
+  },
+  {
+    "type": "hidden",
+    "name": "old_renewal_date",
+    "id": "old_renewal_date",
+    "group": "renewal"
+  },
+  {
     "label": "labels.membership.subscription_fee",
     "type": "text",
     "name": "subscription_fee",
@@ -196,17 +208,5 @@
     "id": "insurance_coverage_f9",
     "class": "mb-3",
     "group": "prices"
-  },
-  {
-    "type": "hidden",
-    "name": "last_reminder_date",
-    "id": "last_reminder_date",
-    "group": "flags"
-  },
-  {
-    "type": "hidden",
-    "name": "running_renewal_date",
-    "id": "running_renewal_date",
-    "group": "flags"
   }
 ]

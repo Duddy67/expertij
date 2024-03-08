@@ -88,7 +88,7 @@ class MembershipController extends Controller
         $page = Setting::getPage('membership.'.$template);
 
         if ($template == 'unavailable') {
-            $renewal = $this->item->getLatestRenewalDate();
+            $renewal = $this->item->getRenewalDate();
             return view('themes.'.$page['theme'].'.index', compact('page', 'renewal'));
         }
 

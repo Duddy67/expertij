@@ -59,13 +59,12 @@ class MembershipController extends Controller
                 $filter->options[] = ['value' => 'pending_offline_payment', 'text' => __('labels.membership.pending_offline_payment')];
             }
         }
-
+var_dump(MembershipSetting::getOldRenewalDate());
         $items = Membership::getMemberships($request);
         $rows = $this->getRows($columns, $items);
         $query = $request->query();
         $url = ['route' => 'admin.memberships', 'item_name' => 'membership', 'query' => $query];
-        $lastReminderDate = Setting::getValue('flags', 'last_reminder_date', 0, Membership::class);
-        $lastReminderDate = ($lastReminderDate) ? Carbon::create($lastReminderDate)->format('d/m/Y H:i') : __('labels.generic.none');
+        $lastReminderDate = MembershipSetting::getLastReminderDate();
 
         return view('admin.membership.list', compact('items', 'columns', 'rows', 'actions', 'filters', 'url', 'lastReminderDate', 'query'));
     }

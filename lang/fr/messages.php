@@ -74,6 +74,7 @@ return [
         'reminder_emails_sent' => 'Les emails de rappel ont bien été envoyés aux membres.',
         'renewal_period_no_reminders' => 'Les emails de rappel ne peuvent pas être envoyés durant la période de renouvellement.',
         'registration_unavailable' => 'Le formulaire d\'inscription est indisponible durant la période de renouvellement. Il sera à nouveau accessible après le :date',
+        'old_renewal_date_undefined' => 'L\'ancienne date de renouvellement n\'est pas définie. Aucune action n\'a été effectuée.',
     ],
     'post' => [
         'create_success' => 'Post créé avec succès.',

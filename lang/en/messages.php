@@ -74,6 +74,7 @@ return [
         'reminder_emails_sent' => 'The reminder emails have been sent to the members.',
         'renewal_period_no_reminders' => 'Reminder emails cannot be sent during the renewal period.',
         'registration_unavailable' => 'The subscription form is unavailable during the renewal period. It will be available again after the :date',
+        'old_renewal_date_undefined' => 'The old renewal date is undefined. No action has been performed.',
     ],
     'post' => [
         'create_success' => 'Post successfully created.',

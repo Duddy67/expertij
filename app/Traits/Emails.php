@@ -253,9 +253,9 @@ trait Emails
         $data = new \stdClass();
         $data->subscription_fee = Setting::getValue('prices', 'subscription_fee', 0, Membership::class);
         $data->associated_subscription_fee = Setting::getValue('prices', 'associated_subscription_fee', 0, Membership::class);
-        // Set the renewal date to the new renewal date for the pending-renewal email and to the running renewal date for 
+        // Set the renewal date to the new renewal date for the pending-renewal email and to the old renewal date for 
         // the reminder (as the reminder is sent after the renewal period).
-        $data->renewal_date = ($code == 'pending-renewal') ? $this->getLatestRenewalDate()->format('d/m/Y') : $this->getRenewalDate()->format('d/m/Y');
+        $data->renewal_date = ($code == 'pending-renewal') ? $this->getRenewalDate()->format('d/m/Y') : MembershipSetting::getOldRenewalDate()->format('d/m/Y');
 
         if (!empty($recipients)) {
             $data->recipients = $recipients;

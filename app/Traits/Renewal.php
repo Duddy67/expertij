@@ -13,25 +13,19 @@ use Carbon\Carbon;
 trait Renewal
 {
     /*
-     * Returns the running renewal date.
+     * Returns the renewal date.
      */
     public function getRenewalDate(): Carbon
     {
         $renewal = Setting::getDataByGroup('renewal', Membership::class);
 
-        return new Carbon(date('Y').'-'.$renewal['month'].'-'.$renewal['day']);
-    }
-
-    /*
-     * Returns the new renewal date.
-     */
-    public function getLatestRenewalDate(): Carbon
-    {
-        $renewal = $this->getRenewalDate(); 
+        // Set the renewal date to the current year.
+        $renewal = new Carbon(date('Y').'-'.$renewal['month'].'-'.$renewal['day']);
         $today = Carbon::today();
 
         // The renewal period for the current year is passed.
         if ($today->greaterThan($renewal)) {
+            // Set the new renewal date.
             $renewal->addYear();
         }
 
@@ -44,14 +38,14 @@ trait Renewal
         // Get the number of days the renewal period goes on.
         $days = Setting::getValue('renewal', 'period', 0, Membership::class);
         // Compute the starting of the renewal period which is the renewal date minus the number of days in the renewal period.
-        $renewalPeriodStart = $this->getLatestRenewalDate()->subDays($days);
+        $renewalPeriodStart = $this->getRenewalDate()->subDays($days);
 
         return ($today->greaterThanOrEqualTo($renewalPeriodStart)) ? true : false;
     }
 
     public function isFreePeriod(): bool
     {
-        $renewal = $this->getRenewalDate(); 
+        $renewal = $this->getRenewalDate(); // new
         $today = Carbon::today();
 
         // Get the number of days the free period goes on.
@@ -64,12 +58,15 @@ trait Renewal
 
     public function checkRenewal(): string
     {
-        $runningRenewalDate = Setting::getDataByGroup('running_renewal_date', Membership::class);
-        // Set to the current renewal date in case the $runningRenewalDate variable is null.
-        $runningRenewalDate = ($runningRenewalDate) ? Carbon::create($runningRenewalDate) : $this->getRenewalDate();
+        $oldRenewalDate = MembershipSetting::getOldRenewalDate();
+
+        // Check the old renewal date variable is set.
+        if (!$oldRenewalDate) {
+            return 'old_renewal_date_undefined';
+        }
 
         // The renewal period has started.
-        if ($this->isRenewalPeriod() && $runningRenewalDate->lessThan($this->getLatestRenewalDate())) {
+        if ($this->isRenewalPeriod() && $oldRenewalDate->lessThan($this->getRenewalDate())) {
             // Reset all the member statuses to pending_renewal
             Membership::where('status', 'member')->update(['status' => 'pending_renewal']);
             // Cancel all the possible old pending payments.
@@ -77,8 +74,8 @@ trait Renewal
                 $query->where('status', 'pending_renewal');
             })->update(['status' => 'cancelled']);
 
-            // Set the flag to the new running renewal date (ie: the latest renewal date).
-            MembershipSetting::setRunningRenewalDate($this->getLatestRenewalDate()->format('Y-m-d'));
+            // This renewal date will become the old renewal date after the renewal period is over.
+            MembershipSetting::setOldRenewalDate($this->getRenewalDate()->format('Y-m-d'));
 
             return 'start_renewal';
         }

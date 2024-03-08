@@ -5,6 +5,7 @@ namespace App\Models\Membership;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Traits\OptionList;
+use Carbon\Carbon;
 
 class Setting extends Model
 {
@@ -72,13 +73,25 @@ class Setting extends Model
         return $options;
     }
 
-    public static function setLastReminderDate(string $date)
+    public static function getLastReminderDate()
     {
-        Setting::where('group', 'flags')->where('key', 'last_reminder_date')->update(['value' => $date]);
+        $lastReminderDate = Setting::where('group', 'renewal')->where('key', 'last_reminder_date')->first()->value;
+        return ($lastReminderDate) ? Carbon::create($lastReminderDate)->format('d/m/Y H:i') : __('labels.generic.none');
     }
 
-    public static function setRunningRenewalDate(string $date)
+    public static function getOldRenewalDate()
     {
-        Setting::where('group', 'flags')->where('key', 'running_renewal_date')->update(['value' => $date]);
+        $oldRenewalDate = Setting::where('group', 'renewal')->where('key', 'old_renewal_date')->first()->value;
+        return ($oldRenewalDate) ? Carbon::create($oldRenewalDate) : null; 
+    }
+
+    public static function setLastReminderDate(string $date)
+    {
+        Setting::where('group', 'renewal')->where('key', 'last_reminder_date')->update(['value' => $date]);
+    }
+
+    public static function setOldRenewalDate(string $date)
+    {
+        Setting::where('group', 'renewal')->where('key', 'old_renewal_date')->update(['value' => $date]);
     }
 }

@@ -545,10 +545,14 @@ class Membership extends Model
         $data['city'] = $user->address->city;
         $data['member_number'] = $this->member_number;
 
-        $renewalDate = $this->getRenewalDate();
 
         if ($this->isRenewalPeriod()) {
-            $renewalDate = $this->getLatestRenewalDate();
+            // Use the new renewal date.
+            $renewalDate = $this->getRenewalDate();
+        }
+        else {
+            // Use the old renewal date.
+            $renewalDate = $this->getRenewalDate()->subYear();
         }
 
         $data['subscription_year'] = $renewalDate->format('Y');
