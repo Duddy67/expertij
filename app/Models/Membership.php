@@ -549,16 +549,18 @@ class Membership extends Model
         if ($this->isRenewalPeriod()) {
             // Use the new renewal date.
             $renewalDate = $this->getRenewalDate();
+            $subscriptionEndDate = $this->getRenewalDate()->addYear();
         }
+        // The renewal period is over (or hasn't started yet).
         else {
             // Use the old renewal date.
             $renewalDate = $this->getRenewalDate()->subYear();
+            $subscriptionEndDate = $this->getRenewalDate();
         }
 
         $data['subscription_year'] = $renewalDate->format('Y');
         $data['subscription_start_date'] = $renewalDate->format('d/m/Y');
-        $renewalDate->addYear();
-        $data['subscription_end_date'] = $renewalDate->format('d/m/Y');
+        $data['subscription_end_date'] = $subscriptionEndDate->format('d/m/Y');
         $data['current_date'] = Carbon::today()->format('d/m/Y');
         $data['payment_mode'] = $payment->payment_mode;
 

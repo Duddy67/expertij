@@ -17,11 +17,11 @@ use App\Models\Membership\Language;
 use App\Models\User;
 use App\Models\User\Citizenship;
 use App\Models\Cms\Setting;
+use App\Models\Membership\Setting as MembershipSetting;
 use App\Models\Cms\Address;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
-use App\Models\Membership\Setting as MembershipSetting;
 class MembershipController extends Controller
 {
     use Form, Emails, Renewal;
@@ -59,7 +59,7 @@ class MembershipController extends Controller
                 $filter->options[] = ['value' => 'pending_offline_payment', 'text' => __('labels.membership.pending_offline_payment')];
             }
         }
-var_dump(MembershipSetting::getOldRenewalDate());
+
         $items = Membership::getMemberships($request);
         $rows = $this->getRows($columns, $items);
         $query = $request->query();

@@ -45,7 +45,7 @@ trait Renewal
 
     public function isFreePeriod(): bool
     {
-        $renewal = $this->getRenewalDate(); // new
+        $renewal = $this->getRenewalDate(); 
         $today = Carbon::today();
 
         // Get the number of days the free period goes on.
@@ -70,7 +70,7 @@ trait Renewal
             // Reset all the member statuses to pending_renewal
             Membership::where('status', 'member')->update(['status' => 'pending_renewal']);
             // Cancel all the possible old pending payments.
-            Payment::where('status', 'pending')->whereHas('membership', function ($query) {
+            Payment::where('status', 'pending')->whereHasMorph('payable', [Membership::class], function ($query) {
                 $query->where('status', 'pending_renewal');
             })->update(['status' => 'cancelled']);
 
