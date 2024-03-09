@@ -163,14 +163,12 @@ trait Emails
         $data->payment_mode = __('labels.generic.'.$payment->mode);
         $prices = Setting::getDataByGroup('prices', $membership);
 
-        $code = 'offline-payment-';
-
         if ($payment->item == 'subscription') {
-            $code .= 'subscription';
+            $code = 'offline-payment-subscription';
             $data->subscription_fee = ($membership->associated_member) ? $prices['associated_subscription_fee'] : $prices['subscription_fee'];
         }
         elseif (str_starts_with($payment->item, 'subscription_insurance_') || str_starts_with($payment->item, 'insurance_')) {
-            $code .= 'insurance';
+            $code = 'offline-payment-insurance';
             // Get the insurance formula (f1, f2...).
             $formula = substr($payment->item, -2);
             $data->insurance_formula = __('labels.membership.insurance_'.$formula);
@@ -181,7 +179,7 @@ trait Emails
             if (str_starts_with($payment->item, 'subscription_insurance_')) {
                 $data->subscription_fee = ($membership->associated_member) ? $prices['associated_subscription_fee'] : $prices['subscription_fee'];
                 $data->total_amount = $data->subscription_fee + $data->insurance_fee;
-                $code .= 'subscription-insurance';
+                $code = 'offline-payment-subscription-insurance';
             }
         }
 
