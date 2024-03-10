@@ -403,7 +403,7 @@ class Membership extends Model
             $item = (isset($query['insurance_code']) && $query['insurance_code'] != 'f0') ? 'subscription_insurance_'.$query['insurance_code'] : $item;
 
             // Add the insurance price (if any).
-            $amount = (str_starts_with($item, 'subscription-insurance-')) ? $amount + $prices['insurance_fee_'.$query['insurance_code']] : $amount;
+            $amount = (str_starts_with($item, 'subscription_insurance_')) ? $amount + $prices['insurance_fee_'.$query['insurance_code']] : $amount;
         }
         elseif ($this->status == 'member' && isset($query['insurance_code']) && $query['insurance_code'] != 'f0') {
             $item = 'insurance_'.$query['insurance_code'];
