@@ -120,6 +120,8 @@ return [
 	'members' => 'Adhérents',
         'member_number' => 'Numéro adhérent',
         'member_since' => 'Membre depuis',
+        'member_list' => 'Liste des membres',
+        'in_member_list' => 'Apparaître dans la liste des membres',
         'pending' => 'En attente',
         'refused' => 'Refusé',
         'pending_subscription' => 'En attente d\'adhésion',

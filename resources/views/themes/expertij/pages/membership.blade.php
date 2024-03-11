@@ -25,12 +25,34 @@
                 <input type="text" name="_status" class="form-control" id="status" value="{{ __('labels.membership.'.$membership->status) }}" disabled>
             </div>
 
-            @if ($membership->status == 'member' && $membership->hasInsurance())
-                <div class="col-md-6 form-group">
-                    <label for="status">{{ __('labels.membership.insurance') }}</label>
-                    <input type="text" name="_insurance" class="form-control" id="insurance" value="{{ __('labels.membership.insurance_'.$membership->insurance_code) }}" disabled>
-                </div>
-            @endif
+            <!-- IMPORTANT: Add autocomplete="off" or Firefox will ignore the select="select" in options. -->
+            <form action="#" method="post" autocomplete="off" id="memberListForm" role="form">
+                @csrf
+                <input type="hidden" id="updateMemberList" value="{{ route('memberships.memberList.update') }}">
+                @method('put')
+
+                @if ($membership->status == 'member')
+                    @if ($membership->hasInsurance())
+                        <div class="col-md-6 form-group">
+                            <label for="status">{{ __('labels.membership.insurance') }}</label>
+                            <input type="text" name="_insurance" class="form-control" id="insurance" value="{{ __('labels.membership.insurance_'.$membership->insurance_code) }}" disabled>
+                        </div>
+                    @endif
+
+                    <div class="col-md-6 form-group">
+                        <label for="member_list">{{ __('labels.membership.in_member_list') }}</label>
+                        <select name="member_list" class="form-select" id="member_list">
+                            <option value="1" {{ ($membership->member_list) ? 'selected="selected"' : '' }}>{{ __('labels.generic.yes') }}</option>
+                            <option value="0" {{ (!$membership->member_list) ? 'selected="selected"' : '' }}>{{ __('labels.generic.no') }}</option>
+                        </select>    
+                    </div>
+                    <div class="col-md-6 form-group mt-4">
+                        <button class="btn btn-success form-action-btn" data-form="memberListForm" data-route="updateMemberList" type="button">
+                            {{ __('labels.button.update') }}
+                        </button>
+                    </div>
+                @endif
+            </form>
         </div>
 
         <div class="tab-pane" id="licences">
@@ -65,7 +87,7 @@
 
         <div class="tab-pane" id="professional_information">
             <!-- Professional information -->
-            <form action="#" method="post" id="membershipForm" role="form" class="php-email-form">
+            <form action="#" method="post" id="professionalInformationForm" role="form" class="php-email-form">
                 @csrf
                 <input type="hidden" id="update" value="{{ route('memberships.update') }}">
                 @method('put')
@@ -150,7 +172,7 @@
             </form>
             <div class="row mt-5 d-flex align-items-center justify-content-center">
                 <div class="col-md-6 offset-md-4">
-                    <button class="btn btn-success form-action-btn" data-form="membershipForm" data-route="update" type="button">
+                    <button class="btn btn-success form-action-btn" data-form="professionalInformationForm" data-route="update" type="button">
                         {{ __('labels.membership.update_professional_status') }}
                     </button>
                 </div>

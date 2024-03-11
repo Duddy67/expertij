@@ -127,6 +127,8 @@ return [
         'member' => 'Member',
         'member_number' => 'Member number',
         'member_since' => 'Member since',
+        'member_list' => 'Member list',
+        'in_member_list' => 'In the member list',
         'pending_renewal' => 'Pending renewal',
         'revoked' => 'Revoked',
         'cancellation' => 'Cancellation',

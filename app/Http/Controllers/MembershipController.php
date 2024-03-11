@@ -272,7 +272,7 @@ class MembershipController extends Controller
     }
 
     /**
-     * Update the user's membership in storage.
+     * Update the user's professional information in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -432,6 +432,24 @@ class MembershipController extends Controller
             $result['replacements'] = $replacements;
             $result['updates'] = $updates;
         }
+
+        return response()->json($result);
+    }
+
+    /**
+     * Update the member_list attribute.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return JSON
+     */
+    public function updateMemberList(Request $request)
+    {
+        // Get the user's membership.
+        $membership = Auth::user()->membership;
+
+        $membership->member_list = ($request->input('member_list')) ? true : false;
+        $membership->save();
+        $result = ['success' => __('messages.membership.update_success')];
 
         return response()->json($result);
     }

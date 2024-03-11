@@ -43,6 +43,7 @@ Route::get('/memberships/edit', [MembershipController::class, 'edit'])->name('me
 Route::get('/memberships/applicants', [MembershipController::class, 'applicants'])->name('memberships.applicants');
 Route::get('/memberships/members', [MembershipController::class, 'members'])->name('memberships.members');
 Route::get('/memberships/associated', [MembershipController::class, 'members'])->name('memberships.associated');
+Route::put('/memberships/member-list', [MembershipController::class, 'updateMemberList'])->name('memberships.memberList.update');
 // Note: Call the route memberships.applicants.edit instead of memberships.applicants.checkout to fit the item-list component logic.
 Route::get('/memberships/applicants/{membership}/checkout', [MembershipController::class, 'checkoutApplicant'])->name('memberships.applicants.edit');
 Route::put('/memberships/applicants/{membership}', [MembershipController::class, 'vote'])->name('memberships.applicants.vote');
