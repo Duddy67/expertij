@@ -27,6 +27,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.getElementById('paymentForm').submit();
             }
         }
+
+        if (evt.target.getAttribute('id') == 'cancellation') {
+            if (confirm(messages['cancellation_confirmation'])) {
+                document.getElementById('cancellationForm').submit();
+            }
+        }
     }, false);
 
     // Initialise the jurisdiction types.

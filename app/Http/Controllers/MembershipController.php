@@ -455,14 +455,28 @@ class MembershipController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Cancel the subscription to Expertij.
      */
-    public function destroy($id)
+    public function cancellation(Request $request)
     {
-        //
+        // Get the user's membership.
+        $membership = Auth::user()->membership;
+        $membership->status = 'cancellation';
+        $membership->save();
+
+        // Cancel the possible last pending payment.
+        $payment = $membership->getLastPayment();
+        if ($payment->status == 'pending') {
+            $payment->status = 'cancelled';
+            $payment->save();
+        }
+
+        // Inform the member as well as the administrators about the cancellation.
+        $this->cancellationAlert($membership);
+
+        $request->session()->flash('success', __('messages.membership.cancellation_confirmation'));
+
+        return redirect()->route('memberships.edit', $request->query());
     }
 
     /**

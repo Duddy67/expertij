@@ -53,6 +53,18 @@
                     </div>
                 @endif
             </form>
+
+            @if ($membership->status == 'pending_renewal')
+                <form action="{{ route('memberships.cancellation') }}" id="cancellationForm" method="post" autocomplete="off" role="form">
+                    @csrf
+                    @method('put')
+                    <div class="col-md-6 form-group mt-4">
+                        <button class="btn btn-danger" id="cancellation" type="button">
+                            {{ __('labels.membership.membership_cancellation') }}
+                        </button>
+                    </div>
+                </form>
+            @endif
         </div>
 
         <div class="tab-pane" id="licences">

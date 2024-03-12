@@ -327,6 +327,26 @@ trait Emails
         return true;
     }
 
+    public function cancellationAlert(Membership $membership): bool
+    {
+        $user = $membership->user;
+        $data = new \stdClass();
+        $data->first_name = $user->first_name;
+        $data->last_name = $user->last_name;
+        $data->email = $user->email;
+
+        if (!Email::sendEmail('cancellation', $data)) {
+            return false;
+        }
+
+        // Informs the administrators about the cancellation.
+        if (!$this->sendEmailToGroup('cancellation-alert', $data, 'office')) {
+            return false;
+        }
+
+        return true;
+    }
+
     public function sendEmailToGroup($code, $data, $group): bool
     {
         $recipients = $this->getRecipientsByGroup($group);

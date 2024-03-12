@@ -75,6 +75,7 @@ return [
         'renewal_period_no_reminders' => 'Reminder emails cannot be sent during the renewal period.',
         'registration_unavailable' => 'The subscription form is unavailable during the renewal period. It will be available again after the :date',
         'old_renewal_date_undefined' => 'The old renewal date is undefined. No action has been performed.',
+        'cancellation_confirmation' => 'Your subscription cancellation has been taken into account. Your account will be deleted soon.',
     ],
     'post' => [
         'create_success' => 'Post successfully created.',
@@ -198,5 +199,6 @@ return [
         'export_list_confirmation' => 'This will export the member list below through a csv file. Are you sure ?',
         'renewal_reminder_confirmation' => 'This will send an reminder to the members who haven\'t paid their membership fee yet. Are you sure ?',
         'applicant_vote_confirmation' => "This will validate your vote with the administrators.\nAre you sure ?",
+        'cancellation_confirmation' => "You are about to cancel your subscription to Expertij.\nAre you sure ?",
     ]
 ];

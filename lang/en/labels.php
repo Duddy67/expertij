@@ -132,6 +132,7 @@ return [
         'pending_renewal' => 'Pending renewal',
         'revoked' => 'Revoked',
         'cancellation' => 'Cancellation',
+        'membership_cancellation' => 'Cancel your subscription',
         'pending_offline_payment' => 'Pending cheque or bank transfer',
 	'membership_global_settings' => 'Membership global parameters ',
 	'member_type' => 'Member type',

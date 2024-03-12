@@ -132,6 +132,7 @@ return [
         'pending_renewal' => 'En attente de renouvellement',
         'revoked' => 'Revoqué',
         'cancellation' => 'Annulation',
+        'membership_cancellation' => 'Annuler votre adhésion',
         'pending_offline_payment' => 'En attente de chèque ou virement',
 	'membership_global_settings' => 'Adhésion paramètres globaux',
 	'member_type' => 'Type d\'adhérent',

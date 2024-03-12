@@ -75,6 +75,7 @@ return [
         'renewal_period_no_reminders' => 'Les emails de rappel ne peuvent pas être envoyés durant la période de renouvellement.',
         'registration_unavailable' => 'Le formulaire d\'inscription est indisponible durant la période de renouvellement. Il sera à nouveau accessible après le :date',
         'old_renewal_date_undefined' => 'L\'ancienne date de renouvellement n\'est pas définie. Aucune action n\'a été effectuée.',
+        'cancellation_confirmation' => 'Votre annulation chez Expertij a bien été prise en compte. Votre compte sera supprimé sous peu.',
     ],
     'post' => [
         'create_success' => 'Post créé avec succès.',
@@ -198,5 +199,6 @@ return [
         'export_list_confirmation' => 'Ceci exportera la liste d\'adhérents ci-dessous dans un fichier csv. Etes vous sûr(e) ?',
         'renewal_reminder_confirmation' => "Ceci enverra un email de rappel aux adhérents n'ayant toujours pas réglé leur cotisation.\nEtes vous sûr(e) ?\nDernier envoi: ",
         'applicant_vote_confirmation' => "Ceci validera votre vote auprès des administrateurs.\nEtes vous sûr(e) ?",
+        'cancellation_confirmation' => "Vous êtes sur le point d'annuler votre adhésion chez Expertij.\nEtes vous sûr(e) ?",
     ]
 ];
