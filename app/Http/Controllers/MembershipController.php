@@ -464,13 +464,6 @@ class MembershipController extends Controller
         $membership->status = 'cancellation';
         $membership->save();
 
-        // Cancel the possible last pending payment.
-        $payment = $membership->getLastPayment();
-        if ($payment->status == 'pending') {
-            $payment->status = 'cancelled';
-            $payment->save();
-        }
-
         // Inform the member as well as the administrators about the cancellation.
         $this->cancellationAlert($membership);
 

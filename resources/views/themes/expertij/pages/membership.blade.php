@@ -54,7 +54,7 @@
                 @endif
             </form>
 
-            @if ($membership->status == 'pending_renewal')
+            @if ($membership->status == 'pending_renewal' && !$membership->hasPendingPayment())
                 <form action="{{ route('memberships.cancellation') }}" id="cancellationForm" method="post" autocomplete="off" role="form">
                     @csrf
                     @method('put')
