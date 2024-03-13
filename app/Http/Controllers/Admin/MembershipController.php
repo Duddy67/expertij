@@ -177,14 +177,53 @@ class MembershipController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified membership from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Membership $membership
+     * @return Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, Membership $membership)
     {
-        //
+        if (!$membership->canDelete()) {
+            return redirect()->route('admin.memberships.edit', array_merge($request->query(), ['membership' => $membership->id]))->with('error',  __('messages.generic.delete_not_auth'));
+        }
+
+        $user = $membership->user;
+        $name = $user->first_name.' '.$user->last_name;
+        $membership->delete();
+
+        return redirect()->route('admin.memberships.index', $request->query())->with('success', __('messages.membership.delete_success', ['name' => $name]));
+    }
+
+    /**
+     * Removes one or more memberships from storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return Response
+     */
+    public function massDestroy(Request $request)
+    {
+        $deleted = 0;
+
+        // Remove the posts selected from the list.
+        foreach ($request->input('ids') as $id) {
+            $membership = Membership::findOrFail($id);
+
+            if (!$membership->canDelete()) {
+              return redirect()->route('admin.memberships.index', $request->query())->with(
+                  [
+                      'error' => __('messages.generic.delete_not_auth'),
+                      'success' => __('messages.membership.delete_list_success', ['number' => $deleted])
+                  ]);
+            }
+
+            $membership->delete();
+
+            $deleted++;
+        }
+
+        return redirect()->route('admin.memberships.index', $request->query())->with('success', __('messages.membership.delete_list_success', ['number' => $deleted]));
     }
 
     /**

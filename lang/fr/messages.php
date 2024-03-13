@@ -56,6 +56,8 @@ return [
     'membership' => [
         'create_success' => 'Votre demande d\'adhésion a été créée avec succès. Un administrateur va en être averti.',
         'update_success' => 'Adhésion mise à jour avec succès.',
+        'delete_success' => 'L\'adhérent ":name" a été supprimé avec succès.',
+        'delete_list_success' => ':number adhérents ont été supprimés avec succès.',
         'licences_update_success' => 'Certificat(s) mis à jour avec succès.',
         'professional_status_info_required' => 'Le champ :attribute est obligatoire.',
         'appeal_court_required' => 'Le champ :attribute est obligatoire.',

@@ -56,6 +56,8 @@ return [
     'membership' => [
         'create_success' => 'Membership application successfully created.',
         'update_success' => 'Membership successfully updated.',
+        'delete_success' => 'The member ":name" has been successfully deleted.',
+        'delete_list_success' => ':number members have been successfully deleted.',
         'licences_update_success' => 'Licence(s) successfully updated.',
         'professional_status_info_required' => 'The :attribute field is required.',
         'appeal_court_required' => 'The :attribute field is required.',
