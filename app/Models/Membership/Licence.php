@@ -75,7 +75,9 @@ class Licence extends Model
      */
     public function delete()
     {
-        $this->attestations()->delete();
+        foreach ($this->attestations as $attestation) {
+            $attestation->delete();
+        }
 
         parent::delete();
     }

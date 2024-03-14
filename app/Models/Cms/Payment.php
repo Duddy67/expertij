@@ -64,6 +64,22 @@ class Payment extends Model
         return $this->morphMany(Document::class, 'documentable')->where('field', 'invoice');
     }
 
+    /**
+     * Delete the model from the database (override).
+     *
+     * @return bool|null
+     *
+     * @throws \LogicException
+     */
+    public function delete()
+    {
+        foreach ($this->invoices as $invoice) {
+            $invoice->delete();
+        }
+
+        parent::delete();
+    }
+
     /*
      * Creates a pdf invoice file.
      */

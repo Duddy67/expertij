@@ -160,7 +160,7 @@ class User extends Authenticatable
         }
 
         if ($this->address) {
-           $this->address->delete();
+            $this->address->delete();
         }
 
         if ($this->membership()->exists()) {
