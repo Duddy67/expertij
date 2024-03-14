@@ -138,6 +138,10 @@ class Membership extends Model
             $this->professionalAttestation->delete();
         }
 
+        if ($this->resume) {
+            $this->resume->delete();
+        }
+
         parent::delete();
     }
 

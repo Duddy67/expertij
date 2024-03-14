@@ -244,6 +244,11 @@ class UserController extends Controller
             return redirect()->route('admin.users.edit', array_merge($request->query(), ['user' => $user->id]))->with('error', __('messages.user.delete_user_not_auth'));
         }
 
+        // Check for membership checking out.
+        if ($user->membership()->exists() && $user->membership->checked_out) {
+            return redirect()->route('admin.users.edit', array_merge($request->query(), ['user' => $user->id]))->with('error', __('messages.user.membership_checked_out', ['name' => $user->name]));
+        }
+
         if ($dependencies = $user->hasDependencies()) {
             return redirect()->route('admin.users.edit', array_merge($request->query(), ['user' => $user->id]))
                              ->with('error', __('messages.user.alert_user_dependencies', ['name' => $user->name, 'number' => $dependencies['nbItems'],
@@ -278,6 +283,12 @@ class UserController extends Controller
                 if (!auth()->user()->canDelete($user)) {
                     $messages['error'] = __('messages.user.delete_list_not_auth', ['name' => $user->name]);
 
+                    return redirect()->route('admin.users.index', $request->query())->with($messages);
+                }
+
+                // Check for membership checking out.
+                if ($user->membership()->exists() && $user->membership->checked_out) {
+                    $messages['error'] = __('messages.user.membership_checked_out', ['name' => $user->name]);
                     return redirect()->route('admin.users.index', $request->query())->with($messages);
                 }
 

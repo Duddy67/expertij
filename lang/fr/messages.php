@@ -19,6 +19,7 @@ return [
         'delete_user_not_auth' => 'Vous n\'êtes pas autorisé(e) à supprimer cet utilisateur.',
         'delete_list_not_auth' => 'Vous n\'êtes pas autorisé(e) à supprimer cet utilisateur: :name',
         'alert_user_dependencies' => 'Vous ne pouvez pas supprimer l\'utilisateur: :name car il possède :number :dependencies. Veuillez modifier ces dépendances et essayer à nouveau.',
+        'membership_checked_out' => 'Vous ne pouvez pas supprimer l\'utilisateur: :name car sa fiche d\'adhésion est actuellement consultée.',
         'unknown_user' => 'Utilisateur inconnu.',
     ],
     'profile' => [

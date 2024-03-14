@@ -163,9 +163,11 @@ class User extends Authenticatable
            $this->address->delete();
         }
 
-        if ($this->membership) {
+        if ($this->membership()->exists()) {
             $this->membership->delete();
         }
+
+        $this->votes()->delete();
 
         $this->groups()->detach();
 
