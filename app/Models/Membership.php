@@ -130,9 +130,15 @@ class Membership extends Model
      */
     public function delete()
     {
-        $this->licences()->delete();
+        foreach ($this->licences as $licence) {
+            $licence->delete();
+        }
+
+        foreach ($this->payments as $payment) {
+            $payment->delete();
+        }
+
         $this->votes()->delete();
-        $this->payments()->delete();
 
         if ($this->professionalAttestation) {
             $this->professionalAttestation->delete();
