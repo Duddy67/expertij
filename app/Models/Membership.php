@@ -253,7 +253,32 @@ class Membership extends Model
         $query->select('memberships.*', 'users.first_name as first_name', 'users.last_name as last_name', 'users.email as email')
               ->leftJoin('users', 'memberships.user_id', '=', 'users.id');
 
-        // TODO: Check the filter values and set the query accordingly.
+        // The search workflow starts with the languages.
+        if ($request->has('languages')) {
+            $query->whereHas('licences.attestations.skills', function($query) use ($request) {
+                $query->whereIn('language_id', $request->input('languages'));
+
+                // Check for skill.
+                if ($request->has('skill') && !empty($request->input('skill'))) {
+                    // interpreter or translator.
+                    $query->where($request->input('skill'), 1); 
+                }
+            });
+
+            // Check for licence type.
+            if ($request->has('licence') && !empty($request->input('licence'))) {
+                $query->whereHas('licences', function($query) use ($request) {
+                    // expert or ceseda.
+                    $query->where('type', $request->input('licence')); 
+
+                    // Check for courts or appeal courts according to the selected type. 
+                    if ($request->has('courts') || $request->has('appeal_courts')) {
+                        $jurisdictions = ($request->has('courts')) ? $request->input('courts') : $request->input('appeal_courts');
+                        $query->whereIn('jurisdiction_id', $jurisdictions); 
+                    }
+                });
+            }
+        }
 
         // Include the members with a pending renewal status during the renewal period.
         $whereIn = ($isRenewalPeriod) ? ['pending_renewal', 'member'] : ['member'];

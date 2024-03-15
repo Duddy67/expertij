@@ -6,12 +6,14 @@
     <div class="card">
         <div class="card-body">
             <form id="member-filters" action="{{ route('memberships.members', $query) }}" method="get">
+                @csrf
                 <div class="row">
                     <div class="col">
                         <label for="languages">@lang ('labels.membership.languages')</label>
                         <select name="languages[]" multiple id="languages" class="form-select select2">
                             @foreach ($options['language'] as $option)
-                                <option value="{{ $option['value'] }}">{{ $option['text'] }}</option>
+                                @php $selected = (isset($query['languages']) && in_array($option['value'], $query['languages'])) ? 'selected=selected' : ''; @endphp
+                                <option value="{{ $option['value'] }}" {{ $selected }}>{{ $option['text'] }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -20,8 +22,8 @@
                         <label for="skill">@lang ('labels.membership.skill')</label>
                         <select name="skill" id="skill" class="form-select select2">
                             <option value="">- {{ __('labels.generic.all') }} -</option>
-                            <option value="interpreter">{{ __('labels.membership.interpreter') }}</option>
-                            <option value="translator">{{ __('labels.membership.translator') }}</option>
+                            <option value="interpreter" {{ (isset($query['skill']) && $query['skill'] == 'interpreter') ? 'selected="selected"' : '' }}>{{ __('labels.membership.interpreter') }}</option>
+                            <option value="translator" {{ (isset($query['skill']) && $query['skill'] == 'translator') ? 'selected="selected"' : '' }}>{{ __('labels.membership.translator') }}</option>
                         </select>
                     </div>
 
@@ -30,7 +32,8 @@
                         <select name="licence" id="licence" class="form-select select2">
                             <option value="">- {{ __('labels.generic.all') }} -</option>
                             @foreach ($options['licence_type'] as $option)
-                                <option value="{{ $option['value'] }}">{{ $option['text'] }}</option>
+                                @php $selected = (isset($query['licence']) && $query['licence'] == $option['value']) ? 'selected=selected' : ''; @endphp
+                                <option value="{{ $option['value'] }}" {{ $selected }}>{{ $option['text'] }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -39,7 +42,8 @@
                         <label for="appeal_courts">@lang ('labels.membership.appeal_courts')</label>
                         <select name="appeal_courts[]" multiple id="appeal_courts" class="form-select select2">
                             @foreach ($options['jurisdictions']['appeal_court'] as $option)
-                                <option value="{{ $option['value'] }}">{{ $option['text'] }}</option>
+                                @php $selected = (isset($query['appeal_courts']) && in_array($option['value'], $query['appeal_courts'])) ? 'selected=selected' : ''; @endphp
+                                <option value="{{ $option['value'] }}" {{ $selected }}>{{ $option['text'] }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -48,7 +52,8 @@
                         <label for="courts">@lang ('labels.membership.courts')</label>
                         <select name="courts[]" multiple id="courts" class="form-select select2">
                             @foreach ($options['jurisdictions']['court'] as $option)
-                                <option value="{{ $option['value'] }}">{{ $option['text'] }}</option>
+                                @php $selected = (isset($query['courts']) && in_array($option['value'], $query['courts'])) ? 'selected=selected' : ''; @endphp
+                                <option value="{{ $option['value'] }}" {{ $selected }}>{{ $option['text'] }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -84,7 +89,7 @@
                     </div>
                     <div class="col-sm">
                         @foreach ($member->licences as $licence)
-                            <p>{{ __('labels.membership.'.$licence->type) }}</p> 
+                            <p class="mt-2 fw-bold">{{ __('labels.membership.'.$licence->type) }}</p> 
                             @php $jurisdictionType = ($licence->type == 'expert') ? __('labels.membership.appeal_court') : __('labels.membership.court'); @endphp
                             <p>{{ $jurisdictionType }}: {{ $licence->jurisdiction->name }}</p> 
                             <hr>

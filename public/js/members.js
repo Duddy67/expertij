@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.getElementById('clear-btn').addEventListener('click', function (evt) {
             initialize();
+            document.getElementById('member-filters').submit();
         }, false);
     }
 
