@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // N.B: jQuery is required with the Select2 plugin.
     $('.select2').select2();
 
-    //initialize();
+    setup();
 
     $('.select2').change( function(e) {
         //console.log(e.target.id);
@@ -18,40 +18,60 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Check first the filters are available.
     if (document.getElementById('search-btn')) {
+
         document.getElementById('search-btn').addEventListener('click', function (evt) {
             document.getElementById('member-filters').submit();
         }, false);
 
         document.getElementById('clear-btn').addEventListener('click', function (evt) {
-            initialize();
+            $('#languages option').prop('selected', false);
+            $('#languages').select2();
+            $('#licence option').prop('selected', false);
+            $('#licence').select2();
+
+            toggleJurisdiction('');
+            toggleSkill();
+
             document.getElementById('member-filters').submit();
         }, false);
     }
 
-    /*
-     *  
-     */
-    function getSelectedOptions(selectId) {
-        const select = document.getElementById(selectId);
-        let selectedOptions = [];
+    function setup() {
 
-        Array.from(select.options).forEach(option => {
-            if (option.selected) {
-                selectedOptions.push(option.value);
+        // One or more languages are selected.
+        if (document.getElementById('languages').value) {
+            // A licence is selected.
+            if (document.getElementById('licence').value) {
+                if (document.getElementById('licence').value == 'expert') {
+                    document.getElementById('appeal_courts-col').style.display = 'block';
+                    document.getElementById('courts-col').style.display = 'none';
+                }
+                // ceseda
+                else {
+                    document.getElementById('appeal_courts-col').style.display = 'none';
+                    document.getElementById('courts-col').style.display = 'block';
+                }
             }
-        });
+            else {
+                document.getElementById('appeal_courts-col').style.display = 'none';
+                document.getElementById('courts-col').style.display = 'none';
+            }
 
-        return selectedOptions;
-    }     
-      
-    function initialize() {
-        $('#languages option').prop('selected', false);
-        $('#languages').select2();
-        $('#licence option').prop('selected', false);
-        $('#licence').select2();
+        }
+        // No language selected.
+        else {
+            // Unselect everything just in case.
+            unselectOptions('skill');
+            unselectOptions('licence');
+            unselectOptions('courts');
+            unselectOptions('appeal_courts');
 
-        toggleJurisdiction('');
-        toggleSkill();
+            // Hide drop down lists.
+            document.getElementById('skill-col').style.display = 'none';
+            document.getElementById('licence-col').style.display = 'none';
+            document.getElementById('courts-col').style.display = 'none';
+            document.getElementById('appeal_courts-col').style.display = 'none';
+        }
     }
 
     function unselectOptions(selectId) {
@@ -80,14 +100,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function toggleSkill() {
-        const languages = getSelectedOptions('languages');
-        if (languages.length) {
+        // One or more languages are selected.
+        if (document.getElementById('languages').value) {
             document.getElementById('skill-col').style.display = 'block';
+            document.getElementById('licence-col').style.display = 'block';
         }
         else {
             $('#skill option').prop('selected', false);
             $('#skill').select2();
             document.getElementById('skill-col').style.display = 'none';
+            $('#licence option').prop('selected', false);
+            $('#licence').select2();
+            document.getElementById('licence-col').style.display = 'none';
         }
     }
 });

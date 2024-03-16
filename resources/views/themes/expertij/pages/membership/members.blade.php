@@ -27,7 +27,7 @@
                         </select>
                     </div>
 
-                    <div class="col">
+                    <div class="col" id="licence-col">
                         <label for="licence">@lang ('labels.membership.licence')</label>
                         <select name="licence" id="licence" class="form-select select2">
                             <option value="">- {{ __('labels.generic.all') }} -</option>
