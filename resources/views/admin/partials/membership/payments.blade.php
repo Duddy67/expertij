@@ -28,7 +28,8 @@
                         {{ __('labels.membership.'.$payment->status) }}
                     @endif
                 </td>
-                <td>{{ __('labels.generic.'.$payment->mode) }}</td>
+                @php $labelType = ($payment->mode == 'free_period') ? 'membership' : 'generic'; @endphp
+                <td>{{ __('labels.'.$labelType.'.'.$payment->mode) }}</td>
                 <td>{{ $payment->amount.' '.$payment->currency }}</td>
                 <td>@date ($payment->created_at)</td>
                 <td>{{ __('labels.membership.'.$payment->item) }}</td>
