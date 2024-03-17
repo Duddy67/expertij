@@ -4,8 +4,13 @@
     document.addEventListener('DOMContentLoaded', () => {
         setStatuses();
 
-        if (document.getElementById('_sendingEmails').value == 1) {
-           document.getElementById('sendEmails').disabled = true
+        // Hide the sendEmails button once the pending status is over.
+        if (document.getElementById('status').value != 'pending') {
+           document.getElementById('sendEmails').parentElement.style.display = 'none';
+        }
+        // The emails have been sent.
+        else if (document.getElementById('_sendingEmails').value == 1) {
+           document.getElementById('sendEmails').disabled = true;
         }
 
         if (document.getElementById('_isAssociatedMember').value == 1) {
