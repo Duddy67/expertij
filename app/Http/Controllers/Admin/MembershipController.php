@@ -94,6 +94,7 @@ class MembershipController extends Controller
         $dateFormat = Setting::getValue('app', 'date_format');
         // Add the id parameter to the query.
         $query = array_merge($request->query(), ['membership' => $id]);
+        $theme = Setting::getDataByGroup('website')['theme'];
 
         $options['licence_type'] = $membership->getLicenceTypeOptions();
         $options['since'] = $membership->getSinceOptions();
@@ -102,7 +103,7 @@ class MembershipController extends Controller
         $options['citizenship'] = $membership->getCitizenshipOptions();
         $options['civility'] = $membership->getCivilityOptions();
 
-        return view('admin.membership.form', compact('membership', 'options', 'fields', 'actions', 'dateFormat', 'query'));
+        return view('admin.membership.form', compact('membership', 'options', 'fields', 'actions', 'dateFormat', 'theme', 'query'));
     }
 
     /**
