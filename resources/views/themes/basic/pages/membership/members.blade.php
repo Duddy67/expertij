@@ -1,5 +1,5 @@
 @push('styles')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css">
+    <link rel="stylesheet" href="{{ asset('/vendor/codalia/css/c.select.css') }}">
 @endpush
 
 @if (!$associated)
@@ -10,7 +10,7 @@
                 <div class="row">
                     <div class="col">
                         <label for="languages">@lang ('labels.membership.languages')</label>
-                        <select name="languages[]" multiple id="languages" class="form-select select2">
+                        <select name="languages[]" multiple id="languages" class="form-select cselect">
                             @foreach ($options['language'] as $option)
                                 @php $selected = (isset($query['languages']) && in_array($option['value'], $query['languages'])) ? 'selected=selected' : ''; @endphp
                                 <option value="{{ $option['value'] }}" {{ $selected }}>{{ $option['text'] }}</option>
@@ -20,7 +20,7 @@
 
                     <div class="col" id="skill-col">
                         <label for="skill">@lang ('labels.membership.skill')</label>
-                        <select name="skill" id="skill" class="form-select select2">
+                        <select name="skill" id="skill" class="form-select cselect">
                             <option value="">- {{ __('labels.generic.all') }} -</option>
                             <option value="interpreter" {{ (isset($query['skill']) && $query['skill'] == 'interpreter') ? 'selected="selected"' : '' }}>{{ __('labels.membership.interpreter') }}</option>
                             <option value="translator" {{ (isset($query['skill']) && $query['skill'] == 'translator') ? 'selected="selected"' : '' }}>{{ __('labels.membership.translator') }}</option>
@@ -29,7 +29,7 @@
 
                     <div class="col" id="licence-col">
                         <label for="licence">@lang ('labels.membership.licence')</label>
-                        <select name="licence" id="licence" class="form-select select2">
+                        <select name="licence" id="licence" class="form-select cselect">
                             <option value="">- {{ __('labels.generic.all') }} -</option>
                             @foreach ($options['licence_type'] as $option)
                                 @php $selected = (isset($query['licence']) && $query['licence'] == $option['value']) ? 'selected=selected' : ''; @endphp
@@ -40,7 +40,7 @@
 
                     <div class="col" id="appeal_courts-col">
                         <label for="appeal_courts">@lang ('labels.membership.appeal_courts')</label>
-                        <select name="appeal_courts[]" multiple id="appeal_courts" class="form-select select2">
+                        <select name="appeal_courts[]" multiple id="appeal_courts" class="form-select cselect">
                             @foreach ($options['jurisdictions']['appeal_court'] as $option)
                                 @php $selected = (isset($query['appeal_courts']) && in_array($option['value'], $query['appeal_courts'])) ? 'selected=selected' : ''; @endphp
                                 <option value="{{ $option['value'] }}" {{ $selected }}>{{ $option['text'] }}</option>
@@ -50,7 +50,7 @@
 
                     <div class="col" id="courts-col">
                         <label for="courts">@lang ('labels.membership.courts')</label>
-                        <select name="courts[]" multiple id="courts" class="form-select select2">
+                        <select name="courts[]" multiple id="courts" class="form-select cselect">
                             @foreach ($options['jurisdictions']['court'] as $option)
                                 @php $selected = (isset($query['courts']) && in_array($option['value'], $query['courts'])) ? 'selected=selected' : ''; @endphp
                                 <option value="{{ $option['value'] }}" {{ $selected }}>{{ $option['text'] }}</option>
@@ -127,7 +127,6 @@
 <x-pagination :items=$members />
 
 @push ('scripts')
-    <!-- Select2 Plugin -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script type="text/javascript" src="{{ asset('/vendor/codalia/c.select.js') }}"></script>
     <script type="text/javascript" src="{{ $public }}/js/members.js"></script>
 @endpush

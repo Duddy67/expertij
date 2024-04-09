@@ -13,7 +13,7 @@
     <div class="row w-100">
         <div class="col-md-6">
             <label for="licences.{{ $i }}.since">{{ __('labels.generic.since') }}</label>
-            <select name="licences[{{ $i }}][since]" class="form-control select2" id="licences.{{ $i }}.since" disabled>
+            <select name="licences[{{ $i }}][since]" class="form-control cselect" id="licences.{{ $i }}.since" disabled>
                 <option value="">{{ __('labels.generic.select_option') }}</option>
                 @foreach ($options['since'] as $option)
                     @php $selected = ($option['value'] == $licence->since) ? 'selected="selected"' : ''; @endphp

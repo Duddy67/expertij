@@ -8,7 +8,7 @@
 <div class="row">
     <div class="col-6">
         <label for="civility">{{ __('labels.user.civility') }}</label>
-        <select name="civility" class="form-control select2" id="civility" disabled>
+        <select name="civility" class="form-control cselect" id="civility" disabled>
             <option value="">{{ __('labels.generic.select_option') }}</option>
             @foreach ($options['civility'] as $option)
                 @php $selected = ($user->civility == $option['value']) ? 'selected="selected"' : ''; @endphp
@@ -45,7 +45,7 @@
     </div>
     <div class="col">
         <label for="citizenship">{{ __('labels.user.citizenship') }}</label>
-        <select name="citizenship" class="form-control select2" id="citizenship" disabled>
+        <select name="citizenship" class="form-control cselect" id="citizenship" disabled>
             <option value="">{{ __('labels.generic.select_option') }}</option>
             @foreach ($options['citizenship'] as $option)
                 @php $selected = ($user->citizenship_id == $option['value']) ? 'selected="selected"' : ''; @endphp
