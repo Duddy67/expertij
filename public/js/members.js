@@ -1,20 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    // N.B: jQuery is required with the Select2 plugin.
-    $('.select2').select2();
+    const cselect = new C_Select.init();
 
     setup();
 
-    $('.select2').change( function(e) {
-        //console.log(e.target.id);
-        if (e.target.id == 'languages') {
-            toggleSkill();
-        }
+    const cselects = document.querySelectorAll('.cselect');
+    for (let i = 0; i < cselects.length; i++) {
+        cselects[i].addEventListener('change', function(e) {
+            if (e.target.id == 'languages') {
+                toggleSkill();
+            }
 
-        if (e.target.id == 'licence') {
-            toggleJurisdiction(e.target.value);
-        }
-    });
+            if (e.target.id == 'licence') {
+                toggleJurisdiction(e.target.value);
+            }
+        });
+    }
 
     // Check first the filters are available.
     if (document.getElementById('search-btn')) {
@@ -24,10 +25,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }, false);
 
         document.getElementById('clear-btn').addEventListener('click', function (evt) {
-            $('#languages option').prop('selected', false);
-            $('#languages').select2();
-            $('#licence option').prop('selected', false);
-            $('#licence').select2();
+            const languages = document.getElementById('languages');
+            languages.options[languages.selectedIndex].removeAttribute('selected');
+            cselect.rebuildCSelect(languages);
+            const licence = document.getElementById('licence');
+            licence.options[licence.selectedIndex].removeAttribute('selected');
+            cselect.rebuildCSelect(licence);
 
             toggleJurisdiction('');
             toggleSkill();
@@ -75,8 +78,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function unselectOptions(selectId) {
-        $('#' + selectId + ' option').prop('selected', false);
-        $('#' + selectId).select2();
+        const select = document.getElementById(selectId);
+        if (select.selectedIndex != -1) {
+            select.options[select.selectedIndex].removeAttribute('selected');
+            cselect.rebuildCSelect(select);
+        } 
     }
 
     function toggleJurisdiction(licence) {
@@ -106,11 +112,13 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('licence-col').style.display = 'block';
         }
         else {
-            $('#skill option').prop('selected', false);
-            $('#skill').select2();
+            const skill = document.getElementById('skill');
+            skill.options[skill.selectedIndex].removeAttribute('selected');
+            cselect.rebuildCSelect(skill);
             document.getElementById('skill-col').style.display = 'none';
-            $('#licence option').prop('selected', false);
-            $('#licence').select2();
+            const licence = document.getElementById('licence');
+            licence.options[licence.selectedIndex].removeAttribute('selected');
+            cselect.rebuildCSelect(licence);
             document.getElementById('licence-col').style.display = 'none';
         }
     }
