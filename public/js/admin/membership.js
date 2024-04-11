@@ -85,6 +85,10 @@
                 document.querySelector('#status option[value=' + stat + ']').disabled = false;
             });
         }
+
+        // Refresh the cselect status item.
+        const cselect = new C_Select.init();
+        cselect.rebuildCSelect(document.getElementById('status'));
     };
 
     /*
@@ -101,9 +105,9 @@
             // Set the current membership status to "member" to prevent the 
             // warning javascript message regarding the status change. 
             document.getElementById('_currentStatus').value = 'member';
-            // Refresh the select2 element through jQuery.
-            $('#status').select2();
-            $('.select2-container--default').attr('style', 'width: 100%');
+            // Refresh the cselect status item.
+            const cselect = new C_Select.init();
+            cselect.rebuildCSelect(document.getElementById('status'));
         }
 
         // Disable the elements of the payment row.

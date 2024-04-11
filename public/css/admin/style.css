@@ -218,11 +218,6 @@ tr.clickable-row {
   height: 100%;
 }
 
-/* remove X from locked tag */
-.locked-tag .select2-selection__choice__remove {
-  display: none!important;
-}
-
 .private-tag {
   background-color: #f6f6f6 !important;
 }
@@ -248,10 +243,6 @@ tr.clickable-row {
 
 .indent-5 {
   padding-left: 50px;
-}
-
-#batchForm .select2-container {
-  width: 100% !important;
 }
 
 .post-image {
