@@ -128,5 +128,11 @@
 
 @push ('scripts')
     <script type="text/javascript" src="{{ asset('/vendor/codalia/c.select.js') }}"></script>
-    <script type="text/javascript" src="{{ $public }}/js/members.js"></script>
 @endpush
+
+@if (!$associated) 
+    @push ('scripts')
+        <script type="text/javascript" src="{{ $public }}/js/members.js"></script>
+    @endpush
+@endif
+

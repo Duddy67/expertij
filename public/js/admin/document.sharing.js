@@ -26,10 +26,10 @@
         hideDeleteButton();
 
         // N.B: jQuery is required with the Select2 plugin.
-        $('#licence_types').change( function() { setJuridictions($(this)); });
-        setJuridictions($('#licence_types'));
+        document.getElementById('licence_types').addEventListener('change', function() { setJuridictions(this); });
+        setJuridictions(document.getElementById('licence_types'));
 
-        if (document.getElementById('_sendingEmails').value == 1) {
+        if (document.getElementById('_sendingEmails') && document.getElementById('_sendingEmails').value == 1) {
            document.getElementById('sendEmails').disabled = true
         }
     });
@@ -90,9 +90,9 @@
     }
 
     function setJuridictions(elem) {
-        if (elem.val() == '') {
-	    $('#appeal_courts').prop('disabled', true);
-	    $('#courts').prop('disabled', true);
+        if (elem.value == '') {
+	    document.getElementById('appeal_courts').disabled = true;
+	    document.getElementById('courts').disabled = true;
 
 	    return;
 	}
@@ -100,16 +100,16 @@
         let types = elem.val();
 
         if (types.length == 1 && types[0] == 'expert') {
-	    $('#appeal_courts').prop('disabled', false);
-	    $('#courts').prop('disabled', true);
+	    document.getElementById('appeal_courts').disabled = false;
+	    document.getElementById('courts').disabled = true;
 	}
         else if (types.length == 1 && types[0] == 'ceseda') {
-	    $('#appeal_courts').prop('disabled', true);
-	    $('#courts').prop('disabled', false);
+	    document.getElementById('appeal_courts').disabled = true;
+	    document.getElementById('courts').disabled = false;
 	}
         else if (types.length == 2) {
-	    $('#appeal_courts').prop('disabled', false);
-	    $('#courts').prop('disabled', false);
+	    document.getElementById('appeal_courts').disabled = false;
+	    document.getElementById('courts').disabled = false;
 	}
     }
 
