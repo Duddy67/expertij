@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cms\Setting;
+use App\Models\Cms\Document;
 use App\Models\Membership;
 use App\Models\User\Citizenship;
 use App\Http\Requests\Profile\UpdateRequest;
@@ -78,6 +79,38 @@ class ProfileController extends Controller
 
         $user->save();
 
-        return response()->json(['success' => __('messages.profile.update_success')]);
+        $updates = [];
+
+        if ($photo = $this->uploadPhoto($request)) {
+            // Delete the previous photo if any.
+            if ($user->photo) {
+                $user->photo->delete();
+            }
+
+            $user->photo()->save($photo);
+            // Update the photo.
+            $user->photo = $photo;
+            $updates['user-photo'] = url('/').$user->photo->getThumbnailUrl();
+        }
+
+        return response()->json(['success' => __('messages.profile.update_success'), 'updates' => $updates]);
+    }
+
+    /*
+     * Creates a Document associated with the uploaded photo file.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \App\Models\Cms\Document
+     */
+    private function uploadPhoto($request)
+    {
+        if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
+            $document = new Document;
+            $document->upload($request->file('photo'), 'photo');
+
+            return $document;
+        }
+
+        return null;
     }
 }

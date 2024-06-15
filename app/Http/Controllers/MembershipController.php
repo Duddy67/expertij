@@ -608,6 +608,7 @@ class MembershipController extends Controller
     {
         $this->item = $membership;
         $page = Setting::getPage('membership.applicant');
+        $theme = $page['theme'];
         $options = $this->getOptions();
         $except = ['name', 'status', 'created_at', 'updated_at', 'updated_by', 'member_number', 'member_since'];
         $fields = $this->getFields($except);
@@ -615,7 +616,7 @@ class MembershipController extends Controller
         $comment = ($request->has('comment')) ? $request->input('comment') : '';
         $query = array_merge($request->query(), ['membership' => $membership->id]);
 
-        return view('themes.'.$page['theme'].'.index', compact('page', 'membership', 'fields', 'options', 'query', 'comment'));
+        return view('themes.'.$theme.'.index', compact('page', 'theme', 'membership', 'fields', 'options', 'query', 'comment'));
     }
 
     /**
