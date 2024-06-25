@@ -149,6 +149,12 @@
             @csrf
         </form>
 
+        <form id="updateEmail" action="{{ route('admin.memberships.updateEmail', $query) }}" method="post">
+            @method('put')
+            @csrf
+            <input type="hidden" name="email" id="updatedEmail" value="">
+        </form>
+
         <form id="setPayment" action="{{ route('admin.memberships.setPayment', $query) }}" method="post">
             @method('put')
             @csrf

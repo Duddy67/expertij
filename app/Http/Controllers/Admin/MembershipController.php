@@ -21,6 +21,8 @@ use App\Models\Membership\Setting as MembershipSetting;
 use App\Models\Cms\Address;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
 
 class MembershipController extends Controller
 {
@@ -308,6 +310,41 @@ class MembershipController extends Controller
         else {
             return response()->json(['warning' => __('messages.generic.cannot_send_email')]);
         }
+    }
+
+    /**
+     * Updates the member's / user's email.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateEmail(Request $request, Membership $membership)
+    {
+        // Get the user who owns the updated email.
+        $user = $membership->user;
+
+        // First, check the current user is allowed to update this user's email.
+        if (!auth()->user()->canUpdate($user)) {
+            return response()->json(['warning' => __('messages.user.edit_user_not_auth')]);
+        }
+
+        // Make sure no one is editing this user.
+        if ($user->checked_out) {
+            return response()->json(['warning' => __('messages.generic.checked_out')]);
+        }
+
+        // Check the updated email is valid.
+        $rules = [ 'email' => ['required', 'email', Rule::unique('users')->ignore($user->id)]];
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json(['warning' => __('messages.user.email_not_valid')]);
+        }
+
+        $user->email = $request->input('email');
+        $user->save();
+
+        return response()->json(['success' => __('messages.user.email_update_success')]);
     }
 
     /*

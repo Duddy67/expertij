@@ -21,6 +21,8 @@ return [
         'alert_user_dependencies' => 'Vous ne pouvez pas supprimer l\'utilisateur: :name car il possède :number :dependencies. Veuillez modifier ces dépendances et essayer à nouveau.',
         'membership_checked_out' => 'Vous ne pouvez pas supprimer l\'utilisateur: :name car sa fiche d\'adhésion est actuellement consultée.',
         'unknown_user' => 'Utilisateur inconnu.',
+        'email_update_success' => 'L\'email de l\'utilisateur a été mis à jour avec succès.',
+        'email_not_valid' => 'L\'email n\'est pas valide ou bien il est déjà utilisé.',
     ],
     'profile' => [
         'update_success' => 'Profil mis à jour avec succès.',

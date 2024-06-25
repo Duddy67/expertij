@@ -28,5 +28,6 @@ Route::get('/memberships/renewal', [AdminMembershipController::class, 'renewal']
 Route::get('/memberships/export', [AdminMembershipController::class, 'export'])->name('admin.memberships.export');
 Route::get('/memberships/reminder', [AdminMembershipController::class, 'renewalReminder'])->name('admin.memberships.reminder');
 Route::put('/memberships/send-emails/{membership}', [AdminMembershipController::class, 'sendEmails'])->name('admin.memberships.sendEmails');
+Route::put('/memberships/update-email/{membership}', [AdminMembershipController::class, 'updateEmail'])->name('admin.memberships.updateEmail');
 Route::put('/memberships/payment/{membership}', [AdminMembershipController::class, 'setPayment'])->name('admin.memberships.setPayment');
 Route::resource('memberships', AdminMembershipController::class, ['as' => 'admin'])->except(['show']);

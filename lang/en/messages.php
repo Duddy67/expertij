@@ -21,6 +21,8 @@ return [
         'alert_user_dependencies' => 'You cannot delete this user: :name as he/she owns :number :dependencies. Please modify these dependencies accordingly then try again.',
         'membership_checked_out' => 'You cannot delete the user: :name as his membership is currently checked out.',
         'unknown_user' => 'Unknown user.',
+        'email_update_success' => 'The user\'s email has been successfully updated.',
+        'email_not_valid' => 'The email is not valid or it is already used.',
     ],
     'profile' => [
         'update_success' => 'Profile successfully updated.',

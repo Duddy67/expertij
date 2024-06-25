@@ -81,6 +81,7 @@
     </div>
     <div class="col">
         <label for="email">{{ __('labels.user.email') }}</label>
-        <input id="email" disabled="" type="email" class="form-control " name="email" value="{{ $user->email }}" readonly="">
+        <input id="email" type="email" class="form-control " value="{{ $user->email }}">
+        <div id="update-email" class="btn btn-primary mt-4">{{ __('labels.membership.update_email') }}</div>
     </div>
 </div>

@@ -190,6 +190,7 @@ return [
 	'votes' => 'Votes',
 	'voting' => 'Voting',
 	'coverage' => 'Coverage',
+	'update_email' => 'Update email',
     ],
     'sharing' => [
 	'create_sharing' => 'Create a document sharing',

@@ -190,6 +190,7 @@ return [
 	'votes' => 'Votes',
 	'voting' => 'Vote',
 	'coverage' => 'Couverture',
+	'update_email' => 'Mise à jour email',
     ],
     'sharing' => [
 	'create_sharing' => 'Créer un partage de document',

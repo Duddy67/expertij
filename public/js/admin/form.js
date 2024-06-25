@@ -38,6 +38,14 @@
                     }
                 }
             });
+        }
+
+        if (document.getElementById('update-email')) {
+            document.getElementById('update-email').addEventListener('click', function(e) {
+                // Copy the updated email value to the hidden field.
+                document.getElementById('updatedEmail').value = document.getElementById('email').value;
+                runAjax('updateEmail');
+            });
 
         }
     });
