@@ -3,11 +3,12 @@
         <div class="col-md-6 form-group">
             @foreach ($options['licence_type'] as $option)
                 @php $checked = ($option['value'] == $licence->type) ? 'checked' : ''; @endphp
-                <input class="form-check-input licence-type" type="radio" data-type="{{ $option['value'] }}" data-licence-index="{{ $i }}" name="licences[{{ $i }}][type]" {{ ($option['value'] == 'expert') ? 'checked="checked"' : '' }} id="licences.{{ $i }}.{{ $option['value'] }}" value="{{ $option['value'] }}" {{ $checked }}>
+                <input class="form-check-input licence-type" type="radio" data-type="{{ $option['value'] }}" data-licence-index="{{ $i }}" name="licences[{{ $i }}][type]" id="licences.{{ $i }}.{{ $option['value'] }}" value="{{ $option['value'] }}" {{ $checked }}>
                 <label class="form-check-label" for="licences.{{ $i }}.{{ $option['value'] }}">
                   {{ $option['text'] }}
                 </label>
             @endforeach
+            <input type="hidden" name="licences[{{ $i }}][type]" value="{{ $licence->type }}">
         </div>
         <div class="col-md-6 form-group">
             <label for="licences.{{ $i }}.since">{{ __('labels.generic.since') }}</label>

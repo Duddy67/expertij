@@ -347,7 +347,8 @@ class MembershipController extends Controller
             if (isset($licenceItem['_id'])) {
                 $licence = $membership->licences->where('id', $licenceItem['_id'])->first();
 
-                $licence->type = $licenceItem['type'];
+                // N.B: Licence types can't be changed once the licence is created.
+                //$licence->type = $licenceItem['type'];
                 $licence->since = $licenceItem['since'];
                 $licence->jurisdiction_id = $licenceItem[$jurisdictionType];
                 $licence->save();
