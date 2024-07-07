@@ -87,35 +87,37 @@
                             {{ $member->email }}
                         </p>
                     </div>
-                    <div class="col-sm">
-                        @foreach ($member->licences as $licence)
-                            <p class="mt-2 fw-bold">{{ __('labels.membership.'.$licence->type) }}</p> 
-                            @php $jurisdictionType = ($licence->type == 'expert') ? __('labels.membership.appeal_court') : __('labels.membership.court'); @endphp
-                            <p>{{ $jurisdictionType }}: {{ $licence->jurisdiction->name }}</p> 
-                            <hr>
-                            <p>{{ __('labels.membership.language') }}(s)</p>
-                            @foreach ($licence->attestations as $attestation)
-                                @foreach ($attestation->skills as $skill)
-                                    <div>
-                                        <p class="d-inline">{{ $languages[$skill->language_id] }}</p>
-                                        @if ($skill->interpreter)
-                                            <p class="d-inline">{{ __('labels.membership.interpreter') }}</p>
-                                            @if ($skill->interpreter_cassation)
-                                                <small>(Cassation)</small>
+                    @if (!$associated)
+                        <div class="col-sm">
+                            @foreach ($member->licences as $licence)
+                                <p class="mt-2 fw-bold">{{ __('labels.membership.'.$licence->type) }}</p> 
+                                @php $jurisdictionType = ($licence->type == 'expert') ? __('labels.membership.appeal_court') : __('labels.membership.court'); @endphp
+                                <p>{{ $jurisdictionType }}: {{ $licence->jurisdiction->name }}</p> 
+                                <hr>
+                                <p>{{ __('labels.membership.language') }}(s)</p>
+                                @foreach ($licence->attestations as $attestation)
+                                    @foreach ($attestation->skills as $skill)
+                                        <div>
+                                            <p class="d-inline">{{ $languages[$skill->language_id] }}</p>
+                                            @if ($skill->interpreter)
+                                                <p class="d-inline">{{ __('labels.membership.interpreter') }}</p>
+                                                @if ($skill->interpreter_cassation)
+                                                    <small>(Cassation)</small>
+                                                @endif
                                             @endif
-                                        @endif
 
-                                        @if ($skill->translator)
-                                            <p class="d-inline">{{ __('labels.membership.translator') }}</p>
-                                            @if ($skill->translator_cassation)
-                                                <small>(Cassation)</small>
+                                            @if ($skill->translator)
+                                                <p class="d-inline">{{ __('labels.membership.translator') }}</p>
+                                                @if ($skill->translator_cassation)
+                                                    <small>(Cassation)</small>
+                                                @endif
                                             @endif
-                                        @endif
-                                    </div>
+                                        </div>
+                                    @endforeach
                                 @endforeach
                             @endforeach
-                        @endforeach
-                    </div>
+                        </div>
+                    @endif
                 </div>
             </li>
 	@endforeach
