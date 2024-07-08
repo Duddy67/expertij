@@ -131,6 +131,11 @@
 	"roles": "admin|manager|assistant|registered"
       },
       {
+	"name": "update-membership-sharings",
+	"type": "level3",
+	"roles": "admin|manager|assistant|registered"
+      },
+      {
 	"name": "update-membership-settings",
 	"type": "level1",
 	"roles": "",

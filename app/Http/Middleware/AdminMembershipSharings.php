@@ -22,15 +22,15 @@ class AdminMembershipSharings
         $update = ['admin.memberships.sharings.update', 'admin.memberships.sharings.edit'];
         $delete = ['admin.memberships.sharings.destroy', 'admin.memberships.sharings.massDestroy'];
 
-	if (in_array($routeName, $create) && !auth()->user()->isAllowedTo('create-post-sharings')) {
+	if (in_array($routeName, $create) && !auth()->user()->isAllowedTo('create-membership-sharings')) {
 	    return redirect()->route('admin')->with('error', __('messages.generic.access_not_auth'));
 	}
 
-	if (in_array($routeName, $update) && !auth()->user()->isAllowedTo('update-post-sharings')) {
+	if (in_array($routeName, $update) && !auth()->user()->isAllowedTo('update-membership-sharings')) {
 	    return redirect()->route('admin.memberships.sharings.index')->with('error', __('messages.category.edit_not_auth'));
 	}
 
-	if (in_array($routeName, $delete) && !auth()->user()->isAllowedTo('delete-post-sharings')) {
+	if (in_array($routeName, $delete) && !auth()->user()->isAllowedTo('delete-membership-sharings')) {
 	    return redirect()->route('admin.memberships.sharings.index')->with('error', __('messages.category.delete_not_auth'));
 	}
 

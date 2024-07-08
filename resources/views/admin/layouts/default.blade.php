@@ -100,7 +100,7 @@
                             <li class="list-group-item list-group-item-action {{ $active }}">
                                 <a href="{{ route('admin.memberships.index') }}" class="sidebar-link">@lang ('labels.membership.members')</a>
                             </li>
-                            @allowto('update-membership-settings')
+                            @allowto('create-membership-sharings')
                                 @php $active = ($routeName == 'admin.memberships.sharings.index' || $routeName == 'admin.memberships.sharings.create' || $routeName == 'admin.memberships.sharings.edit') ? 'active' : '' @endphp
                                 <li class="list-group-item list-group-item-action {{ $active }}">
                                     <a href="{{ route('admin.memberships.sharings.index') }}" class="sidebar-link">@lang ('labels.generic.document_sharing')</a>
