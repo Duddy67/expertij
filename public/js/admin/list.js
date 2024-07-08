@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     massDestroy = function() {
-	if (setSelectedItems() && window.confirm(messages.confirm_multiple_item_deletion)) {
+	if (setSelectedItems() && window.confirm(messages.confirm_multiple_item_deletions)) {
             const selectedItemForm = document.getElementById('selectedItems');
             selectedItemForm.querySelector('input[name="_method"]').value = 'delete';
             selectedItemForm.setAttribute('action', document.getElementById('destroyItems').value);

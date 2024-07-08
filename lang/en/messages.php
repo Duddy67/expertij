@@ -205,5 +205,6 @@ return [
         'renewal_reminder_confirmation' => 'This will send an reminder to the members who haven\'t paid their membership fee yet. Are you sure ?',
         'applicant_vote_confirmation' => "This will validate your vote with the administrators.\nAre you sure ?",
         'cancellation_confirmation' => "You are about to cancel your subscription to Expertij.\nAre you sure ?",
+        'confirm_multiple_item_deletions' => "You are about to delete one or more items.\nAre you sure ?",
     ]
 ];

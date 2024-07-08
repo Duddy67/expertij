@@ -205,5 +205,6 @@ return [
         'renewal_reminder_confirmation' => "Ceci enverra un email de rappel aux adhérents n'ayant toujours pas réglé leur cotisation.\nEtes vous sûr(e) ?\nDernier envoi: ",
         'applicant_vote_confirmation' => "Ceci validera votre vote auprès des administrateurs.\nEtes vous sûr(e) ?",
         'cancellation_confirmation' => "Vous êtes sur le point d'annuler votre adhésion chez Expertij.\nEtes vous sûr(e) ?",
+        'confirm_multiple_item_deletions' => "Vous êtes sur le point de supprimer un ou plusieurs éléments.\nEtes vous sûr(e) ?",
     ]
 ];
