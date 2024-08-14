@@ -74,6 +74,7 @@ return [
 	'show_post_categories' => 'Montrer les catégories du post',
 	'show_post_image' => 'Montrer l\'image du post',
         'posts_per_page' => 'Posts par page',
+        'customized_posts_per_page' => 'Posts par page personnalisé',
 	'posted_by' => 'Posté par :author',
     ],
     'membership' => [
@@ -405,6 +406,7 @@ return [
         'resume' => 'Curriculum vitae',
         'running' => 'En cours',
         'expired' => 'Expiré(e)',
+        'customized' => 'Personnalisé',
     ],
     'filter' => [
 	'search' => 'Recherche',

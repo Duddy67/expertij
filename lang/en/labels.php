@@ -74,6 +74,7 @@ return [
 	'show_post_categories' => 'Show post categories',
 	'show_post_image' => 'Show post image',
         'posts_per_page' => 'Posts per page',
+        'customized_posts_per_page' => 'Customized posts per page',
 	'posted_by' => 'Posted by :author',
     ],
     'membership' => [
@@ -404,6 +405,7 @@ return [
         'resume' => 'Resumé',
         'running' => 'Running',
         'expired' => 'Expired',
+        'customized' => 'Customized',
     ],
     'filter' => [
 	'search' => 'Search',
