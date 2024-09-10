@@ -213,13 +213,15 @@ class Membership extends Model
 
         // Create the csv file from the query results.
 
-        $list = [['Nom', 'Prénom', 'Email', 'Statut', 'Numéro adhérent', 'Assurance']];
+        $list = [['Nom', 'Prénom', 'Email', 'Téléphone', 'Code postal', 'Statut', 'Numéro adhérent', 'Assurance']];
         $fields = [];
 
         foreach ($memberships as $membership) {
             $fields[] = $membership->user->first_name;
             $fields[] = $membership->user->last_name;
             $fields[] = $membership->user->email;
+            $fields[] = $membership->user->address->phone;
+            $fields[] = $membership->user->address->postcode;
             $fields[] = __('labels.membership.'.$membership->status);
             $fields[] = ($membership->member_number) ? $membership->member_number : 'Pas encore adhérent';
             $fields[] = ($membership->insurance_code) ? __('labels.membership.insurance_'.$membership->insurance_code) : 'Aucune assurance';
