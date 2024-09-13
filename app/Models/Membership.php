@@ -222,7 +222,7 @@ class Membership extends Model
             $spokenLanguages = '';
 
             // Check only regular members.
-            if ($membership->member_number && !$membership->associated_member) {
+            if (!$membership->associated_member) {
                 foreach ($membership->licences as $licence) {
                     foreach ($licence->attestations as $attestation) {
                         foreach ($attestation->skills as $skill) {
