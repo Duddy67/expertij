@@ -213,16 +213,40 @@ class Membership extends Model
 
         // Create the csv file from the query results.
 
-        $list = [['Nom', 'Prénom', 'Email', 'Téléphone', 'Code postal', 'Statut', 'Numéro adhérent', 'Assurance']];
+        $list = [['Nom', 'Prénom', 'Email', 'Téléphone', 'Adresse', 'Code postal', 'Ville', 'Statut', 'Languages parlés', 'Numéro adhérent', 'Assurance']];
         $fields = [];
+        // Get languages as an associative array ('alpha_3' => 'fr').
+        $languages = Language::where('published', 1)->orderBy('fr')->pluck('fr', 'alpha_3')->toArray();
 
         foreach ($memberships as $membership) {
-            $fields[] = $membership->user->first_name;
+            $spokenLanguages = '';
+
+            // Check only regular members.
+            if ($membership->member_number && !$membership->associated_member) {
+                foreach ($membership->licences as $licence) {
+                    foreach ($licence->attestations as $attestation) {
+                        foreach ($attestation->skills as $skill) {
+                            $as = ($skill->interpreter) ? __('labels.membership.interpreter') : '';
+                            $as .= ($skill->interpreter && $skill->translator) ? '|' : '';
+                            $as .= ($skill->translator) ? __('labels.membership.translator') : '';
+                            $spokenLanguages .= $languages[$skill->language_id].' ('.$as.'), ';
+                        }
+                    }
+                }
+
+                // Remove the comma and the space from the end of the line.
+                $spokenLanguages = substr_replace($spokenLanguages, '', -2);
+            }
+
             $fields[] = $membership->user->last_name;
+            $fields[] = $membership->user->first_name;
             $fields[] = $membership->user->email;
             $fields[] = $membership->user->address->phone;
+            $fields[] = $membership->user->address->street;
             $fields[] = $membership->user->address->postcode;
+            $fields[] = $membership->user->address->city;
             $fields[] = __('labels.membership.'.$membership->status);
+            $fields[] = $spokenLanguages;
             $fields[] = ($membership->member_number) ? $membership->member_number : 'Pas encore adhérent';
             $fields[] = ($membership->insurance_code) ? __('labels.membership.insurance_'.$membership->insurance_code) : 'Aucune assurance';
 
