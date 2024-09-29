@@ -7,6 +7,7 @@ var CodaliaLang = {
                 "alert_value_type_not_valid":"Value type is not valid.",
                 "alert_overlapping":"Group items cannot overlap each others.",
                 "empty_title":"Empty title.",
+                "empty_group_class":"Empty group class.",
                 "empty_text_block":"Empty text block.",
                 "no_file_selected":"No file selected.",
                 "file_too_big":"The file is too big. Max size: ",
