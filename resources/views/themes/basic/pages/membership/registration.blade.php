@@ -61,7 +61,7 @@
                     </div>
                     <div class="col-md-6 form-group">
                         <label for="birth_date">{{ __('labels.user.birth_date') }}</label>
-                        <input type="text" name="birth_date" class="form-control date" id="birth_date" data-options="['startEmpty']" data-date="0" data-format="d M Y">
+                        <input type="text" name="birth_date" class="form-control date" id="birth_date" data-options="['startEmpty']" data-date="0" data-format="d M Y" readonly>
                         <input type="hidden" id="_birth_date" name="_birth_date" value="">
                         <div class="text-danger" id="birth_dateError"></div>
                     </div>
