@@ -138,7 +138,7 @@
       {
 	"name": "update-membership-settings",
 	"type": "level1",
-	"roles": "",
+	"roles": "admin",
 	"optional": "admin"
       }
   ],
