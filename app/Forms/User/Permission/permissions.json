@@ -152,7 +152,7 @@
       {
 	"name": "update-emails",
 	"type": "level1",
-	"roles": "",
+	"roles": "admin",
 	"optional": "admin"
       }
   ],
