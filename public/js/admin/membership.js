@@ -57,7 +57,7 @@
         const currentStatus = document.getElementById('status').value;
 
         // Disables the dropdown list.
-        if (currentStatus == 'member' || currentStatus == 'refused' || currentStatus == 'cancelled' || currentStatus == 'revoked' || currentStatus == 'cancellation') {
+        if (currentStatus == 'member' || currentStatus == 'refused' || currentStatus == 'cancelled' || currentStatus == 'revoked') {
             document.getElementById('status').disabled = true;
 
             // Cancel the possible pending payment in case the membership is cancelled or revoked.
@@ -71,11 +71,13 @@
         else {
             const disabled = {pending: ['cancelled', 'pending_renewal', 'member', 'revoked', 'cancellation'],
                             pending_subscription: ['pending', 'refused', 'member', 'pending_renewal', 'revoked', 'cancellation'],
-                            pending_renewal: ['pending', 'refused', 'member', 'pending_subscription', 'cancelled', 'cancellation']};
+                            pending_renewal: ['pending', 'refused', 'member', 'pending_subscription', 'cancelled', 'cancellation'],
+                            cancellation: ['pending', 'refused', 'member', 'pending_subscription', 'cancelled', 'revoked']};
 
             const enabled = {pending: ['refused', 'pending_subscription'],
                             pending_subscription: ['cancelled'],
-                            pending_renewal: ['revoked']};
+                            pending_renewal: ['revoked'], 
+                            cancellation: ['pending_renewal']};
 
             disabled[currentStatus].forEach( function(stat) {
                 document.querySelector('#status option[value=' + stat + ']').disabled = true;
