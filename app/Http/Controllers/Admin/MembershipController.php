@@ -362,6 +362,8 @@ class MembershipController extends Controller
             if ($isNew) {
                 $membership->member_number = $membership->getMemberNumber();
                 $membership->member_since = Carbon::now();
+                // Check for free period.
+                $membership->free_period = $this->isFreePeriod();
             }
 
             $membership->status = 'member';

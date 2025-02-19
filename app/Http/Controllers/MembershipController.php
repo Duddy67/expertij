@@ -156,8 +156,6 @@ class MembershipController extends Controller
                 'professional_experience' => $request->input('professional_experience'),
                 'observations' => $request->input('observations'),
                 'why_expertij' => $request->input('why_expertij'),
-                // Check for free period.
-                'free_period' => $this->isFreePeriod(),
                 // New subscriptions are pending by default.
                 'status' => 'pending',
                 'owned_by' => $user->id,
@@ -221,8 +219,6 @@ class MembershipController extends Controller
                 // New subscriptions are pending by default.
                 'status' => 'pending',
                 'owned_by' => $user->id,
-                // Check for free period.
-                'free_period' => $this->isFreePeriod(),
                 'associated_member' => true,
             ]);
 
