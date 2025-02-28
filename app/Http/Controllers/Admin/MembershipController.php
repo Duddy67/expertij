@@ -74,7 +74,7 @@ class MembershipController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Request $request, int $id): \Illuminate\View\View
+    public function edit(Request $request, int $id): \Illuminate\View\View|\Illuminate\Http\RedirectResponse
     {
         $membership = $this->item = Membership::find($id);
 
